@@ -1,0 +1,21 @@
+CREATE TABLE LESSONSDB
+(
+    lesson_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    lesson_name_id INTEGER NOT NULL,
+    lesson_day INTEGER NOT NULL,
+    lesson_homework TEXT,
+    lesson_class TEXT NOT NULL,
+    lesson_checked INTEGER NOT NULL,
+    lesson_num INTEGER NOT NULL,
+    lesson_special INTEGER,
+    lesson_start_time INTEGER,
+    lesson_end_time INTEGER
+);
+
+insertLesson:
+    INSERT OR REPLACE INTO LESSONSDB (lesson_name_id, lesson_day, lesson_homework, lesson_class,
+    lesson_checked, lesson_num, lesson_special, lesson_start_time, lesson_end_time)
+    VALUES (?, ?, ?, ?, 0, ?, ?, ?, ?);
+
+getLessonsIds:
+    SELECT lesson_id FROM LESSONSDB WHERE lesson_day = ?;
