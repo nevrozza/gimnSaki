@@ -3,6 +3,7 @@ package settings
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.get
 import com.russhwolf.settings.set
+import models.Token
 
 class SettingsAuthDataSource(
     private val settings: Settings
@@ -28,7 +29,7 @@ class SettingsAuthDataSource(
     }
 
     fun fetchDevKey(): String {
-        return settings[devKey, ""]
+        return settings[devKey, "c4ca4238a0b923820dcc509a6f75849b"]
     }
 
     fun saveVendor(vendor: String) {
@@ -39,8 +40,35 @@ class SettingsAuthDataSource(
         return settings[vendorKey, ""]
     }
 
+    fun saveLogin(login: String) {
+        settings[loginKey] = login
+    }
+
+    fun fetchLogin(): String {
+        return settings[loginKey, ""]
+    }
+
+    fun savePassword(password: String) {
+        settings[passwordKey] = password
+    }
+
+    fun fetchPassword(): String {
+        return settings[passwordKey, ""]
+    }
+
+    fun saveSheets(sheetsToken: String) {
+        settings[sheetsKey] = sheetsToken
+    }
+
+    fun fetchSheets(): String {
+        return settings[sheetsKey, ""]
+    }
+
 
     companion object {
+        const val sheetsKey = "sheetsKey"
+        const val loginKey = "loginKey"
+        const val passwordKey = "loginKey"
         const val diaryKey = "diaryKey"
         const val tokenKey = "tokenKey"
         const val devKey = "devKey"

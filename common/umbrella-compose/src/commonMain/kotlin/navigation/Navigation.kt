@@ -1,6 +1,5 @@
 package navigation
 import SplashScreen
-import navigation.NavigationTree
 import ru.alexgladkov.odyssey.compose.extensions.screen
 import ru.alexgladkov.odyssey.compose.navigation.RootComposeBuilder
 
@@ -10,9 +9,12 @@ enum class NavigationSource {
 
 fun RootComposeBuilder.generateGraph(source: NavigationSource) {
 
+
     screen(name = NavigationTree.Splash.SplashScreen.name) {
        SplashScreen()
     }
+
+    startFlow()
 
     when(source) {
         NavigationSource.Android -> {}

@@ -54,4 +54,29 @@ class AuthRepositoryImpl(
     override fun fetchDevKey(): String {
         return cacheDataSource.fetchDevKey()
     }
+
+    override fun saveLogin(login: String) {
+        cacheDataSource.saveLogin(login)
+    }
+
+    override fun fetchLogin(): String {
+        return cacheDataSource.fetchLogin()
+    }
+
+    override fun savePassword(password: String) {
+        cacheDataSource.savePassword(password)
+    }
+
+    override fun fetchPassword(): String {
+        return cacheDataSource.fetchPassword()
+    }
+
+    override fun saveSheets(sheetsToken: String) {
+        cacheDataSource.saveSheets(sheetsToken)
+    }
+
+    override fun fetchSheets(): String {
+        return cacheDataSource.fetchSheets()
+    }
+
 }

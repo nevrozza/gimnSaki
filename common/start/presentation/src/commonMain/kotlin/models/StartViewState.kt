@@ -4,7 +4,7 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
-data class SplashViewState(
+data class StartViewState(
     val hour: Int = Clock.System.now().toLocalDateTime(TimeZone.of("UTC+3")).hour,
     val dataList: List<String>
 )

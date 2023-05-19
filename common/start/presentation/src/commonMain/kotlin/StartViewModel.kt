@@ -1,17 +1,19 @@
 package splash.presentation
 
 import com.adeo.kviewmodel.BaseSharedViewModel
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import kotlinx.datetime.*
-import splash.presentation.models.SplashAction
-import splash.presentation.models.SplashEvent
-import splash.presentation.models.SplashViewState
+import splash.presentation.models.StartAction
+import splash.presentation.models.StartEvent
+import splash.presentation.models.StartViewState
 
 
-class SplashViewModel: BaseSharedViewModel<SplashViewState, SplashAction, SplashEvent>(
-    initialState = SplashViewState(dataList = listOf("Здравствуйте!"))
+class StartViewModel: BaseSharedViewModel<StartViewState, StartAction, StartEvent>(
+    initialState = StartViewState(dataList = listOf("Здравствуйте!"))
 ){
 
     private val listOfBye = listOf("Доброй ночи!", "Геджелер хайыр!", "Доброї ночі!", "Good night!", "Gute Nacht!")
@@ -23,7 +25,8 @@ class SplashViewModel: BaseSharedViewModel<SplashViewState, SplashAction, Splash
         setDataLists()
     }
 
-    override fun obtainEvent(viewEvent: SplashEvent) {
+    @OptIn(DelicateCoroutinesApi::class)
+    override fun obtainEvent(viewEvent: StartEvent) {
 
         GlobalScope.launch(Dispatchers.IO) {
             when (viewEvent) {
@@ -33,6 +36,13 @@ class SplashViewModel: BaseSharedViewModel<SplashViewState, SplashAction, Splash
     }
 
     private fun setDataLists() {
-        viewState = viewState.copy(dataList = if (viewState.hour in 19..21) listOfEvening else if (viewState.hour in 5..22) listOfBye else if (viewState.hour <= 10) listOfMorning else listOfAfternoon)
+        viewState = viewState.copy(dataList =
+        when(viewState.hour) {
+            in 5..10 -> listOfMorning
+            in 11..18 -> listOfAfternoon
+            in 19..21 -> listOfEvening
+            else -> listOfBye
+        })
+
     }
 }

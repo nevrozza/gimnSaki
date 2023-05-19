@@ -1,15 +1,15 @@
 plugins {
-    id("android-setup")
     id("multiplatform-setup")
-    kotlin("plugin.serialization")
+    id("android-setup")
 }
 
 kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(project(":common:auth:api"))
+                implementation(project(":common:settings:api"))
                 implementation(project(":common:core"))
+                implementation(project(":common:utils"))
 
                 implementation(Dependencies.Kodein.core)
                 implementation(Dependencies.Settings.core)

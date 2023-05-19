@@ -14,4 +14,16 @@ interface AuthRepository {
 
     fun saveDevKey(devKey: String)
     fun fetchDevKey(): String
+
+    fun saveLogin(login: String)
+
+    fun fetchLogin(): String
+
+    fun savePassword(password: String)
+
+    fun fetchPassword(): String
+
+    fun saveSheets(sheetsToken: String)
+
+    fun fetchSheets(): String
 }

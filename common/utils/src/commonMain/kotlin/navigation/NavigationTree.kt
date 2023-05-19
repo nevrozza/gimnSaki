@@ -5,6 +5,9 @@ object NavigationTree {
         SplashScreen
     }
 
+    enum class Start {
+        StartFlow, StartScreen, StartColorScreen, StartDescriptionScreen
+    }
     enum class Auth {
         AuthFlow, Login
     }
