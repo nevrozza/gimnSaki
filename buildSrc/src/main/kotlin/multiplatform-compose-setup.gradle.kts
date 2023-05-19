@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
+    id("dev.icerock.mobile.multiplatform-resources")
     id("org.jetbrains.compose")
 }
 
@@ -13,6 +14,9 @@ kotlin {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material3)
+
+                api("dev.icerock.moko:resourc:0.22.0")
+                api("dev.icerock.moko:resources-compose:0.22.0")
             }
         }
 

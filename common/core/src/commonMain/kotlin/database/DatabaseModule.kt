@@ -1,7 +1,5 @@
 package database
 
-import PlatformConfiguration
-import com.squareup.sqldelight.db.SqlDriver
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.instance

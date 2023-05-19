@@ -7,10 +7,10 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalViewConfiguration
 
 @Composable
-expect fun AppTheme(colorScheme: ColorScheme, darkTheme: Boolean = isSystemInDarkTheme(), isDynamic: Boolean = false, content: @Composable () -> Unit)
+actual fun AppTheme(colorScheme: ColorScheme, darkTheme: Boolean, isDynamic: Boolean, content: @Composable () -> Unit) {
+    CompositionLocalProvider(
+        LocalColorProvider provides colorScheme,
+        content = content
+    )
 
-object Theme {
-    val colors: ColorScheme
-        @Composable
-        get() = LocalColorProvider.current
 }

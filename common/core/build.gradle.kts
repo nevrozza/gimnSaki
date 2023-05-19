@@ -1,8 +1,8 @@
 plugins {
     id("android-setup")
     id("multiplatform-setup")
-    id("com.squareup.sqldelight")
-    id("dev.icerock.mobile.multiplatform-resources")
+    id("app.cash.sqldelight") version "2.0.0-alpha05"
+
     kotlin("plugin.serialization")
 }
 
@@ -27,10 +27,7 @@ kotlin {
                 implementation(Dependencies.Settings.noargs)
 
                 api(Dependencies.Kodein.core)
-                api(Dependencies.SqlDelight.core)
 
-                api(Dependencies.Moko.Resources.res)
-                api(Dependencies.Moko.Resources.compose)
             }
         }
 
@@ -58,10 +55,12 @@ kotlin {
 }
 
 sqldelight {
-    database("Database") {
-        packageName = "com.gimnsaki.app"
-        schemaOutputDirectory = file("src/commonMain/sqldelight/databases/schema")
-        migrationOutputDirectory = file("src/commonMain/sqldelight/databases/migrations")
+    databases {
+        create("Database") {
+            packageName.set("com.gimnsaki.app")
+            schemaOutputDirectory.set(file("src/commonMain/sqldelight/databases/schema"))
+            migrationOutputDirectory.set(file("src/commonMain/sqldelight/databases/migrations"))
+        }
     }
 }
 
