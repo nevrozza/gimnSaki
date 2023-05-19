@@ -4,6 +4,7 @@ import android.app.Activity
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
@@ -11,6 +12,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.ViewCompat
 import com.adeo.kviewmodel.odyssey.setupWithViewModels
+
 import navigation.NavigationSource
 import navigation.NavigationTree
 import navigation.generateGraph
@@ -22,23 +24,19 @@ import ru.alexgladkov.odyssey.compose.navigation.modal_navigation.ModalNavigator
 import ru.alexgladkov.odyssey.compose.navigation.modal_navigation.configuration.DefaultModalConfiguration
 import ru.alexgladkov.odyssey.core.configuration.DisplayType
 import theme.AppTheme
-import theme.Theme
+import theme.greenDarkPalette
+import theme.greenLightPalette
 
-
-import theme.lightPalette
 
 fun ComponentActivity.setupThemedNavigation() {
     val rootController = RootComposeBuilder().apply { generateGraph(NavigationSource.Android) }.build()
     rootController.setupWithActivity(this)
     rootController.setupWithViewModels()
-
-
     setContent{
 
-
-        AppTheme(colorScheme = lightPalette) {
+        AppTheme(colorScheme = greenDarkPalette()) {
             val view = LocalView.current
-            val backgroundColor = Theme.colors.background
+            val backgroundColor = MaterialTheme.colorScheme.background
             if (!view.isInEditMode) {
                 val darkTheme: Boolean = isSystemInDarkTheme()
                 SideEffect {

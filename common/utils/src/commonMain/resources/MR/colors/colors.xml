@@ -1,11 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name = "greenLightPrimary">#386A20</color>
+    <color name = "greenLightOnPrimary">#FFFFFF</color>
+    <color name = "greenLightPrimaryContainer">#B8F397</color>
+    <color name = "greenLightOnPrimaryContainer">#042100</color>
+    <color name = "greenLightInversePrimary">#9CD67D</color>
+    <color name = "greenLightSecondary">#55624C</color>
+    <color name = "greenLightOnSecondary">#FFFFFF</color>
+    <color name = "greenLightSecondaryContainer">#D9E7CB</color>
+    <color name = "greenLightOnSecondaryContainer">#131F0D</color>
+    <color name = "greenLightTertiary">#6FF6F8</color>
+    <color name = "greenLightOnTertiary">#002020</color>
+    <color name = "greenLightTertiaryContainer">#BBEBEB</color>
+    <color name = "greenLightOnTertiaryContainer">#002021</color>
+    <color name = "greenLightBackground">#FDFDF6</color>
+    <color name = "greenLightOnBackground">#1A1C18</color>
+    <color name = "greenLightSurface">@color/greenLightBackground</color>
+    <color name = "greenLightOnSurface">@color/greenLightOnBackground</color>
+    <color name = "greenLightSurfaceVariant">#DFE4D6</color>
+    <color name = "greenLightOnSurfaceVariant">#43493E</color>
+    <color name = "greenLightSurfaceTint">@color/greenLightPrimary</color>
+    <color name = "greenLightInverseSurface">#2F312C</color>
+    <color name = "greenLightInverseOnSurface">#F1F1EA</color>
+    <color name = "greenLightError">#BA1B1B</color>
+    <color name = "greenLightOnError">#FFFFFF</color>
+    <color name = "greenLightErrorContainer">#FFDAD6</color>
+    <color name = "greenLightOnErrorContainer">#410002</color>
+    <color name = "greenLightOutline">#74796E</color>
+    <color name = "greenLightOutlineVariant">#74796E50</color>
+
+
+    <color name = "greenDarkPrimary">@color/greenLightInversePrimary</color>
+    <color name = "greenDarkOnPrimary">#0C3900</color>
+    <color name = "greenDarkPrimaryContainer">#205107</color>
+    <color name = "greenDarkOnPrimaryContainer">@color/greenLightPrimaryContainer</color>
+    <color name = "greenDarkInversePrimary">@color/greenLightPrimary</color>
+    <color name = "greenDarkSecondary">#BDCBB0</color>
+    <color name = "greenDarkOnSecondary">#273420</color>
+    <color name = "greenDarkSecondaryContainer">#3E4A36</color>
+    <color name = "greenDarkOnSecondaryContainer">@color/greenLightSecondaryContainer</color>
+    <color name = "greenDarkTertiary">#004F50</color>
+    <color name = "greenDarkOnTertiary">#6FF7F7</color>
+    <color name = "greenDarkTertiaryContainer">#1E4E4E</color>
+    <color name = "greenDarkOnTertiaryContainer">@color/greenLightTertiaryContainer</color>
+    <color name = "greenDarkBackground">#1A1C18</color>
+    <color name = "greenDarkOnBackground">#E3E3DC</color>
+    <color name = "greenDarkSurface">@color/greenDarkBackground</color>
+    <color name = "greenDarkOnSurface">@color/greenDarkOnBackground</color>
+    <color name = "greenDarkSurfaceVariant">#43493E</color>
+    <color name = "greenDarkOnSurfaceVariant">#C4C8BB</color>
+    <color name = "greenDarkSurfaceTint">@color/greenDarkPrimary</color>
+    <color name = "greenDarkInverseSurface">#2F312C</color>
+    <color name = "greenDarkInverseOnSurface">#E3E3DC</color>
+    <color name = "greenDarkError">#FFB4A9</color>
+    <color name = "greenDarkOnError">#680003</color>
+    <color name = "greenDarkErrorContainer">#7D2B22</color>
+    <color name = "greenDarkOnErrorContainer">@color/greenLightErrorContainer</color>
+    <color name = "greenDarkOutline">#8D9286</color>
+    <color name = "greenDarkOutlineVariant">#8D928650</color>
+
+
+
     <!-- format: #RRGGBB[AA] or 0xRRGGBB[AA] or RRGGBB[AA] where [AA] - optional -->
     <color name="valueColor">#B02743FF</color>
     <color name="referenceColor">@color/valueColor</color>
     <color name="themedColor">
-        <light>0xB92743FF</light>
-        <dark>7CCFEEFF</dark>
+        <light>#FF0000</light>
+        <dark>#804030</dark>
     </color>
     <color name="themedReferenceColor">
         <light>@color/valueColor</light>

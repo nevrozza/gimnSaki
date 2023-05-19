@@ -1,4 +1,7 @@
+
+
 plugins {
+
     `kotlin-dsl`
 }
 repositories {
@@ -12,6 +15,7 @@ repositories {
 dependencies {
 
 
+
     implementation(Dependencies.Kotlin.gradlePlugin)
     implementation(Dependencies.Compose.gradlePlugin)
     implementation(Dependencies.Android.gradlePlugin)
@@ -23,3 +27,8 @@ dependencies {
 kotlin {
     sourceSets.getByName("main").kotlin.srcDir("buildSrc/src/main/kotlin")
 }
+
+
+
+
+

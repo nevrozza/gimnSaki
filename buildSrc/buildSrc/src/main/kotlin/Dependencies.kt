@@ -14,7 +14,7 @@ object Dependencies {
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
 
         object Serialization {
-            const val gradlePlugin = "org.jetbrains.kotlin:kotlin-serialization:1.8.20"
+            const val gradlePlugin = "org.jetbrains.kotlin:kotlin-serialization:$version"
             const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.3"
         }
 
@@ -68,14 +68,16 @@ object Dependencies {
     }
 
     object Android {
-        private const val version = "7.3.1"
+        private const val version = "8.0.1"
         const val gradlePlugin = "com.android.tools.build:gradle:$version"
         const val composeActivity = "androidx.activity:activity-compose:1.7.0"
+        const val runtime = "androidx.compose.runtime:runtime:1.4.3"
         object Compose {
             const val ui = "androidx.compose.ui:ui:1.4.0"
             const val material3 = "androidx.compose.material3:material3:1.0.1"
             const val icons  = "androidx.compose.material:material-icons-core:1.4.0"
             const val tooling  = "androidx.compose.ui:ui-tooling:1.4.0"
+
         }
     }
 

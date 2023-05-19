@@ -30,10 +30,9 @@ android {
         }
     }
 
-
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
@@ -42,5 +41,5 @@ dependencies {
     implementation(project(":common:umbrella-core"))
     implementation(project(":common:core"))
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.compose.runtime:runtime:1.4.2")
+    implementation(Dependencies.Android.runtime)
 }

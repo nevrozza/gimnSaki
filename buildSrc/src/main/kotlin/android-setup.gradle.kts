@@ -1,8 +1,11 @@
+import org.gradle.api.artifacts.dsl.Dependencies
+
 plugins {
     id("com.android.library")
 }
 
 android {
+    namespace = "com.gimnsaki.app.android"
     compileSdk = 33
 
     defaultConfig {
@@ -15,8 +18,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     composeOptions {
@@ -25,6 +28,9 @@ android {
 
     sourceSets {
         named("main") {
+            dependencies {
+                implementation("androidx.compose.runtime:runtime:1.4.3")
+            }
             manifest.srcFile("src/androidMain/AndroidManifest.xml")
         }
     }

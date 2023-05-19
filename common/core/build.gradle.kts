@@ -2,7 +2,6 @@ plugins {
     id("android-setup")
     id("multiplatform-setup")
     id("app.cash.sqldelight") version "2.0.0-alpha05"
-
     kotlin("plugin.serialization")
 }
 
@@ -62,9 +61,4 @@ sqldelight {
             migrationOutputDirectory.set(file("src/commonMain/sqldelight/databases/migrations"))
         }
     }
-}
-
-multiplatformResources {
-    multiplatformResourcesPackage = "com.gimnsaki.app"
-    iosBaseLocalizationRegion = "ru"
 }
