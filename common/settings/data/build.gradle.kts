@@ -9,7 +9,6 @@ kotlin {
             dependencies {
                 implementation(project(":common:settings:api"))
                 implementation(project(":common:core"))
-                implementation(project(":common:utils"))
 
                 implementation(Dependencies.Kodein.core)
                 implementation(Dependencies.Settings.core)

@@ -3,20 +3,28 @@ package settings
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.get
 import com.russhwolf.settings.set
-import themeCodes.ThemeCodes
 
 class SettingsSettingsDataSource(
     private val settings: Settings
 ) {
-    fun saveThemeCode(themeCode: Int){
-        settings[themeKey] = themeCode
+    fun saveThemeTint(themeTint: String){
+        settings[themeTintKey] = themeTint
     }
 
-    fun fetchThemeCode(): Int {
-        return settings[themeKey, ThemeCodes.default]
+    fun fetchThemeTint(): String {
+        return settings[themeTintKey, ""]
+    }
+
+    fun saveThemeColor(themeColor: String){
+        settings[themeColorKey] = themeColor
+    }
+
+    fun fetchThemeColor(): String {
+        return settings[themeColorKey, ""]
     }
 
     companion object {
-        const val themeKey = "themeKey"
+        const val themeTintKey = "themeTintKey"
+        const val themeColorKey = "themeColorKey"
     }
 }

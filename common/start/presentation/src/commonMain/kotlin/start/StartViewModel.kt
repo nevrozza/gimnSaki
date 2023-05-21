@@ -1,15 +1,17 @@
-package splash.presentation
+package start
 
 import com.adeo.kviewmodel.BaseSharedViewModel
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.IO
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.datetime.*
-import splash.presentation.models.StartAction
-import splash.presentation.models.StartEvent
-import splash.presentation.models.StartViewState
+import start.models.StartAction
+import start.models.StartEvent
+import start.models.StartViewState
 
 
 class StartViewModel: BaseSharedViewModel<StartViewState, StartAction, StartEvent>(
@@ -23,6 +25,8 @@ class StartViewModel: BaseSharedViewModel<StartViewState, StartAction, StartEven
 
     init {
         setDataLists()
+        setText()
+        startTimer()
     }
 
     @OptIn(DelicateCoroutinesApi::class)
@@ -30,9 +34,15 @@ class StartViewModel: BaseSharedViewModel<StartViewState, StartAction, StartEven
 
         GlobalScope.launch(Dispatchers.IO) {
             when (viewEvent) {
-
+                is StartEvent.SkipPressed -> skip()
             }
         }
+    }
+
+    private fun skip() {
+        viewAction = StartAction.OpenStartColor
+//        if()
+//        viewAction = StartAction.OpenMainFlow
     }
 
     private fun setDataLists() {
@@ -43,6 +53,23 @@ class StartViewModel: BaseSharedViewModel<StartViewState, StartAction, StartEven
             in 19..21 -> listOfEvening
             else -> listOfBye
         })
+    }
 
+    private fun setText() {
+        viewState = viewState.copy(text = viewState.dataList.random())
+    }
+
+    private fun startTimer() {
+        var seconds = 2
+        viewModelScope.launch {
+            while (seconds != 0) {
+                seconds--
+                delay(1000)
+            }
+
+            obtainEvent(StartEvent.SkipPressed)
+//                viewModelScope.cancel()
+            viewModelScope.cancel()
+        }
     }
 }

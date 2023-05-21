@@ -9,8 +9,9 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                api(project(":common:utils"))
-                implementation(project(":common:auth:api"))
+
+                api(project(":common:auth:api"))
+
 
                 api(Dependencies.Kotlin.Serialization.serialization)
                 api(Dependencies.Kotlin.Coroutines.core)

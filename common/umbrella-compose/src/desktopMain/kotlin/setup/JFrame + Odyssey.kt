@@ -1,8 +1,10 @@
 package setup
 
+import SettingsRepository
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.awt.ComposePanel
-import androidx.compose.ui.window.Window
+import di.Inject
 import navigation.NavigationSource
 import navigation.NavigationTree
 import navigation.generateGraph
@@ -13,7 +15,6 @@ import ru.alexgladkov.odyssey.compose.navigation.modal_navigation.ModalNavigator
 import ru.alexgladkov.odyssey.compose.navigation.modal_navigation.configuration.DefaultModalConfiguration
 import ru.alexgladkov.odyssey.core.configuration.DisplayType
 import theme.AppTheme
-import theme.Theme
 import java.awt.BorderLayout
 import javax.swing.JFrame
 import javax.swing.WindowConstants
@@ -29,8 +30,14 @@ fun JFrame.setupThemedNavigation() {
         CompositionLocalProvider(
             LocalRootController provides rootController
         ) {
-            AppTheme {
-                val backgroundColor = Theme.colors.primaryBackground
+            val settingsRepository: SettingsRepository = Inject.instance()
+            val tint = settingsRepository.fetchThemeTint()
+            val color = settingsRepository.fetchThemeColor()
+            val colorScheme = schemeChooser(settingsRepository, tint, color)
+            AppTheme(colorScheme = colorScheme) {
+
+
+                val backgroundColor = MaterialTheme.colorScheme.background
                 rootController.backgroundColor = backgroundColor
 
                 ModalNavigator(DefaultModalConfiguration(backgroundColor, DisplayType.EdgeToEdge)) {

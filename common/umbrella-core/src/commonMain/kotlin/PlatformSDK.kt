@@ -10,18 +10,18 @@ object PlatformSDK {
         configuration: PlatformConfiguration
     ) {
         val umbrellaModule = DI.Module(
-            name = "umbrellaModule",
+            name = "umbrella",
             init = {
                 bind<PlatformConfiguration>() with singleton { configuration }
             }
         )
-
-        Inject.createDependencies (
+        Inject.createDependencies(
             DI {
                 importAll(
                     umbrellaModule,
                     coreModule,
-                    authModule
+                    authModule,
+                    settingsModule
                 )
             }.direct
         )

@@ -8,6 +8,8 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(project(":common:core"))
+                api(project(":common:settings:api"))
+                api(project(":common:auth:api"))
 
                 implementation(project(":common:utils-compose"))
                 implementation(project(":common:utils"))

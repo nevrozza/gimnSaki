@@ -10,7 +10,7 @@ object Dependencies {
     }
 
     object Kotlin {
-        private const val version = "1.8.20"
+        private const val version = "1.8.10"
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
 
         object Serialization {
@@ -30,7 +30,7 @@ object Dependencies {
     }
 
     object Compose {
-        private const val version = "1.4.0"
+        private const val version = "1.3.1"
         const val gradlePlugin = "org.jetbrains.compose:compose-gradle-plugin:$version"
     }
 

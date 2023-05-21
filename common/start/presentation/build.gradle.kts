@@ -7,9 +7,9 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(project(":common:start:api"))
-                implementation(project(":common:auth:api"))
-                implementation(project(":common:settings:api"))
+                api(project(":common:start:api"))
+                api(project(":common:auth:api"))
+                api(project(":common:settings:api"))
                 implementation(project(":common:core"))
 
                 implementation(Dependencies.Kotlin.DateTime.dateTime)

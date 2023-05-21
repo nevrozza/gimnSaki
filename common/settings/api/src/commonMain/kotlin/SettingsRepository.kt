@@ -1,7 +1,11 @@
 interface SettingsRepository {
 
-    fun saveThemeCode(code: Int)
+    fun saveThemeTint(tint: String)
 
-    fun fetchThemeCode(): Int
+    fun fetchThemeTint(): String
+
+    fun saveThemeColor(color: String)
+
+    fun fetchThemeColor(): String
 
 }

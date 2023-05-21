@@ -7,7 +7,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(project(":common:settings:api"))
+                api(project(":common:settings:api"))
                 implementation(project(":common:core"))
 
                 implementation(Dependencies.Other.ViewModel.core)
