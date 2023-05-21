@@ -11,7 +11,7 @@ kotlin {
                 api(project(":common:auth:api"))
                 api(project(":common:settings:api"))
                 implementation(project(":common:core"))
-
+                implementation(project(":common:utils"))
                 implementation(Dependencies.Kotlin.DateTime.dateTime)
                 implementation(Dependencies.Other.ViewModel.core)
             }

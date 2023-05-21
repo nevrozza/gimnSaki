@@ -8,6 +8,8 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(project(":common:start:presentation"))
+                implementation(project(":common:settings:compose"))
+                implementation(project(":common:settings:presentation"))
                 implementation(project(":common:core"))
 
                 

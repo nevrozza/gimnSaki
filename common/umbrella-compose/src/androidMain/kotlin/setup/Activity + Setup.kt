@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Build
 import android.util.Log
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
@@ -46,6 +47,7 @@ import ru.alexgladkov.odyssey.core.configuration.DisplayType
 import theme.AppTheme
 import theme.defaultDarkPalette
 import theme.magicForUpdateSettings
+import theme.schemeChooser
 
 import themeCodes.ThemeColors
 import themeCodes.ThemeTint
@@ -63,9 +65,6 @@ fun ComponentActivity.setupThemedNavigation() {
 
 
     setContent {
-
-
-
         val settingsRepository = remember { mutableStateOf(Inject.instance() as SettingsRepository) }
 
         if(magicForUpdateSettings.value) {
@@ -78,15 +77,14 @@ fun ComponentActivity.setupThemedNavigation() {
                 settingsRepository.value.saveThemeColor(ThemeColors.Dynamic.name)
             }
         }
+        themeInit(settingsRepository.value)
+
 
         val tint = settingsRepository.value.fetchThemeTint()
         val color = settingsRepository.value.fetchThemeColor()
-
-
         val darkTheme: Boolean =
             if (tint == ThemeTint.Auto.name) isSystemInDarkTheme()
             else tint == ThemeTint.Dark.name
-
 
         val colorScheme by mutableStateOf (if (color == ThemeColors.Dynamic.name) {
             if (darkTheme) {
@@ -95,15 +93,15 @@ fun ComponentActivity.setupThemedNavigation() {
                 dynamicLightColorScheme(applicationContext)
             }
         } else {
-            schemeChooser(settingsRepository.value, darkTheme, color)
+            schemeChooser(darkTheme, color)
         })
+
         val backgroundColor = colorScheme.background
         rootController.backgroundColor = backgroundColor
 
         val view = LocalView.current
 
         SideEffect {
-            (view.context as Activity).window.statusBarColor = backgroundColor.toArgb()
             ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = !darkTheme
         }
 
