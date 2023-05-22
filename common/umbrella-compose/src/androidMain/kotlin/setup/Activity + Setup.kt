@@ -2,18 +2,10 @@ package setup
 
 import SettingsRepository
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.os.Build
-import android.util.Log
-import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.MutableTransitionState
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.CompositionLocalProvider
@@ -21,18 +13,12 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.ViewCompat
 import com.adeo.kviewmodel.odyssey.setupWithViewModels
 
 import di.Inject
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.launch
 
 import navigation.NavigationSource
 import navigation.NavigationTree
@@ -45,7 +31,8 @@ import ru.alexgladkov.odyssey.compose.navigation.modal_navigation.ModalNavigator
 import ru.alexgladkov.odyssey.compose.navigation.modal_navigation.configuration.DefaultModalConfiguration
 import ru.alexgladkov.odyssey.core.configuration.DisplayType
 import theme.AppTheme
-import theme.defaultDarkPalette
+import theme.adaptive.LocalK
+import theme.adaptive.K
 import theme.magicForUpdateSettings
 import theme.schemeChooser
 
@@ -65,9 +52,10 @@ fun ComponentActivity.setupThemedNavigation() {
 
 
     setContent {
-        val settingsRepository = remember { mutableStateOf(Inject.instance() as SettingsRepository) }
+        val settingsRepository =
+            remember { mutableStateOf(Inject.instance() as SettingsRepository) }
 
-        if(magicForUpdateSettings.value) {
+        if (magicForUpdateSettings.value) {
             settingsRepository.value = Inject.instance()
             magicForUpdateSettings.value = false
         }
@@ -86,18 +74,28 @@ fun ComponentActivity.setupThemedNavigation() {
             if (tint == ThemeTint.Auto.name) isSystemInDarkTheme()
             else tint == ThemeTint.Dark.name
 
-        val colorScheme by mutableStateOf (if (color == ThemeColors.Dynamic.name) {
-            if (darkTheme) {
-                dynamicDarkColorScheme(applicationContext)
+        val colorScheme by mutableStateOf(
+            if (color == ThemeColors.Dynamic.name) {
+                if (darkTheme) {
+                    dynamicDarkColorScheme(applicationContext)
+                } else {
+                    dynamicLightColorScheme(applicationContext)
+                }
             } else {
-                dynamicLightColorScheme(applicationContext)
+                schemeChooser(darkTheme, color)
             }
-        } else {
-            schemeChooser(darkTheme, color)
-        })
+        )
 
         val backgroundColor = colorScheme.background
         rootController.backgroundColor = backgroundColor
+
+        val configuration = LocalConfiguration.current
+        val k = remember {
+            K(
+                w = configuration.screenWidthDp.toFloat() / 393,
+                h = configuration.screenHeightDp.toFloat() / 783
+            )
+        }
 
         val view = LocalView.current
 
@@ -106,7 +104,8 @@ fun ComponentActivity.setupThemedNavigation() {
         }
 
         CompositionLocalProvider(
-            LocalRootController provides rootController
+            LocalRootController provides rootController,
+            LocalK provides k
         ) {
 
             AppTheme(colorScheme = colorScheme) {

@@ -15,6 +15,10 @@ import ru.alexgladkov.odyssey.compose.navigation.modal_navigation.ModalNavigator
 import ru.alexgladkov.odyssey.compose.navigation.modal_navigation.configuration.DefaultModalConfiguration
 import ru.alexgladkov.odyssey.core.configuration.DisplayType
 import theme.AppTheme
+import theme.adaptive.K
+import theme.adaptive.LocalK
+import theme.schemeChooser
+import themeCodes.ThemeTint
 import java.awt.BorderLayout
 import javax.swing.JFrame
 import javax.swing.WindowConstants
@@ -25,15 +29,21 @@ fun JFrame.setupThemedNavigation() {
     defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
     title = "gimnSaki admin"
 
+    val k = K(w = this.x/1920f, h = this.y/1080f)
+
     val composePanel = ComposePanel()
     composePanel.setContent {
         CompositionLocalProvider(
-            LocalRootController provides rootController
+            LocalRootController provides rootController,
+            LocalK provides k
         ) {
             val settingsRepository: SettingsRepository = Inject.instance()
             val tint = settingsRepository.fetchThemeTint()
             val color = settingsRepository.fetchThemeColor()
-            val colorScheme = schemeChooser(settingsRepository, tint, color)
+
+            val darkTheme: Boolean = tint == ThemeTint.Dark.name
+
+            val colorScheme = schemeChooser(darkTheme, color)
             AppTheme(colorScheme = colorScheme) {
 
 
