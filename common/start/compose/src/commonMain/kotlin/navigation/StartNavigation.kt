@@ -4,8 +4,7 @@ import ru.alexgladkov.odyssey.compose.extensions.flow
 import ru.alexgladkov.odyssey.compose.extensions.screen
 import ru.alexgladkov.odyssey.compose.navigation.RootComposeBuilder
 import start.StartScreen
-import start.StartView
-import startColor.StartColorScreen
+import themeChanger.ThemeChangerScreen
 
 fun RootComposeBuilder.startFlow() {
     flow(name = NavigationTree.Start.StartFlow.name) {
@@ -14,11 +13,11 @@ fun RootComposeBuilder.startFlow() {
         }
 
         screen(name = NavigationTree.Start.StartColorScreen.name) {
-            StartColorScreen()
+            ThemeChangerScreen(true)
         }
 
         screen(name = NavigationTree.Start.StartDescriptionScreen.name) {
-
+            StartScreen()
         }
 
     }

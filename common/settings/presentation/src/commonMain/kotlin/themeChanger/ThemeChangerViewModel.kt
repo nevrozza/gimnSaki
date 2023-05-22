@@ -29,19 +29,18 @@ class ThemeChangerViewModel(private val settingsRepository: SettingsRepository =
     }
 
     private fun changeTintOn(tint: String) {
-        viewState = viewState.copy(tint = tint, isTintChanging = true)
-        settingsRepository.saveThemeTint(tint)
-        viewAction = ThemeChangerAction.UpdateTheme
+        viewState = viewState.copy(tint = tint)
     }
 
     private fun changeColorOn(color: String) {
         viewState = viewState.copy(color = color, isColorChanging = true)
-        settingsRepository.saveThemeColor(color)
-        viewAction = ThemeChangerAction.UpdateTheme
     }
 
     private fun themeChanged() {
-        viewState = viewState.copy(isColorChanging = false, isTintChanging = false)
+        settingsRepository.saveThemeTint(viewState.tint)
+        settingsRepository.saveThemeColor(viewState.color)
+        viewAction = ThemeChangerAction.UpdateTheme
+        viewState = viewState.copy(isColorChanging = false)
     }
 
 

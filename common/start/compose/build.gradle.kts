@@ -12,10 +12,10 @@ kotlin {
                 implementation(project(":common:settings:presentation"))
                 implementation(project(":common:core"))
 
-                
                 implementation(project(":common:utils-compose"))
 
 
+                implementation(Dependencies.Moko.Resources.compose)
                 implementation(project(":common:utils"))
 
 
