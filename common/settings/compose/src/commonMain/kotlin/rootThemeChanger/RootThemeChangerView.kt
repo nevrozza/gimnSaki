@@ -75,63 +75,10 @@ fun RootThemeChangerView(state: ThemeChangerViewState, eventHandler: (ThemeChang
 
         if (animatedSize.value == maxSize) eventHandler(ThemeChangerEvent.ThemeChanged)
         Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Bottom) {
-            ElevatedCard(
-                modifier = Modifier.size(300.dp, 450.dp)
-            ) {
-                Row() {
-                    Column {
-                        Row() {
-                            Card(Modifier.size(60.dp, 40.dp)) {}
-                            Spacer(Modifier.size(100.dp, 40.dp))
-                            Card(Modifier.size((118.5).dp, 40.dp)) {}
-                        }
-                        Row() {
-                            Column {
-                                Spacer(Modifier.size(40.dp, 100.dp))
-                                Card(Modifier.size(40.dp, 200.dp).padding(bottom = 3.dp)) {}
-                                Card(Modifier.size(40.dp, 150.dp)) {}
-                            }
-                            Column {
-                                Row {
-                                    Card(Modifier.size(150.dp).padding(3.dp)) {}
-                                    Column {
-                                        Card(Modifier.size(85.dp).padding(vertical = 3.dp)) {}
-                                        Card(Modifier.size(85.dp, (42.5).dp)) {}
-                                    }
-                                }
-                                Row {
-                                    Card(Modifier.size(75.dp, 120.dp).padding(3.dp)) {}
-                                    Column {
-                                        Card(Modifier.size(75.dp, 60.dp).padding(top = 3.dp, end = 3.dp)) {}
-                                        Card(Modifier.size(75.dp, 60.dp).padding(top = 3.dp, bottom = 3.dp, end = 3.dp)) {}
-                                    }
-                                    Column {
-                                        Card(Modifier.size(85.dp, 90.dp).padding(vertical = 3.dp)) {}
-                                    }
-                                }
-                                Row {
-                                    Column {
-                                        Card(Modifier.size(150.dp, 50.dp).padding(start = 3.dp, bottom = 3.dp)) {}
-                                        Card(Modifier.size(150.dp, 88.dp).padding(start = 3.dp)) {}
-                                    }
-                                    Column {
-                                        Card(Modifier.size(85.dp, 110.dp).padding(start = 3.dp, bottom = 3.dp)) {}
-                                        Card(Modifier.size(85.dp, 30.dp).padding(start = 3.dp)) {}
-                                    }
-                                }
-
-                            }
-                        }
-                    }
-                    Column {
-                        Card(Modifier.size(20.dp, 210.dp)) {}
-                        Spacer(Modifier.size(20.dp, 40.dp))
-                        Card(Modifier.size(20.dp, 200.dp)) {}
-                    }
-                }
 
 
-            }
+            ThemePreview()
+
             Spacer(Modifier.size(50.dp))
             ColorPickerTab(state = state, animatedSize = animatedSize, buttonSize = buttonSize) {
                 eventHandler(it)
@@ -146,7 +93,74 @@ fun RootThemeChangerView(state: ThemeChangerViewState, eventHandler: (ThemeChang
 
 }
 
+@Composable
+fun ThemePreview() {
+    ElevatedCard(
+        modifier = Modifier.size(300.dp, 450.dp)
+    ) {
 
+        Row() {
+            Column {
+                Row() {
+                    Card(Modifier.size(60.dp, 40.dp)) {}
+                    Spacer(Modifier.size(100.dp, 40.dp))
+                    Card(Modifier.size((118.5).dp, 40.dp)) {}
+                }
+                Row() {
+                    Column {
+                        Spacer(Modifier.size(40.dp, 100.dp))
+                        Card(Modifier.size(40.dp, 200.dp).padding(bottom = 3.dp)) {}
+                        Card(Modifier.size(40.dp, 150.dp)) {}
+                    }
+                    Column {
+                        Row {
+                            Card(Modifier.size(150.dp).padding(3.dp)) {}
+                            Column {
+                                Card(Modifier.size(85.dp).padding(vertical = 3.dp)) {}
+                                Card(Modifier.size(85.dp, (42.5).dp)) {}
+                            }
+                        }
+                        Row {
+                            Card(Modifier.size(75.dp, 120.dp).padding(3.dp)) {}
+                            Column {
+                                Card(Modifier.size(75.dp, 60.dp).padding(top = 3.dp, end = 3.dp)) {}
+                                Card(
+                                    Modifier.size(75.dp, 60.dp)
+                                        .padding(top = 3.dp, bottom = 3.dp, end = 3.dp)
+                                ) {}
+                            }
+                            Column {
+                                Card(Modifier.size(85.dp, 90.dp).padding(vertical = 3.dp)) {}
+                            }
+                        }
+                        Row {
+                            Column {
+                                Card(
+                                    Modifier.size(150.dp, 50.dp)
+                                        .padding(start = 3.dp, bottom = 3.dp)
+                                ) {}
+                                Card(Modifier.size(150.dp, 88.dp).padding(start = 3.dp)) {}
+                            }
+                            Column {
+                                Card(
+                                    Modifier.size(85.dp, 110.dp)
+                                        .padding(start = 3.dp, bottom = 3.dp)
+                                ) {}
+                                Card(Modifier.size(85.dp, 30.dp).padding(start = 3.dp)) {}
+                            }
+                        }
+
+                    }
+                }
+            }
+            Column {
+                Card(Modifier.size(20.dp, 210.dp)) {}
+                Spacer(Modifier.size(20.dp, 40.dp))
+                Card(Modifier.size(20.dp, 200.dp)) {}
+            }
+        }
+    }
+}
 
 @Composable
 fun ColorPickButton(
