@@ -9,8 +9,13 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(project(":common:utils"))
-                implementation("com.github.Kaaveh:sdp-compose:1.1.0")
                 implementation(Dependencies.Moko.Resources.compose)
+            }
+        }
+
+        androidMain {
+            dependencies {
+                implementation("com.intuit.sdp:sdp-android:1.1.0")
             }
         }
     }

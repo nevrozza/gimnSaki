@@ -3,4 +3,6 @@
     <string name="dark_theme">Тёмная</string>
     <string name="light_theme">Светлая</string>
     <string name="auto_theme">Авто</string>
+    <string name="choose_theme">Выберите тему</string>
+    <string name="choose_theme_under">Позже Вы сможете сменить её в настройках</string>
 </resources>

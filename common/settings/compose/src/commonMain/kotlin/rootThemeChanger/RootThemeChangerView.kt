@@ -7,7 +7,6 @@ import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,7 +15,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -31,13 +29,11 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.gimnsaki.app.MR
 import dev.icerock.moko.resources.compose.stringResource
@@ -48,6 +44,7 @@ import themeChanger.models.ThemeChangerEvent
 import themeChanger.models.ThemeChangerViewState
 import themeCodes.ThemeColors
 import themeCodes.ThemeTint
+import widgets.AutoResizedText
 import widgets.SegmentedButton
 
 @Composable
@@ -82,7 +79,7 @@ fun RootThemeChangerView(state: ThemeChangerViewState, eventHandler: (ThemeChang
 
             ThemePreview()
 
-            Spacer(Modifier.height(50.hpx))
+            Spacer(Modifier.height(10.dp))
             ColorPickerTab(state = state, animatedSize = animatedSize, buttonSize = buttonSize) {
                 eventHandler(it)
             }
@@ -234,7 +231,7 @@ fun ColorPickerTab(
                 contentAlignment = Alignment.BottomCenter
             ) {
                 SegmentedButton(
-                    minWidth = (width-24.dp*2*3)/3f,
+                    minWidth = (width-16.hpx*2*3)/3f,
                     items = listOf(
                         ThemeTint.Dark.name,
                         ThemeTint.Light.name,
@@ -270,12 +267,12 @@ fun ColorPickerTab(
                                 modifier = Modifier.fillMaxSize(),
                                 contentAlignment = Alignment.Center
                             ) {
-                                Text("Dynamic")
+                                AutoResizedText("Dynamic", sizer = .8f)
                             }
                         }
                         Spacer(Modifier.size(5.dp))
                     } else {
-                        Spacer(Modifier.size(35.dp))
+                        Spacer(Modifier.size(20.hpx+5.dp))
                     }
                     Row() {
                         ColorPickButton(

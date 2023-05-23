@@ -13,21 +13,17 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import theme.adaptive.hpx
 
-@Composable
-expect fun resizedText() {}
 
 @Composable
 fun SegmentedButton(
@@ -37,12 +33,13 @@ fun SegmentedButton(
     selected: String,
     onSelected: (String) -> Unit
 ) {
+    val style = MaterialTheme.typography.labelLarge
+    val resizedTextStyle = remember { mutableStateOf(style.copy(fontSize = 30.sp)) }
     Row() {
-        val listOfSizes = mutableListOf<MutableState<TextUnit>>()
-
         for (i in items.indices) {
             val isSelected = items[i] == selected
-            listOfSizes.add(mutableStateOf(40.sp))
+
+
             Box(contentAlignment = Alignment.CenterEnd) {
                 OutlinedButton(
                     modifier = Modifier.height(height = 40.hpx),
@@ -50,8 +47,8 @@ fun SegmentedButton(
                         containerColor = if (isSelected) MaterialTheme.colorScheme.secondaryContainer else Color.Transparent,
                         contentColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
                     ),
-                    contentPadding = PaddingValues(horizontal = 24.hpx),
-                    onClick = {onSelected(items [i]) },
+                    contentPadding = PaddingValues(horizontal = 16.hpx, vertical = 0.hpx),
+                    onClick = { onSelected(items[i]) },
                     shape = when (items[i]) {
                         items.first() -> RoundedCornerShape(
                             topStartPercent = 100,
@@ -76,10 +73,14 @@ fun SegmentedButton(
                     }
                 ) {
 
-                    Box (modifier = Modifier.width(minWidth), contentAlignment = Alignment.Center) {
-
-//                        Text(text = titles[i], fontSize = 30.ssp, modifier = Modifier.offset(x = if(items[i] == items.first()) 3.dp else if(items[i] == items.last()) (-3).dp else 0.dp))
-//                        AutoResizedText(text = titles[i], fontSize = listOfSizes[i], listOfSizes = listOfSizes, modifier = Modifier.offset(x = if(items[i] == items.first()) 3.dp else if(items[i] == items.last()) (-3).dp else 0.dp))
+                    Box(modifier = Modifier.width(minWidth), contentAlignment = Alignment.Center) {
+                        AutoResizedText(
+                            text = titles[i],
+                            modifier = Modifier.offset(x = if (items[i] == items.first()) 3.dp else if (items[i] == items.last()) (-3).dp else 0.dp),
+//                            isCanChange = true,
+                            resizedTextStyle = resizedTextStyle,
+                            kef = 0.85f
+                        )
                     }
                 }
                 if (items[i] != items.last()) Spacer(
