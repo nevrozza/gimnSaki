@@ -17,6 +17,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "gimnSaki"
 include(":androidApp")
+include(":desktopApp")
 
 include(":common:auth:api")
 include(":common:auth:compose")

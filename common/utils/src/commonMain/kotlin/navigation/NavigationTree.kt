@@ -1,5 +1,7 @@
 package navigation
 
+import com.gimnsaki.app.MR
+
 object NavigationTree {
     enum class Splash {
         SplashScreen
@@ -11,4 +13,10 @@ object NavigationTree {
     enum class Auth {
         AuthFlow, Login
     }
+}
+
+
+fun a() {
+    MR.strings
+
 }

@@ -24,7 +24,6 @@ class MainActivity : ComponentActivity() {
         setupThemedNavigation()
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         val windowInsetsController =
             WindowCompat.getInsetsController(window, window.decorView)

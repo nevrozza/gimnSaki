@@ -1,5 +1,7 @@
 package rootThemeChanger
 
+import LocalFullScreenConstraints
+import MRStrings
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
@@ -12,9 +14,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -28,7 +32,9 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
@@ -37,14 +43,11 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.unit.dp
 import com.gimnsaki.app.MR
 import dev.icerock.moko.resources.compose.stringResource
-import theme.adaptive.hpx
 import theme.schemeChooser
-import theme.adaptive.wpx
 import themeChanger.models.ThemeChangerEvent
 import themeChanger.models.ThemeChangerViewState
 import themeCodes.ThemeColors
 import themeCodes.ThemeTint
-import widgets.AutoResizedText
 import widgets.SegmentedButton
 
 @Composable
@@ -57,33 +60,48 @@ expect fun isCanInDynamic(): Boolean
 
 @ExperimentalMaterial3Api
 @Composable
-fun RootThemeChangerView(state: ThemeChangerViewState, eventHandler: (ThemeChangerEvent) -> Unit) {
+fun RootThemeChangerView(state: ThemeChangerViewState, isStart: Boolean = false, eventHandler: (ThemeChangerEvent) -> Unit) {
+    val fullScreenConstraints = LocalFullScreenConstraints.current
+    val buttonSize = 50
+    val divider = 3 * (buttonSize * buttonSize)
+    val maxSize = (fullScreenConstraints.maxWidth.value * fullScreenConstraints.maxHeight.value) / divider
 
-    BoxWithConstraints(contentAlignment = Alignment.Center) {
-        val buttonSize = 50
-        val divider = 3 * (buttonSize * buttonSize)
-        val maxSize = (this.maxWidth.value * this.maxHeight.value) / divider
-        val animatedSize = animateFloatAsState(
-            if (state.isColorChanging) maxSize else 1f,
-            animationSpec = tween(500)
-        )
-
-
-        if (animatedSize.value == maxSize) eventHandler(ThemeChangerEvent.ThemeChanged)
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Bottom
-        ) {
+    val animatedSize = animateFloatAsState(
+        if (state.isColorChanging) maxSize else 1f,
+        animationSpec = tween(500)
+    )
 
 
-            ThemePreview()
+    if (animatedSize.value == maxSize) eventHandler(ThemeChangerEvent.ThemeChanged)
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Bottom
+    ) {
 
-            Spacer(Modifier.height(10.dp))
-            ColorPickerTab(state = state, animatedSize = animatedSize, buttonSize = buttonSize) {
-                eventHandler(it)
-            }
+
+        ThemePreview()
+
+        Spacer(Modifier.height(10.dp))
+        ColorPickerTab(state = state, animatedSize = animatedSize, buttonSize = buttonSize) {
+            eventHandler(it)
         }
+//        if (isStart) {
+//            Box(
+//                Modifier.fillMaxWidth().fillMaxHeight().padding(bottom = 15.dp),
+//                contentAlignment = Alignment.Center
+//            ) {
+//                FilledTonalButton(
+//                    onClick = { eventHandler(ThemeChangerEvent.NextPressed) },
+//                    contentPadding = PaddingValues(0.dp),
+//                    modifier = Modifier.height(40.dp).width(120.dp)
+//                ) {
+//
+//                    AutoResizedText("Готово!", sizer = 0.5f)
+//
+//                }
+//            }
+//        }
 
 
     }
@@ -93,60 +111,60 @@ fun RootThemeChangerView(state: ThemeChangerViewState, eventHandler: (ThemeChang
 @Composable
 fun ThemePreview() {
     ElevatedCard(
-        modifier = Modifier.size(300.wpx, 450.hpx)
+        modifier = Modifier.size(300.dp, 450.dp)
     ) {
 
         Row() {
             Column {
                 Row() {
-                    Card(Modifier.size(60.wpx, 40.hpx)) {}
-                    Spacer(Modifier.size(100.wpx, 40.hpx))
-                    Card(Modifier.size(116.wpx, 40.hpx)) {}
+                    Card(Modifier.size(60.dp, 40.dp)) {}
+                    Spacer(Modifier.size(100.dp, 40.dp))
+                    Card(Modifier.size(116.dp, 40.dp)) {}
                 }
                 Row() {
                     Column {
-                        Spacer(Modifier.size(40.wpx, 100.hpx))
-                        Card(Modifier.size(40.wpx, 200.hpx).padding(bottom = 3.dp)) {}
-                        Card(Modifier.size(40.wpx, 150.hpx)) {}
+                        Spacer(Modifier.size(40.dp, 100.dp))
+                        Card(Modifier.size(40.dp, 200.dp).padding(bottom = 3.dp)) {}
+                        Card(Modifier.size(40.dp, 150.dp)) {}
                     }
                     Column {
                         Row {
                             //height: 85.wpx + 42.5f.hpx
-                            Card(Modifier.size(150.wpx).padding(3.dp)) {}
+                            Card(Modifier.size(150.dp).padding(3.dp)) {}
                             Column {
-                                Card(Modifier.size(85.wpx).padding(vertical = 3.dp)) {}
-                                Card(Modifier.size(85.wpx, 42.5f.hpx)) {}
+                                Card(Modifier.size(85.dp).padding(vertical = 3.dp)) {}
+                                Card(Modifier.size(85.dp, 42.5f.dp)) {}
                             }
                         }
                         Row {
-                            Card(Modifier.size(75.wpx, 120.hpx).padding(3.dp)) {}
+                            Card(Modifier.size(75.dp, 120.dp).padding(3.dp)) {}
                             Column {
                                 Card(
-                                    Modifier.size(75.wpx, 60.hpx).padding(top = 3.dp, end = 3.dp)
+                                    Modifier.size(75.dp, 60.dp).padding(top = 3.dp, end = 3.dp)
                                 ) {}
                                 Card(
-                                    Modifier.size(75.wpx, 60.hpx)
+                                    Modifier.size(75.dp, 60.dp)
                                         .padding(top = 3.dp, bottom = 3.dp, end = 3.dp)
                                 ) {}
                             }
                             Column {
-                                Card(Modifier.size(85.wpx, 90.hpx).padding(vertical = 3.dp)) {}
+                                Card(Modifier.size(85.dp, 90.dp).padding(vertical = 3.dp)) {}
                             }
                         }
                         Row {
                             Column {
                                 Card(
-                                    Modifier.size(150.wpx, 50.hpx)
+                                    Modifier.size(150.dp, 50.dp)
                                         .padding(start = 3.dp, bottom = 3.dp)
                                 ) {}
-                                Card(Modifier.size(150.wpx, 88.hpx).padding(start = 3.dp)) {}
+                                Card(Modifier.size(150.dp, 88.dp).padding(start = 3.dp)) {}
                             }
                             Column {
                                 Card(
-                                    Modifier.size(85.wpx, 110.hpx)
+                                    Modifier.size(85.dp, 110.dp)
                                         .padding(start = 3.dp, bottom = 3.dp)
                                 ) {}
-                                Card(Modifier.size(85.wpx, 30.hpx).padding(start = 3.dp)) {}
+                                Card(Modifier.size(85.dp, 30.dp).padding(start = 3.dp)) {}
                             }
                         }
 
@@ -154,9 +172,9 @@ fun ThemePreview() {
                 }
             }
             Column(Modifier.padding(start = 3.dp)) {
-                Card(Modifier.size(22.5.wpx, 210.hpx)) {}
-                Spacer(Modifier.size(22.5.wpx, 40.hpx))
-                Card(Modifier.size(22.5.wpx, 200.hpx)) {}
+                Card(Modifier.size(22.5.dp, 210.dp)) {}
+                Spacer(Modifier.size(22.5.dp, 40.dp))
+                Card(Modifier.size(22.5.dp, 200.dp)) {}
             }
         }
     }
@@ -178,7 +196,7 @@ fun ColorPickButton(
 
 
 
-    Box(modifier = Modifier.size((buttonSize + 10).hpx)) {
+    Box(modifier = Modifier.size((buttonSize + 10).dp)) {
         AnimatedVisibility(
             visible = (isFinished) || state.color == color,
             enter = fadeIn(spring(stiffness = Spring.StiffnessLow)),
@@ -193,7 +211,7 @@ fun ColorPickButton(
                     )
                 ) {}
                 ElevatedButton(
-                    modifier = Modifier.size(buttonSize.hpx)
+                    modifier = Modifier.size(buttonSize.dp)
                         .scale(if (state.color == color) animatedSize.value else 1f)
                         .aspectRatio(1f),
                     onClick = {
@@ -222,37 +240,36 @@ fun ColorPickerTab(
         else state.tint == ThemeTint.Dark.name
 
     val isFinished = !state.isColorChanging && animatedSize.value == 1f
-    val width = 290.hpx
+    val width = 290.dp
     Column {
-
-        Box(Modifier.height(155.hpx).width(width), contentAlignment = Alignment.TopStart) {
+        Box(Modifier.height(155.dp).width(width), contentAlignment = Alignment.TopStart) {
             Box(
-                Modifier.height(155.hpx).width(width),
+                Modifier.height(155.dp).width(width),
                 contentAlignment = Alignment.BottomCenter
             ) {
                 SegmentedButton(
-                    minWidth = (width-16.hpx*2*3)/3f,
                     items = listOf(
                         ThemeTint.Dark.name,
                         ThemeTint.Light.name,
                         ThemeTint.Auto.name
                     ),
                     titles = listOf(
-                        stringResource(MR.strings.dark_theme),
-                        stringResource(MR.strings.light_theme),
-                        stringResource(MR.strings.auto_theme)
+                        stringResource(MRStrings.darkTheme),
+                        stringResource(MRStrings.lightTheme),
+                        stringResource(MRStrings.autoTheme)
                     ),
                     state.tint
                 ) {
-                    eventHandler(ThemeChangerEvent.TintChangeOn(it)); eventHandler(ThemeChangerEvent.ThemeChanged)
+                    eventHandler(ThemeChangerEvent.TintChangeOn(it))
+                    eventHandler(ThemeChangerEvent.ThemeChanged)
                 }
             }
             Row(modifier = Modifier.width(width), horizontalArrangement = Arrangement.Center) {
                 Column {
                     if (isCanInDynamic()) {
                         ElevatedCard(
-                            modifier = Modifier.height(30.hpx)
-                                .width(100.hpx),
+                            modifier = Modifier.height(30.dp)
+                                .width(100.dp),
                             colors = CardDefaults.elevatedCardColors(
                                 containerColor = if (state.color == ThemeColors.Dynamic.name) MaterialTheme.colorScheme.secondaryContainer
                                 else MaterialTheme.colorScheme.surface
@@ -267,12 +284,12 @@ fun ColorPickerTab(
                                 modifier = Modifier.fillMaxSize(),
                                 contentAlignment = Alignment.Center
                             ) {
-                                AutoResizedText("Dynamic", sizer = .8f)
+                                Text("Dynamic")
                             }
                         }
                         Spacer(Modifier.size(5.dp))
                     } else {
-                        Spacer(Modifier.size(20.hpx+5.dp))
+                        Spacer(Modifier.size(20.dp + 5.dp))
                     }
                     Row() {
                         ColorPickButton(

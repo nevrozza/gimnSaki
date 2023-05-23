@@ -1,11 +1,14 @@
 package setup
 
+import LocalFullScreenConstraints
 import SettingsRepository
 import android.annotation.SuppressLint
 import android.os.Build
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.CompositionLocalProvider
@@ -13,10 +16,14 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
 import com.adeo.kviewmodel.odyssey.setupWithViewModels
+import commonLog
 
 import di.Inject
 
@@ -31,8 +38,9 @@ import ru.alexgladkov.odyssey.compose.navigation.modal_navigation.ModalNavigator
 import ru.alexgladkov.odyssey.compose.navigation.modal_navigation.configuration.DefaultModalConfiguration
 import ru.alexgladkov.odyssey.core.configuration.DisplayType
 import theme.AppTheme
-import theme.adaptive.LocalK
-import theme.adaptive.K
+import theme.adaptive.LocalWindowSize
+import theme.adaptive.WindowSizeClass
+import theme.adaptive.WindowWidthSizeClass
 import theme.magicForUpdateSettings
 import theme.schemeChooser
 
@@ -90,12 +98,7 @@ fun ComponentActivity.setupThemedNavigation() {
         rootController.backgroundColor = backgroundColor
 
         val configuration = LocalConfiguration.current
-        val k = remember {
-            K(
-                w = configuration.screenWidthDp.toFloat() / 393,
-                h = configuration.screenHeightDp.toFloat() / 783
-            )
-        }
+
 
         val view = LocalView.current
 
@@ -103,19 +106,25 @@ fun ComponentActivity.setupThemedNavigation() {
             ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = !darkTheme
         }
 
-        CompositionLocalProvider(
-            LocalRootController provides rootController,
-            LocalK provides k
-        ) {
 
-            AppTheme(colorScheme = colorScheme) {
-                ModalNavigator(
-                    DefaultModalConfiguration(backgroundColor, DisplayType.EdgeToEdge)
-                ) {
-                    Navigator(startScreen = NavigationTree.Splash.SplashScreen.name)
+        BoxWithConstraints(Modifier.fillMaxSize()) {
+            val windowSize = WindowSizeClass.calculateFromSize(DpSize(this.maxWidth, this.maxHeight))
+            commonLog(windowSize.toString())
+            CompositionLocalProvider(
+                LocalRootController provides rootController,
+                LocalWindowSize provides windowSize,
+                LocalFullScreenConstraints provides this
+            ) {
+
+                AppTheme(colorScheme = colorScheme) {
+                    ModalNavigator(
+                        DefaultModalConfiguration(backgroundColor, DisplayType.EdgeToEdge)
+                    ) {
+                        Navigator(startScreen = NavigationTree.Splash.SplashScreen.name)
+                    }
+
+
                 }
-
-
             }
         }
 

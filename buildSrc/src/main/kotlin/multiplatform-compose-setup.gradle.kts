@@ -1,10 +1,12 @@
-
+import Dependencies
+import dev.icerock.gradle.MRVisibility
 
 
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
     id("org.jetbrains.compose")
+
 }
 
 kotlin {
@@ -14,6 +16,7 @@ kotlin {
     sourceSets {
         named("commonMain") {
             dependencies {
+
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material3)
@@ -41,4 +44,3 @@ kotlin {
         kotlinOptions.jvmTarget = "17"
     }
 }
-

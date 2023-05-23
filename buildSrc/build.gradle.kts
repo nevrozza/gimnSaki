@@ -1,7 +1,7 @@
 
 
 plugins {
-
+    id("dev.icerock.mobile.multiplatform-resources").version("0.22.0")
     `kotlin-dsl`
 }
 repositories {
@@ -23,6 +23,7 @@ dependencies {
     implementation(Dependencies.Android.gradlePlugin)
     implementation(Dependencies.Kotlin.Serialization.gradlePlugin)
     implementation(Dependencies.Moko.Resources.gradlePlugin)
+
 
 }
 

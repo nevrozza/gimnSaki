@@ -12,12 +12,6 @@ kotlin {
                 implementation(Dependencies.Moko.Resources.compose)
             }
         }
-
-        androidMain {
-            dependencies {
-                implementation("com.intuit.sdp:sdp-android:1.1.0")
-            }
-        }
     }
 
 }

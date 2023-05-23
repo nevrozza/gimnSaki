@@ -1,13 +1,15 @@
+
+
 plugins {
-    id("dev.icerock.mobile.multiplatform-resources")
     id("android-setup")
     id("multiplatform-setup")
+    id("dev.icerock.mobile.multiplatform-resources")
 }
 
 kotlin {
-    dependencies {
-        sourceSets {
-            commonMain {
+    sourceSets {
+        commonMain {
+            dependencies {
                 api(Dependencies.Moko.Resources.res)
             }
 
@@ -15,8 +17,6 @@ kotlin {
     }
 }
 
-
 multiplatformResources {
     multiplatformResourcesPackage = "com.gimnsaki.app"
-    iosBaseLocalizationRegion = "ru"
 }

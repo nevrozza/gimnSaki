@@ -1,5 +1,6 @@
 package theme
 
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
 import themeCodes.ThemeColors
@@ -7,8 +8,9 @@ import themeCodes.ThemeColors
 
 @Composable
 fun schemeChooser(isDark: Boolean, color: String): ColorScheme {
-
-
+    BoxWithConstraints {
+        this
+    }
     return if(isDark) {
             when(color) {
                 ThemeColors.Default.name -> defaultDarkPalette()

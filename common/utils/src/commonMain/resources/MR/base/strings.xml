@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
-    <string name="dark_theme">Тёмная</string>
-    <string name="light_theme">Светлая</string>
-    <string name="auto_theme">Авто</string>
-    <string name="choose_theme">Выберите тему</string>
-    <string name="choose_theme_under">Позже Вы сможете сменить её в настройках</string>
+    <string name="darkTheme">Тёмная</string>
+    <string name="lightTheme">Светлая</string>
+    <string name="autoTheme">Авто</string>
+    <string name="chooseTheme">Выберите тему</string>
+    <string name="chooseThemeUnder">Позже Вы сможете сменить её в настройках</string>
 </resources>

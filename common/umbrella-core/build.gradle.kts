@@ -8,7 +8,6 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(project(":common:core"))
-                implementation(project(":common:utils"))
                 implementation(project(":common:auth:data"))
                 implementation(project(":common:settings:data"))
 
