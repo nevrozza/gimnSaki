@@ -2,10 +2,13 @@ package setup
 
 import LocalFullScreenConstraints
 import SettingsRepository
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.awt.ComposePanel
 import androidx.compose.ui.unit.DpSize
@@ -20,9 +23,9 @@ import ru.alexgladkov.odyssey.compose.navigation.modal_navigation.ModalNavigator
 import ru.alexgladkov.odyssey.compose.navigation.modal_navigation.configuration.DefaultModalConfiguration
 import ru.alexgladkov.odyssey.core.configuration.DisplayType
 import theme.AppTheme
-import theme.adaptive.LocalWindowSize
+import theme.adaptive.LocalWindowScreen
 import theme.adaptive.WindowSizeClass
-import theme.adaptive.WindowWidthSizeClass
+import theme.magicForUpdateSettings
 import theme.schemeChooser
 import themeCodes.ThemeTint
 import java.awt.BorderLayout
@@ -40,20 +43,30 @@ fun JFrame.setupThemedNavigation() {
     val composePanel = ComposePanel()
     composePanel.setContent {
         BoxWithConstraints(Modifier.fillMaxSize()) {
-            val windowSize = WindowSizeClass.calculateFromSize(DpSize(this.maxWidth, this.maxHeight))
+            val windowScreen = WindowSizeClass.calculateScreen(DpSize(this.maxWidth, this.maxHeight))
             CompositionLocalProvider(
                 LocalRootController provides rootController,
-                LocalWindowSize provides windowSize,
+                LocalWindowScreen provides windowScreen,
                 LocalFullScreenConstraints provides this
             ) {
-                val settingsRepository: SettingsRepository = Inject.instance()
-                val tint = settingsRepository.fetchThemeTint()
-                val color = settingsRepository.fetchThemeColor()
 
-                val darkTheme: Boolean = tint == ThemeTint.Dark.name
+                val settingsRepository =
+                    remember { mutableStateOf(Inject.instance() as SettingsRepository) }
 
-                val colorScheme = schemeChooser(darkTheme, color)
-                AppTheme(colorScheme = colorScheme) {
+                if (magicForUpdateSettings.value) {
+                    settingsRepository.value = Inject.instance()
+                    magicForUpdateSettings.value = false
+                }
+                themeInit(settingsRepository.value)
+                val tint = settingsRepository.value.fetchThemeTint()
+                val color = settingsRepository.value.fetchThemeColor()
+
+                val darkTheme: Boolean =
+                    if (tint == ThemeTint.Auto.name) isSystemInDarkTheme()
+                    else tint == ThemeTint.Dark.name
+
+                val colorScheme = mutableStateOf( schemeChooser(darkTheme, color) )
+                AppTheme(colorScheme = colorScheme.value) {
 
 
                     val backgroundColor = MaterialTheme.colorScheme.background
@@ -71,7 +84,7 @@ fun JFrame.setupThemedNavigation() {
             }
         }
     }
-    minimumSize = Dimension(390, 550)
+    minimumSize = Dimension(360, 640)
     contentPane.add(composePanel, BorderLayout.CENTER)
     setSize(1300, 700)
     setLocationRelativeTo(null)

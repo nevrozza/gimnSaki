@@ -38,9 +38,8 @@ import ru.alexgladkov.odyssey.compose.navigation.modal_navigation.ModalNavigator
 import ru.alexgladkov.odyssey.compose.navigation.modal_navigation.configuration.DefaultModalConfiguration
 import ru.alexgladkov.odyssey.core.configuration.DisplayType
 import theme.AppTheme
-import theme.adaptive.LocalWindowSize
+import theme.adaptive.LocalWindowScreen
 import theme.adaptive.WindowSizeClass
-import theme.adaptive.WindowWidthSizeClass
 import theme.magicForUpdateSettings
 import theme.schemeChooser
 
@@ -108,11 +107,11 @@ fun ComponentActivity.setupThemedNavigation() {
 
 
         BoxWithConstraints(Modifier.fillMaxSize()) {
-            val windowSize = WindowSizeClass.calculateFromSize(DpSize(this.maxWidth, this.maxHeight))
-            commonLog(windowSize.toString())
+            val windowScreen = WindowSizeClass.calculateScreen(DpSize(this.maxWidth, this.maxHeight))
+            commonLog("${this.maxWidth} ${this.maxHeight}=${windowScreen}")
             CompositionLocalProvider(
                 LocalRootController provides rootController,
-                LocalWindowSize provides windowSize,
+                LocalWindowScreen provides windowScreen,
                 LocalFullScreenConstraints provides this
             ) {
 

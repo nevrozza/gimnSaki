@@ -1,4 +1,4 @@
-package rootThemeChanger
+package themeChanger
 
 import android.os.Build
 import themeCodes.ThemeColors

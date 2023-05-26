@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -22,9 +21,6 @@ import com.adeo.kviewmodel.compose.observeAsState
 import com.adeo.kviewmodel.odyssey.StoredViewModel
 import di.Inject
 import navigation.NavigationTree
-import rootThemeChanger.dynamicDarkScheme
-import rootThemeChanger.dynamicLightScheme
-import rootThemeChanger.isCanInDynamic
 import ru.alexgladkov.odyssey.compose.extensions.push
 import ru.alexgladkov.odyssey.compose.local.LocalRootController
 import theme.AppTheme
@@ -60,7 +56,7 @@ fun ThemeChangerScreen(isStart: Boolean) {
             exit = fadeOut(spring(stiffness = Spring.StiffnessLow))
         ) {
             AppTheme(darkColorScheme) {
-                ThemeChangerView(isStart = isStart, state = state.value) {
+                RootThemeChangerView(state = state.value, isStart = isStart) {
                     viewModel.obtainEvent(it)
                 }
             }
@@ -72,7 +68,7 @@ fun ThemeChangerScreen(isStart: Boolean) {
             exit = fadeOut(spring(stiffness = Spring.StiffnessLow))
         ) {
             AppTheme(lightColorScheme) {
-                ThemeChangerView(isStart = isStart, state = state.value) {
+                RootThemeChangerView(state = state.value, isStart = isStart) {
                     viewModel.obtainEvent(it)
                 }
             }

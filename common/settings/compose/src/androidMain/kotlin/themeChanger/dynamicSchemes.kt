@@ -1,4 +1,4 @@
-package rootThemeChanger
+package themeChanger
 
 import PlatformConfiguration
 import androidx.compose.material3.ColorScheme
