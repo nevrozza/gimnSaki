@@ -2,6 +2,7 @@ plugins {
     id("multiplatform-setup")
     id("android-setup")
     kotlin("native.cocoapods")
+    id("dev.icerock.mobile.multiplatform-resources")
 }
 
 version = "0.0.1"
@@ -25,6 +26,11 @@ kotlin {
             export(project(":common:start:api"))
             export(project(":common:start:presentation"))
             export(project(":common:umbrella-core"))
+
+
+            //MOKO
+            export("dev.icerock.moko:resources:0.22.3")
+            export("dev.icerock.moko:graphics:0.9.0")
         }
     }
 
@@ -40,6 +46,10 @@ kotlin {
                 implementation(project(":common:start:api"))
                 implementation(project(":common:start:presentation"))
                 implementation(project(":common:umbrella-core"))
+
+                //MOKO
+                implementation("dev.icerock.moko:resources:0.22.3")
+                implementation("dev.icerock.moko:graphics:0.9.0")
             }
         }
 
@@ -54,6 +64,10 @@ kotlin {
                 api(project(":common:start:api"))
                 api(project(":common:start:presentation"))
                 api(project(":common:umbrella-core"))
+
+                //MOKO
+                api("dev.icerock.moko:resources:0.22.3")
+                api("dev.icerock.moko:graphics:0.9.0")
             }
         }
     }

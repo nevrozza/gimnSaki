@@ -147,7 +147,7 @@ private fun horizontalView(
         Column(
             Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Top
         ) {
             if (isStart) {
                 Text(stringResource(MRStrings.chooseTheme),
@@ -156,11 +156,9 @@ private fun horizontalView(
 
                 Text(stringResource(MRStrings.chooseThemeUnder),
                     modifier = Modifier.clickable { eventHandler(ThemeChangerEvent.NextPressed) })
-
-                Spacer(Modifier.fillMaxHeight(.03f))
             }
 
-            Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.fillMaxHeight(.05f))
             ColorPickerTab(state = state, animatedSize = animatedSize, buttonSize = buttonSize) {
                 eventHandler(it)
             }
@@ -283,7 +281,7 @@ private fun verticalView(
     ) {
 
         if (isStart) {
-            Spacer(Modifier.height(padding.calculateTopPadding()))
+            Spacer(Modifier.fillMaxHeight(.01f))
             Text(stringResource(MRStrings.chooseTheme),
                 fontSize = 24.sp,
                 modifier = Modifier.clickable { eventHandler(ThemeChangerEvent.NextPressed) })

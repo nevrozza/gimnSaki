@@ -1,10 +1,13 @@
 import SwiftUI
+import SharedSDK
+
+
 
 struct ContentView: View {
-	let greet = "asd"
-
+    
 	var body: some View {
-		Text(greet)
+        Text("sad")
+        RoundedRectangle(cornerRadius: 10).foregroundColor(SwiftUI.Color(SwiftUI.Color.textPrimary))
 	}
 }
 

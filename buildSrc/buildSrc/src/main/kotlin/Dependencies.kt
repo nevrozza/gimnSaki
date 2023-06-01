@@ -49,7 +49,7 @@ object Dependencies {
 
     object Moko {
         object Resources {
-            private const val version = "0.22.0"
+            private const val version = "0.22.3"
 
             const val gradlePlugin = "dev.icerock.moko:resources-generator:$version"
             const val res = "dev.icerock.moko:resources:$version"
