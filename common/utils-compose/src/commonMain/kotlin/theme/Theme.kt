@@ -27,11 +27,6 @@ fun AppTheme(colorScheme: ColorScheme, content: @Composable () -> Unit) {
 
 var magicForUpdateSettings: MutableState<Boolean> = mutableStateOf(false)
 
-
-fun dev.icerock.moko.graphics.Color.toComposeColor(): Color {
-        return Color(red = red, green = green, blue = blue, alpha = alpha)
-}
-
 @Composable
 fun defaultLightPalette():
         ColorScheme

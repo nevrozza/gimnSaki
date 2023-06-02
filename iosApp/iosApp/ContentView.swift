@@ -4,10 +4,16 @@ import SharedSDK
 
 
 struct ContentView: View {
-    
+
+    @EnvironmentObject var themeManager: ThemeManager
 	var body: some View {
-        Text("sad")
-        RoundedRectangle(cornerRadius: 10).foregroundColor(SwiftUI.Color(SwiftUI.Color.textPrimary))
+        let theme = themeManager.current.colorScheme
+        let orientation = themeManager.orientation
+        
+            
+            RoundedRectangle(cornerRadius: 10).foregroundColor(theme.primary)
+            Text(orientation.description)
+        
 	}
 }
 

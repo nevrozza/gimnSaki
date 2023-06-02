@@ -79,7 +79,11 @@ fun fromWidth(width: Dp): WindowWidth {
     }
 }
 
-
+//fun isHorizontal(size: WindowSizeClass): Boolean {
+//    return (size.height == WindowHeight.Compact &&
+//            (size.width == WindowWidth.Expanded
+//                    || size.width == WindowWidth.Medium))
+//}
 fun fromHeight(height: Dp): WindowHeight {
     require(height >= 0.dp) { "Height must not be negative" }
     return when {

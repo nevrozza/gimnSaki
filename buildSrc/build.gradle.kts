@@ -1,7 +1,7 @@
 
 
 plugins {
-    id("dev.icerock.mobile.multiplatform-resources").version("0.22.0")
+    id("dev.icerock.mobile.multiplatform-resources").version("0.22.3")
     `kotlin-dsl`
 }
 repositories {
