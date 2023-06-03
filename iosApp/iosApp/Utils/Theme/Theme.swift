@@ -13,7 +13,7 @@ import SwiftUI
 class ThemeManager: ObservableObject {
     @Published var orientation: CustomDeviceOrientation = .Vertical
     
-    @Published var current: Theme = .defaultLight
+    @Published var current: Theme = .redLight
 }
 
 
@@ -36,5 +36,11 @@ extension Theme {
     static let yellowDark  = Theme(colorScheme: yellowDarkPallete)
 }
 
-
+func themeInit(settingsRepository: SettingsRepositorySwift) {
+    if(settingsRepository.fetchThemeTint().isEmpty
+            && settingsRepository.fetchThemeColor().isEmpty) {
+        settingsRepository.saveThemeColor(color: ThemeColors.default_.name)
+        settingsRepository.saveThemeTint(tint: ThemeTint.auto_.name)
+        }
+}
 

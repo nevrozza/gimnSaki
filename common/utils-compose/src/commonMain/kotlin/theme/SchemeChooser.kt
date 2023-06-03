@@ -8,9 +8,9 @@ import themeCodes.ThemeColors
 
 @Composable
 fun schemeChooser(isDark: Boolean, color: String): ColorScheme {
-    BoxWithConstraints {
-        this
-    }
+//    BoxWithConstraints {
+//        this
+//    }
     return if(isDark) {
             when(color) {
                 ThemeColors.Default.name -> defaultDarkPalette()

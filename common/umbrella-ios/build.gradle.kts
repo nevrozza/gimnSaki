@@ -27,10 +27,9 @@ kotlin {
             export(project(":common:start:presentation"))
             export(project(":common:umbrella-core"))
 
-
             //MOKO
-            export("dev.icerock.moko:resources:0.22.3")
-            export("dev.icerock.moko:graphics:0.9.0")
+            export(Dependencies.Moko.Resources.res)
+            export(Dependencies.Moko.Resources.graphics)
         }
     }
 
@@ -47,9 +46,10 @@ kotlin {
                 implementation(project(":common:start:presentation"))
                 implementation(project(":common:umbrella-core"))
 
+
                 //MOKO
-                implementation("dev.icerock.moko:resources:0.22.3")
-                implementation("dev.icerock.moko:graphics:0.9.0")
+                implementation(Dependencies.Moko.Resources.res)
+                implementation(Dependencies.Moko.Resources.graphics)
             }
         }
 
@@ -65,9 +65,10 @@ kotlin {
                 api(project(":common:start:presentation"))
                 api(project(":common:umbrella-core"))
 
+
                 //MOKO
-                api("dev.icerock.moko:resources:0.22.3")
-                api("dev.icerock.moko:graphics:0.9.0")
+                api(Dependencies.Moko.Resources.res)
+                api(Dependencies.Moko.Resources.graphics)
             }
         }
     }

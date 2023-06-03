@@ -4,8 +4,6 @@
 //
 //  Created by nevrozq on 02.06.2023.
 //  Copyright © 2023 orgName. All rights reserved.
-//
-
 import Foundation
 import SwiftUI
 

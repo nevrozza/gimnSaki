@@ -54,7 +54,7 @@ object Dependencies {
             const val gradlePlugin = "dev.icerock.moko:resources-generator:$version"
             const val res = "dev.icerock.moko:resources:$version"
             const val compose = "dev.icerock.moko:resources-compose:$version"
-
+            const val graphics = "dev.icerock.moko:graphics:0.9.0"
         }
     }
 
@@ -73,10 +73,10 @@ object Dependencies {
         const val composeActivity = "androidx.activity:activity-compose:1.7.0"
         const val runtime = "androidx.compose.runtime:runtime:1.4.3"
         object Compose {
-            const val ui = "androidx.compose.ui:ui:1.4.0"
-            const val material3 = "androidx.compose.material3:material3:1.0.1"
-            const val icons  = "androidx.compose.material:material-icons-core:1.4.0"
-            const val tooling  = "androidx.compose.ui:ui-tooling:1.4.0"
+            const val ui = "androidx.compose.ui:ui:1.4.3"
+            const val material3 = "androidx.compose.material3:material3:1.1.0"
+            const val icons  = "androidx.compose.material:material-icons-core:1.4.3"
+            const val tooling  = "androidx.compose.ui:ui-tooling:1.4.3"
 
         }
     }
