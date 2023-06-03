@@ -1,4 +1,4 @@
-package themeCodes
+package theme
 
 
 enum class ThemeTint {

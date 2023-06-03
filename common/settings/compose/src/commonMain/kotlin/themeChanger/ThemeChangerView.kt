@@ -1,10 +1,10 @@
 package themeChanger
 
 import LocalFullScreenConstraints
+import theme.LocalThemeManager
 import MRStrings
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
@@ -24,7 +24,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -45,7 +44,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
@@ -55,15 +53,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.icerock.moko.resources.compose.stringResource
-import di.Inject
 import theme.adaptive.LocalWindowScreen
-import theme.adaptive.WindowScreen
 import theme.schemeChooser
 import themeChanger.models.ThemeChangerEvent
 import themeChanger.models.ThemeChangerViewState
-import themeCodes.ThemeColors
-import themeCodes.ThemeTint
+import theme.ThemeColors
+import theme.ThemeTint
 import widgets.SegmentedButton
+import theme.WindowScreen
 
 @Composable
 expect fun dynamicDarkScheme(): ColorScheme?
@@ -81,6 +78,8 @@ fun RootThemeChangerView(
     isStart: Boolean = false,
     eventHandler: (ThemeChangerEvent) -> Unit
 ) {
+    val themeManager = LocalThemeManager.current
+
     val fullScreenConstraints = LocalFullScreenConstraints.current
     val screen = LocalWindowScreen.current
     val buttonSize = 50
@@ -94,7 +93,7 @@ fun RootThemeChangerView(
     )
 
 
-    if (animatedSize.value == maxSize) eventHandler(ThemeChangerEvent.ThemeChanged)
+    if (animatedSize.value == maxSize) eventHandler(ThemeChangerEvent.ColorChanged)
 
     Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
         when (screen) {
@@ -477,6 +476,7 @@ fun ColorPickerTab(
     buttonSize: Int,
     eventHandler: (ThemeChangerEvent) -> Unit
 ) {
+    val themeManager = LocalThemeManager.current
     val isDark: Boolean =
         if (state.tint == ThemeTint.Auto.name) isSystemInDarkTheme()
         else state.tint == ThemeTint.Dark.name
@@ -503,7 +503,6 @@ fun ColorPickerTab(
                     state.tint
                 ) {
                     eventHandler(ThemeChangerEvent.TintChangeOn(it))
-                    eventHandler(ThemeChangerEvent.ThemeChanged)
                 }
             }
             Row(modifier = Modifier.width(width), horizontalArrangement = Arrangement.Center) {

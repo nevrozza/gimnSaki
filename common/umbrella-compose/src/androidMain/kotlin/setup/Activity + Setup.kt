@@ -1,6 +1,7 @@
 package setup
 
 import LocalFullScreenConstraints
+import theme.LocalThemeManager
 import SettingsRepository
 import android.annotation.SuppressLint
 import android.os.Build
@@ -13,14 +14,10 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.DpSize
-import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
 import com.adeo.kviewmodel.odyssey.setupWithViewModels
 import commonLog
@@ -37,13 +34,13 @@ import ru.alexgladkov.odyssey.compose.navigation.modal_navigation.ModalNavigator
 import ru.alexgladkov.odyssey.compose.navigation.modal_navigation.configuration.DefaultModalConfiguration
 import ru.alexgladkov.odyssey.core.configuration.DisplayType
 import theme.AppTheme
+import theme.ThemeManager
 import theme.adaptive.LocalWindowScreen
 import theme.adaptive.WindowSizeClass
-import theme.magicForUpdateSettings
 import theme.schemeChooser
 
-import themeCodes.ThemeColors
-import themeCodes.ThemeTint
+import theme.ThemeColors
+import theme.ThemeTint
 
 
 @SuppressLint("CoroutineCreationDuringComposition", "UnrememberedMutableState")
@@ -58,29 +55,26 @@ fun ComponentActivity.setupThemedNavigation() {
 
 
     setContent {
-        val settingsRepository =
-            remember { mutableStateOf(Inject.instance() as SettingsRepository) }
+        val settingsRepository: SettingsRepository = Inject.instance()
 
-        if (magicForUpdateSettings.value) {
-            settingsRepository.value = Inject.instance()
-            magicForUpdateSettings.value = false
-        }
+        val themeManager = ThemeManager(mutableStateOf(settingsRepository.fetchThemeColor()), mutableStateOf(settingsRepository.fetchThemeTint()))
 
-        if (settingsRepository.value.fetchThemeColor().isBlank()) {
+        if (themeManager.color.value.isBlank()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                settingsRepository.value.saveThemeColor(ThemeColors.Dynamic.name)
+                themeManager.color.value = ThemeColors.Dynamic.name
+                settingsRepository.saveThemeColor(ThemeColors.Dynamic.name)
             }
         }
-        themeInit(settingsRepository.value)
+        themeInit(themeManager, settingsRepository)
 
 
-        val tint = settingsRepository.value.fetchThemeTint()
-        val color = settingsRepository.value.fetchThemeColor()
+        val tint = themeManager.tint.value
+        val color = themeManager.color.value
         val darkTheme: Boolean =
             if (tint == ThemeTint.Auto.name) isSystemInDarkTheme()
             else tint == ThemeTint.Dark.name
 
-        val colorScheme by mutableStateOf(
+        val colorScheme =
             if (color == ThemeColors.Dynamic.name) {
                 if (darkTheme) {
                     dynamicDarkColorScheme(applicationContext)
@@ -90,13 +84,10 @@ fun ComponentActivity.setupThemedNavigation() {
             } else {
                 schemeChooser(darkTheme, color)
             }
-        )
+
 
         val backgroundColor = colorScheme.background
         rootController.backgroundColor = backgroundColor
-
-        val configuration = LocalConfiguration.current
-
 
         val view = LocalView.current
 
@@ -111,10 +102,12 @@ fun ComponentActivity.setupThemedNavigation() {
             CompositionLocalProvider(
                 LocalRootController provides rootController,
                 LocalWindowScreen provides windowScreen,
-                LocalFullScreenConstraints provides this
+                LocalFullScreenConstraints provides this,
+                LocalThemeManager provides themeManager
             ) {
 
                 AppTheme(colorScheme = colorScheme) {
+                    commonLog(themeManager.toString())
                     ModalNavigator(
                         DefaultModalConfiguration(backgroundColor, DisplayType.EdgeToEdge)
                     ) {

@@ -12,8 +12,8 @@ import themeChanger.models.ThemeChangerAction
 import themeChanger.models.ThemeChangerEvent
 import themeChanger.models.ThemeChangerViewState
 
-class ThemeChangerViewModel(private val settingsRepository: SettingsRepository = Inject.instance()): BaseSharedViewModel<ThemeChangerViewState, ThemeChangerAction, ThemeChangerEvent>(
-    initialState = ThemeChangerViewState(color = settingsRepository.fetchThemeColor(), tint = settingsRepository.fetchThemeTint())
+class ThemeChangerViewModel(color: String, tint: String, private val settingsRepository: SettingsRepository = Inject.instance()): BaseSharedViewModel<ThemeChangerViewState, ThemeChangerAction, ThemeChangerEvent>(
+    initialState = ThemeChangerViewState(color = color, tint = tint)
 ) {
     @OptIn(DelicateCoroutinesApi::class)
     override fun obtainEvent(viewEvent: ThemeChangerEvent) {
@@ -21,7 +21,7 @@ class ThemeChangerViewModel(private val settingsRepository: SettingsRepository =
             when (viewEvent) {
                 is ThemeChangerEvent.NextPressed -> openDescription()
                 is ThemeChangerEvent.ActionInited -> clearAction()
-                is ThemeChangerEvent.ThemeChanged -> themeChanged()
+                is ThemeChangerEvent.ColorChanged -> colorChanged()
                 is ThemeChangerEvent.ColorChangeOn -> changeColorOn(viewEvent.color)
                 is ThemeChangerEvent.TintChangeOn -> changeTintOn(viewEvent.tint)
             }
@@ -30,16 +30,18 @@ class ThemeChangerViewModel(private val settingsRepository: SettingsRepository =
 
     private fun changeTintOn(tint: String) {
         viewState = viewState.copy(tint = tint)
+        settingsRepository.saveThemeTint(viewState.tint)
+        viewAction = ThemeChangerAction.UpdateTint
     }
 
     private fun changeColorOn(color: String) {
         viewState = viewState.copy(color = color, isColorChanging = true)
     }
 
-    private fun themeChanged() {
-        settingsRepository.saveThemeTint(viewState.tint)
+    private fun colorChanged() {
+
         settingsRepository.saveThemeColor(viewState.color)
-        viewAction = ThemeChangerAction.UpdateTheme
+        viewAction = ThemeChangerAction.UpdateColor
         viewState = viewState.copy(isColorChanging = false)
     }
 

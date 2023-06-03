@@ -24,8 +24,8 @@ fun AppTheme(colorScheme: ColorScheme, content: @Composable () -> Unit) {
         content = content
     )
 }
-
-var magicForUpdateSettings: MutableState<Boolean> = mutableStateOf(false)
+//
+//var magicForUpdateSettings: MutableState<Boolean> = mutableStateOf(false)
 
 @Composable
 fun defaultLightPalette():

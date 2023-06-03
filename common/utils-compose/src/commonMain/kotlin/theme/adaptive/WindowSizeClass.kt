@@ -4,30 +4,15 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import theme.WindowScreen
+import theme.WindowSize
+import androidx.compose.runtime.Composable
 
-
-sealed class WindowScreen {
-    object Vertical : WindowScreen()
-    object Horizontal : WindowScreen()
-    object Expanded : WindowScreen()
-}
-
-sealed class WindowWidth {
-    object Compact : WindowWidth()
-    object Medium : WindowWidth()
-    object Expanded : WindowWidth()
-}
-
-sealed class WindowHeight {
-    object Compact : WindowHeight()
-    object Medium : WindowHeight()
-    object Expanded : WindowHeight()
-}
 
 @Immutable
 class WindowSizeClass private constructor(
-    val width: WindowWidth,
-    val height: WindowHeight
+    val width: WindowSize,
+    val height: WindowSize
 ) {
     companion object {
 
@@ -36,46 +21,47 @@ class WindowSizeClass private constructor(
             val windowHeightSizeClass = fromHeight(size.height)
             return WindowSizeClass(windowWidthSizeClass, windowHeightSizeClass)
         }
-
-        fun calculateScreen(size: DpSize): WindowScreen {
+        @Composable
+        fun calculateScreen(size: DpSize, device: String = "phone"): WindowScreen {
             val windowWidthSizeClass = fromWidth(size.width)
             val windowHeightSizeClass = fromHeight(size.height)
             val windowSizeClass = WindowSizeClass(windowWidthSizeClass, windowHeightSizeClass)
 //            return WindowSizeClass(windowWidthSizeClass, windowHeightSizeClass)
-            return if (isExpanded(windowSizeClass)) WindowScreen.Expanded
+            return if (isExpanded(windowSizeClass, device)) WindowScreen.Expanded
             else if (isVertical(windowSizeClass)) WindowScreen.Vertical
             else WindowScreen.Horizontal
         }
 
-        fun isHorizontal(size: WindowSizeClass): Boolean {
-            return (size.height == WindowHeight.Compact &&
-                    (size.width == WindowWidth.Expanded
-                            || size.width == WindowWidth.Medium))
+        private fun isHorizontal(size: WindowSizeClass): Boolean {
+            return (size.height == WindowSize.Compact &&
+                    (size.width == WindowSize.Expanded
+                            || size.width == WindowSize.Medium))
         }
 
-        fun isVertical(size: WindowSizeClass): Boolean {
-            return ((size.height == WindowHeight.Expanded &&
-                    (size.width == WindowWidth.Medium
-                            || size.width == WindowWidth.Compact)) ||
-                    (size.height == WindowHeight.Medium && size.width == WindowWidth.Compact)
+        private fun isVertical(size: WindowSizeClass): Boolean {
+            return ((size.height == WindowSize.Expanded &&
+                    (size.width == WindowSize.Medium
+                            || size.width == WindowSize.Compact)) ||
+                    (size.height == WindowSize.Medium && size.width == WindowSize.Compact)
                     )
         }
-
-        private fun isExpanded(size: WindowSizeClass): Boolean {
-            return ((size.width == WindowWidth.Expanded &&
-                    (size.height == WindowHeight.Medium
-                            || size.height == WindowHeight.Expanded)))
+        @Composable
+        private fun isExpanded(size: WindowSizeClass, device: String): Boolean {
+            return ((size.width == WindowSize.Expanded &&
+                    (size.height == WindowSize.Medium
+                            || size.height == WindowSize.Expanded)) || (!isVertical(size) && device == "pc"))
         }
     }
 }
 
 
-fun fromWidth(width: Dp): WindowWidth {
+
+fun fromWidth(width: Dp): WindowSize {
     require(width >= 0.dp) { "Width must not be negative" }
     return when {
-        width < 600.dp -> WindowWidth.Compact
-        width < 840.dp -> WindowWidth.Medium
-        else -> WindowWidth.Expanded
+        width < 600.dp -> WindowSize.Compact
+        width < 840.dp -> WindowSize.Medium
+        else -> WindowSize.Expanded
     }
 }
 
@@ -84,12 +70,12 @@ fun fromWidth(width: Dp): WindowWidth {
 //            (size.width == WindowWidth.Expanded
 //                    || size.width == WindowWidth.Medium))
 //}
-fun fromHeight(height: Dp): WindowHeight {
+fun fromHeight(height: Dp): WindowSize {
     require(height >= 0.dp) { "Height must not be negative" }
     return when {
-        height < 480.dp -> WindowHeight.Compact
-        height < 900.dp -> WindowHeight.Medium
-        else -> WindowHeight.Expanded
+        height < 480.dp -> WindowSize.Compact
+        height < 900.dp -> WindowSize.Medium
+        else -> WindowSize.Expanded
     }
 }
 

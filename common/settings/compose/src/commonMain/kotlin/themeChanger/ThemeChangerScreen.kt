@@ -1,6 +1,6 @@
 package themeChanger
 
-import SettingsRepository
+import theme.LocalThemeManager
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.Spring
@@ -14,41 +14,38 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.adeo.kviewmodel.compose.observeAsState
 import com.adeo.kviewmodel.odyssey.StoredViewModel
-import di.Inject
 import navigation.NavigationTree
 import ru.alexgladkov.odyssey.compose.extensions.push
 import ru.alexgladkov.odyssey.compose.local.LocalRootController
 import theme.AppTheme
-import theme.magicForUpdateSettings
 import theme.schemeChooser
 import themeChanger.models.ThemeChangerAction
 import themeChanger.models.ThemeChangerEvent
 import themeChanger.models.ThemeChangerViewState
-import themeCodes.ThemeColors
-import themeCodes.ThemeTint
+import theme.ThemeColors
+import theme.ThemeTint
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ThemeChangerScreen(isStart: Boolean) {
+    val themeManager = LocalThemeManager.current
     val rootController = LocalRootController.current
-    val settingsRepository = remember { mutableStateOf(Inject.instance() as SettingsRepository) }
 
-    StoredViewModel(factory = { ThemeChangerViewModel() }) { viewModel ->
+    StoredViewModel(factory = { ThemeChangerViewModel(color = themeManager.color.value, tint = themeManager.tint.value) }) { viewModel ->
         val state = viewModel.viewStates().observeAsState()
         val action = viewModel.viewActions().observeAsState()
         val isDynamic = isCanInDynamic() && state.value.color == ThemeColors.Dynamic.name
-        val darkColorScheme = if (isDynamic) dynamicDarkScheme()!! else schemeChooser(true, settingsRepository.value.fetchThemeColor())
-        val lightColorScheme = if (isDynamic) dynamicLightScheme()!! else schemeChooser(false, settingsRepository.value.fetchThemeColor())
+        val darkColorScheme = if (isDynamic) dynamicDarkScheme()!! else schemeChooser(true, themeManager.color.value)
+        val lightColorScheme = if (isDynamic) dynamicLightScheme()!! else schemeChooser(false, themeManager.color.value)
 
 
         val darkTheme: Boolean =
-            if (state.value.tint == ThemeTint.Auto.name) isSystemInDarkTheme()
-            else state.value.tint == ThemeTint.Dark.name
+            if (themeManager.tint.value == ThemeTint.Auto.name) isSystemInDarkTheme()
+            else themeManager.tint.value == ThemeTint.Dark.name
 
         AnimatedVisibility(
             visible = darkTheme,
@@ -83,9 +80,13 @@ fun ThemeChangerScreen(isStart: Boolean) {
                 viewModel.obtainEvent(ThemeChangerEvent.ActionInited)
             }
 
-            is ThemeChangerAction.UpdateTheme -> {
-                magicForUpdateSettings.value = true
-                viewModel.obtainEvent(ThemeChangerEvent.ActionInited)
+            is ThemeChangerAction.UpdateColor -> {
+                    themeManager.color.value  = state.value.color
+
+            }
+
+            is ThemeChangerAction.UpdateTint -> {
+                themeManager.tint.value  = state.value.tint
             }
 
             else -> {}

@@ -16,15 +16,10 @@ import ru.alexgladkov.odyssey.compose.local.LocalRootController
 import ru.alexgladkov.odyssey.core.LaunchFlag
 import ru.alexgladkov.odyssey.core.animations.AnimationType
 import start.models.StartAction
-import theme.magicForUpdateSettings
 
 @Composable
 fun StartScreen() {
     val rootController = LocalRootController.current
-//    val authRepository: AuthRepository = Inject.instance()
-//    if(authRepository.fetchToken().isBlank()) {
-//    rootController.push(NavigationTree.Auth.Login.name)
-//    }
 
     StoredViewModel(factory = { StartViewModel() }) { viewModel ->
         val state = viewModel.viewStates().observeAsState()
@@ -32,7 +27,6 @@ fun StartScreen() {
 
         val stateTransition = remember {
             MutableTransitionState(false).apply {
-                // Start the animation immediately.
                 targetState = true
             }
         }
