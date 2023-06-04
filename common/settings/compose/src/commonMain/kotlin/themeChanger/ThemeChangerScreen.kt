@@ -53,7 +53,7 @@ fun ThemeChangerScreen(isStart: Boolean) {
             exit = fadeOut(spring(stiffness = Spring.StiffnessLow))
         ) {
             AppTheme(darkColorScheme) {
-                RootThemeChangerView(state = state.value, isStart = isStart) {
+                ThemeChangerView(state = state.value, isStart = isStart) {
                     viewModel.obtainEvent(it)
                 }
             }
@@ -65,7 +65,7 @@ fun ThemeChangerScreen(isStart: Boolean) {
             exit = fadeOut(spring(stiffness = Spring.StiffnessLow))
         ) {
             AppTheme(lightColorScheme) {
-                RootThemeChangerView(state = state.value, isStart = isStart) {
+                ThemeChangerView(state = state.value, isStart = isStart) {
                     viewModel.obtainEvent(it)
                 }
             }

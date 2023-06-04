@@ -22,7 +22,7 @@ struct iOSApp: App {
                         Color.clear // we just want the reader to get triggered, so let's use an empty color
                         
                             .onAppear {
-                            
+                                themeManager.orientation = calculateFromScreen(size: proxy.size)
                                 setupThemeManager()
                             }
                             
@@ -30,8 +30,7 @@ struct iOSApp: App {
                             
                             .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
                                 DispatchQueue.main.async {
-                                                let size = proxy.size
-                                                themeManager.orientation = calculateFromScreen(size: size)
+                                                themeManager.orientation = calculateFromScreen(size: proxy.size)
                                             }
                             }
                             
@@ -51,11 +50,12 @@ struct iOSApp: App {
         let settingsRepository = FuckSwift().settingsRepository()
         themeInit(settingsRepository: settingsRepository)
         let tint = settingsRepository.fetchThemeTint()
+        themeManager.tint = tint
         let color = settingsRepository.fetchThemeColor()
-        let isSystemInDarkTheme = themeManager.system == .light
+        let isSystemInDarkTheme = themeManager.systemTint == .light
         let isDark = (tint == ThemeTint.auto_.name) ? (isSystemInDarkTheme) : (tint == ThemeTint.dark.name)
         let colorScheme = schemeChoser(isDark: isDark, color: color)
-        themeManager.current = Theme(colorScheme: colorScheme)
+        themeManager.currentTheme = Theme(colorScheme: colorScheme)
     }
 	
 }

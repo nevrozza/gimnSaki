@@ -12,9 +12,10 @@ import themeChanger.models.ThemeChangerAction
 import themeChanger.models.ThemeChangerEvent
 import themeChanger.models.ThemeChangerViewState
 
-class ThemeChangerViewModel(color: String, tint: String, private val settingsRepository: SettingsRepository = Inject.instance()): BaseSharedViewModel<ThemeChangerViewState, ThemeChangerAction, ThemeChangerEvent>(
+class ThemeChangerViewModel(color: String, tint: String): BaseSharedViewModel<ThemeChangerViewState, ThemeChangerAction, ThemeChangerEvent>(
     initialState = ThemeChangerViewState(color = color, tint = tint)
 ) {
+
     @OptIn(DelicateCoroutinesApi::class)
     override fun obtainEvent(viewEvent: ThemeChangerEvent) {
         GlobalScope.launch(Dispatchers.IO) {
@@ -29,6 +30,7 @@ class ThemeChangerViewModel(color: String, tint: String, private val settingsRep
     }
 
     private fun changeTintOn(tint: String) {
+        val settingsRepository: SettingsRepository = Inject.instance()
         viewState = viewState.copy(tint = tint)
         settingsRepository.saveThemeTint(viewState.tint)
         viewAction = ThemeChangerAction.UpdateTint
@@ -39,7 +41,7 @@ class ThemeChangerViewModel(color: String, tint: String, private val settingsRep
     }
 
     private fun colorChanged() {
-
+        val settingsRepository: SettingsRepository = Inject.instance()
         settingsRepository.saveThemeColor(viewState.color)
         viewAction = ThemeChangerAction.UpdateColor
         viewState = viewState.copy(isColorChanging = false)

@@ -73,7 +73,7 @@ expect fun isCanInDynamic(): Boolean
 @OptIn(ExperimentalAnimationApi::class)
 @ExperimentalMaterial3Api
 @Composable
-fun RootThemeChangerView(
+fun ThemeChangerView(
     state: ThemeChangerViewState,
     isStart: Boolean = false,
     eventHandler: (ThemeChangerEvent) -> Unit

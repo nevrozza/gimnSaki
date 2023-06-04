@@ -1,6 +1,7 @@
-package start
+package hello
 
 import com.adeo.kviewmodel.BaseSharedViewModel
+import hello.models.HelloAction
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -9,13 +10,12 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.datetime.*
-import start.models.StartAction
-import start.models.StartEvent
-import start.models.StartViewState
+import hello.models.HelloEvent
+import hello.models.HelloViewState
 
 
-class StartViewModel: BaseSharedViewModel<StartViewState, StartAction, StartEvent>(
-    initialState = StartViewState(dataList = listOf("Здравствуйте!"))
+class HelloViewModel: BaseSharedViewModel<HelloViewState, HelloAction, HelloEvent>(
+    initialState = HelloViewState(dataList = listOf("Здравствуйте!"))
 ){
 
     private val listOfBye = listOf("Доброй ночи!", "Геджелер хайыр!", "Доброї ночі!", "Good night!", "Gute Nacht!")
@@ -30,17 +30,17 @@ class StartViewModel: BaseSharedViewModel<StartViewState, StartAction, StartEven
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    override fun obtainEvent(viewEvent: StartEvent) {
+    override fun obtainEvent(viewEvent: HelloEvent) {
 
         GlobalScope.launch(Dispatchers.IO) {
             when (viewEvent) {
-                is StartEvent.SkipPressed -> skip()
+                is HelloEvent.SkipPressed -> skip()
             }
         }
     }
 
     private fun skip() {
-        viewAction = StartAction.OpenStartColor
+        viewAction = HelloAction.OpenStartColor
 //        if()
 //        viewAction = StartAction.OpenMainFlow
     }
@@ -67,7 +67,7 @@ class StartViewModel: BaseSharedViewModel<StartViewState, StartAction, StartEven
                 delay(1000)
             }
 
-            obtainEvent(StartEvent.SkipPressed)
+            obtainEvent(HelloEvent.SkipPressed)
 //                viewModelScope.cancel()
             viewModelScope.cancel()
         }

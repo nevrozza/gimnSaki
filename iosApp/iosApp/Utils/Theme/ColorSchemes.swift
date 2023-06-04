@@ -50,6 +50,7 @@ struct ColorScheme {
     var outline: SwiftUI.Color
     var outlineVariant: SwiftUI.Color
     var scrim: SwiftUI.Color = .black
+    var colorStr: String
 }
 
 var MRColors = DMRColors()
@@ -80,7 +81,8 @@ var defaultLightPallete = ColorScheme(
     onError:                SwiftUI.Color(MRColors.defaultLightOnError.getUIColor()),
     errorContainer:         SwiftUI.Color(MRColors.defaultLightErrorContainer.getUIColor()),
     outline:                SwiftUI.Color(MRColors.defaultLightOutline.getUIColor()),
-    outlineVariant:         SwiftUI.Color(MRColors.defaultLightOutlineVariant.getUIColor())
+    outlineVariant:         SwiftUI.Color(MRColors.defaultLightOutlineVariant.getUIColor()),
+    colorStr:               ThemeColors.default_.name
 )
 
 var defaultDarkPallete = ColorScheme(
@@ -109,7 +111,8 @@ var defaultDarkPallete = ColorScheme(
     onError:                SwiftUI.Color(MRColors.defaultDarkOnError.getUIColor()),
     errorContainer:         SwiftUI.Color(MRColors.defaultDarkErrorContainer.getUIColor()),
     outline:                SwiftUI.Color(MRColors.defaultDarkOutline.getUIColor()),
-    outlineVariant:         SwiftUI.Color(MRColors.defaultDarkOutlineVariant.getUIColor())
+    outlineVariant:         SwiftUI.Color(MRColors.defaultDarkOutlineVariant.getUIColor()),
+    colorStr:               ThemeColors.default_.name
 )
 
 var greenLightPallete = ColorScheme(
@@ -138,7 +141,8 @@ var greenLightPallete = ColorScheme(
     onError:                SwiftUI.Color(MRColors.greenLightOnError.getUIColor()),
     errorContainer:         SwiftUI.Color(MRColors.greenLightErrorContainer.getUIColor()),
     outline:                SwiftUI.Color(MRColors.greenLightOutline.getUIColor()),
-    outlineVariant:         SwiftUI.Color(MRColors.greenLightOutlineVariant.getUIColor())
+    outlineVariant:         SwiftUI.Color(MRColors.greenLightOutlineVariant.getUIColor()),
+    colorStr:               ThemeColors.green.name
 )
 
 var greenDarkPallete = ColorScheme(
@@ -167,7 +171,8 @@ var greenDarkPallete = ColorScheme(
     onError:                SwiftUI.Color(MRColors.greenDarkOnError.getUIColor()),
     errorContainer:         SwiftUI.Color(MRColors.greenDarkErrorContainer.getUIColor()),
     outline:                SwiftUI.Color(MRColors.greenDarkOutline.getUIColor()),
-    outlineVariant:         SwiftUI.Color(MRColors.greenDarkOutlineVariant.getUIColor())
+    outlineVariant:         SwiftUI.Color(MRColors.greenDarkOutlineVariant.getUIColor()),
+    colorStr:               ThemeColors.green.name
 )
 
 var redLightPallete = ColorScheme(
@@ -196,7 +201,8 @@ var redLightPallete = ColorScheme(
     onError:                SwiftUI.Color(MRColors.redLightOnError.getUIColor()),
     errorContainer:         SwiftUI.Color(MRColors.redLightErrorContainer.getUIColor()),
     outline:                SwiftUI.Color(MRColors.redLightOutline.getUIColor()),
-    outlineVariant:         SwiftUI.Color(MRColors.redLightOutlineVariant.getUIColor())
+    outlineVariant:         SwiftUI.Color(MRColors.redLightOutlineVariant.getUIColor()),
+    colorStr:               ThemeColors.red.name
 )
 
 var redDarkPallete = ColorScheme(
@@ -225,7 +231,8 @@ var redDarkPallete = ColorScheme(
     onError:                SwiftUI.Color(MRColors.redDarkOnError.getUIColor()),
     errorContainer:         SwiftUI.Color(MRColors.redDarkErrorContainer.getUIColor()),
     outline:                SwiftUI.Color(MRColors.redDarkOutline.getUIColor()),
-    outlineVariant:         SwiftUI.Color(MRColors.redDarkOutlineVariant.getUIColor())
+    outlineVariant:         SwiftUI.Color(MRColors.redDarkOutlineVariant.getUIColor()),
+    colorStr:               ThemeColors.red.name
 )
 
 var yellowLightPallete = ColorScheme(
@@ -254,7 +261,8 @@ var yellowLightPallete = ColorScheme(
     onError:                SwiftUI.Color(MRColors.yellowLightOnError.getUIColor()),
     errorContainer:         SwiftUI.Color(MRColors.yellowLightErrorContainer.getUIColor()),
     outline:                SwiftUI.Color(MRColors.yellowLightOutline.getUIColor()),
-    outlineVariant:         SwiftUI.Color(MRColors.yellowLightOutlineVariant.getUIColor())
+    outlineVariant:         SwiftUI.Color(MRColors.yellowLightOutlineVariant.getUIColor()),
+    colorStr:               ThemeColors.yellow.name
 )
 
 var yellowDarkPallete = ColorScheme(
@@ -283,5 +291,6 @@ var yellowDarkPallete = ColorScheme(
     onError:                SwiftUI.Color(MRColors.yellowDarkOnError.getUIColor()),
     errorContainer:         SwiftUI.Color(MRColors.yellowDarkErrorContainer.getUIColor()),
     outline:                SwiftUI.Color(MRColors.yellowDarkOutline.getUIColor()),
-    outlineVariant:         SwiftUI.Color(MRColors.yellowDarkOutlineVariant.getUIColor())
+    outlineVariant:         SwiftUI.Color(MRColors.yellowDarkOutlineVariant.getUIColor()),
+    colorStr:               ThemeColors.yellow.name
 )

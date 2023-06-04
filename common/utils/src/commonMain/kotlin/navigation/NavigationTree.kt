@@ -8,15 +8,9 @@ object NavigationTree {
     }
 
     enum class Start {
-        StartFlow, StartScreen, StartColorScreen, StartDescriptionScreen
+        StartFlow, HelloScreen, StartColorScreen, StartDescriptionScreen
     }
     enum class Auth {
         AuthFlow, Login
     }
-}
-
-
-fun a() {
-    MR.strings
-
 }

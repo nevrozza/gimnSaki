@@ -11,8 +11,9 @@ import SwiftUI
 
 class ThemeManager: ObservableObject {
     @Published var orientation: WindowScreen = .Vertical()
-    @Published var system: SwiftUI.ColorScheme = .dark
-    @Published var current: Theme = .redLight
+    @Published var systemTint: SwiftUI.ColorScheme = .dark
+    @Published var currentTheme: Theme = .redLight
+    @Published var tint: String = ThemeTint.auto_.name
 }
 
 class Theme: ObservableObject {

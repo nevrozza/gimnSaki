@@ -11,10 +11,10 @@ import SharedSDK
 
 
 
-struct StartScreen: View {
+struct HelloScreen: View {
     @EnvironmentObject var themeManager: ThemeManager
     @EnvironmentObject var currentScreen: CurrentScreen
-    @State private  var startViewModel = StartViewModel()
+    @State private var helloViewModel = HelloViewModel()
     
 
     
@@ -22,16 +22,16 @@ struct StartScreen: View {
     var body: some View {
         
         ObservingView(
-            statePublisher: statePublisher(startViewModel.viewStates())
+            statePublisher: statePublisher(helloViewModel.viewStates())
         ) { viewState in
-            StartView(state: viewState) { event in
-                startViewModel.obtainEvent(viewEvent: event)
+            HelloView(state: viewState) { event in
+                helloViewModel.obtainEvent(viewEvent: event)
             }.environmentObject(themeManager)
                 
         }
-        .onReceive(sharePublisher(startViewModel.viewActions())) { action in
+        .onReceive(sharePublisher(helloViewModel.viewActions())) { action in
             switch action {
-            case StartAction.OpenStartColor():
+            case HelloAction.OpenStartColor():
                 withAnimation {
                     currentScreen.value = NavigationTree.Start.startcolorscreen.name
                 }

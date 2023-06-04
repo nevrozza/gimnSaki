@@ -4,26 +4,25 @@ import SharedSDK
 
 
 struct ContentView: View {
-    @Environment(\.colorScheme) var currentSystemScheme
+    @Environment(\.colorScheme) var systemTint
     
     
     @EnvironmentObject var themeManager: ThemeManager
     var body: some View {
         
         Color.clear.onAppear {
-            if(currentSystemScheme == .dark) {themeManager.system = .light} else { themeManager.system = .dark}
+            if(systemTint == .dark) {themeManager.systemTint = .light} else { themeManager.systemTint = .dark}
         }
-        .onChange(of: currentSystemScheme) { _ in
-            themeManager.system = currentSystemScheme
-            themeManager.current.colorScheme = schemeChoser(isDark: themeManager.system == .light, color: nil)
+        .onChange(of: systemTint) { _ in
+            themeManager.systemTint = systemTint
+            themeManager.currentTheme.colorScheme = schemeChoser(isDark: themeManager.systemTint == .light, color: nil)
             
         }
         
-        let colors = themeManager.current.colorScheme
         StartFlow()
-
+            .background(themeManager.currentTheme.colorScheme.background)
+            .background(ignoresSafeAreaEdges: [.top, .bottom, .leading, .trailing])
             .environmentObject(themeManager)
-        
     }
 }
 

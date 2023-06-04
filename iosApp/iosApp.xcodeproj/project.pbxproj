@@ -15,8 +15,10 @@
 		870B54B62A2A33470000D9E0 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870B54B52A2A33470000D9E0 /* Theme.swift */; };
 		870B54B82A2A3D450000D9E0 /* ColorSchemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870B54B72A2A3D450000D9E0 /* ColorSchemes.swift */; };
 		870B54BC2A2A4A930000D9E0 /* Adaptive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870B54BB2A2A4A920000D9E0 /* Adaptive.swift */; };
-		8718E0E32A2BB5E2004C0D7A /* StartScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8718E0E22A2BB5E2004C0D7A /* StartScreen.swift */; };
-		8718E0E52A2BB7B6004C0D7A /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8718E0E42A2BB7B6004C0D7A /* StartView.swift */; };
+		870FB71D2A2CEED600BEFEB2 /* ThemeChangerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870FB71C2A2CEED600BEFEB2 /* ThemeChangerScreen.swift */; };
+		870FB71F2A2CF13700BEFEB2 /* ThemeChangerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870FB71E2A2CF13700BEFEB2 /* ThemeChangerView.swift */; };
+		8718E0E32A2BB5E2004C0D7A /* HelloScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8718E0E22A2BB5E2004C0D7A /* HelloScreen.swift */; };
+		8718E0E52A2BB7B6004C0D7A /* HelloView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8718E0E42A2BB7B6004C0D7A /* HelloView.swift */; };
 		876219212A290B16008570B5 /* Flow + Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876219202A290B16008570B5 /* Flow + Publisher.swift */; };
 		876219232A290B2F008570B5 /* ViewModel + View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876219222A290B2F008570B5 /* ViewModel + View.swift */; };
 		87F791C32A2C337E0072A943 /* NavigationTransitions in Frameworks */ = {isa = PBXBuildFile; productRef = 87F791C22A2C337E0072A943 /* NavigationTransitions */; };
@@ -33,8 +35,10 @@
 		870B54B52A2A33470000D9E0 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		870B54B72A2A3D450000D9E0 /* ColorSchemes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSchemes.swift; sourceTree = "<group>"; };
 		870B54BB2A2A4A920000D9E0 /* Adaptive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adaptive.swift; sourceTree = "<group>"; };
-		8718E0E22A2BB5E2004C0D7A /* StartScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreen.swift; sourceTree = "<group>"; };
-		8718E0E42A2BB7B6004C0D7A /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
+		870FB71C2A2CEED600BEFEB2 /* ThemeChangerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeChangerScreen.swift; sourceTree = "<group>"; };
+		870FB71E2A2CF13700BEFEB2 /* ThemeChangerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeChangerView.swift; sourceTree = "<group>"; };
+		8718E0E22A2BB5E2004C0D7A /* HelloScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloScreen.swift; sourceTree = "<group>"; };
+		8718E0E42A2BB7B6004C0D7A /* HelloView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloView.swift; sourceTree = "<group>"; };
 		876219202A290B16008570B5 /* Flow + Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flow + Publisher.swift"; sourceTree = "<group>"; };
 		876219222A290B2F008570B5 /* ViewModel + View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel + View.swift"; sourceTree = "<group>"; };
 		87F791C42A2C36B40072A943 /* StartFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartFlow.swift; sourceTree = "<group>"; };
@@ -130,9 +134,36 @@
 			path = Senior;
 			sourceTree = "<group>";
 		};
+		870FB7192A2CE8A700BEFEB2 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				870FB71B2A2CECA400BEFEB2 /* ThemeChanger */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		870FB71A2A2CE8E800BEFEB2 /* Hello */ = {
+			isa = PBXGroup;
+			children = (
+				8718E0E22A2BB5E2004C0D7A /* HelloScreen.swift */,
+				8718E0E42A2BB7B6004C0D7A /* HelloView.swift */,
+			);
+			path = Hello;
+			sourceTree = "<group>";
+		};
+		870FB71B2A2CECA400BEFEB2 /* ThemeChanger */ = {
+			isa = PBXGroup;
+			children = (
+				870FB71C2A2CEED600BEFEB2 /* ThemeChangerScreen.swift */,
+				870FB71E2A2CF13700BEFEB2 /* ThemeChangerView.swift */,
+			);
+			path = ThemeChanger;
+			sourceTree = "<group>";
+		};
 		8718E0DF2A2BB4A7004C0D7A /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				870FB7192A2CE8A700BEFEB2 /* Settings */,
 				8718E0E12A2BB5C4004C0D7A /* Start */,
 				8718E0E02A2BB4AF004C0D7A /* Init */,
 			);
@@ -151,8 +182,7 @@
 		8718E0E12A2BB5C4004C0D7A /* Start */ = {
 			isa = PBXGroup;
 			children = (
-				8718E0E22A2BB5E2004C0D7A /* StartScreen.swift */,
-				8718E0E42A2BB7B6004C0D7A /* StartView.swift */,
+				870FB71A2A2CE8E800BEFEB2 /* Hello */,
 				87F791C42A2C36B40072A943 /* StartFlow.swift */,
 			);
 			path = Start;
@@ -287,12 +317,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8718E0E52A2BB7B6004C0D7A /* StartView.swift in Sources */,
+				8718E0E52A2BB7B6004C0D7A /* HelloView.swift in Sources */,
 				870B54BC2A2A4A930000D9E0 /* Adaptive.swift in Sources */,
 				876219212A290B16008570B5 /* Flow + Publisher.swift in Sources */,
-				8718E0E32A2BB5E2004C0D7A /* StartScreen.swift in Sources */,
+				8718E0E32A2BB5E2004C0D7A /* HelloScreen.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
+				870FB71D2A2CEED600BEFEB2 /* ThemeChangerScreen.swift in Sources */,
+				870FB71F2A2CF13700BEFEB2 /* ThemeChangerView.swift in Sources */,
 				870B54B62A2A33470000D9E0 /* Theme.swift in Sources */,
 				876219232A290B2F008570B5 /* ViewModel + View.swift in Sources */,
 				87F791C52A2C36B40072A943 /* StartFlow.swift in Sources */,

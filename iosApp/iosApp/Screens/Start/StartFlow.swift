@@ -10,7 +10,7 @@ import SwiftUI
 import SharedSDK
 
 class CurrentScreen: ObservableObject {
-    @Published var value: String = NavigationTree.Start.startscreen.name
+    @Published var value: String = NavigationTree.Start.helloscreen.name
 }
 
 struct StartFlow: View {
@@ -19,22 +19,26 @@ struct StartFlow: View {
     @EnvironmentObject var themeManager: ThemeManager
 
     var body: some View {
-        let colors = themeManager.current.colorScheme
+        let colors = themeManager.currentTheme.colorScheme
 
-            if(currentScreen.value == NavigationTree.Start.startscreen.name) {
-                    StartScreen()
+            if(currentScreen.value == NavigationTree.Start.helloscreen.name) {
+                    HelloScreen()
+                
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(colors.background)
-                        .background(ignoresSafeAreaEdges: [.top, .bottom, .leading, .trailing])
+                
                         .environmentObject(themeManager)
                         .environmentObject(currentScreen)
                         .transition(.move(edge: .top))
             } else {
-                Text("asdaasda")
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(colors.background)
-                    .background(ignoresSafeAreaEdges: [.top, .bottom, .leading, .trailing])
-                    .transition(.move(edge: .bottom))
+                VStack {
+                    ThemeChangerScreen(isStart: true, colorStr: themeManager.currentTheme.colorScheme.colorStr, tint: themeManager.tint)
+                        .environmentObject(themeManager)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        
+                        
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .transition(.move(edge: .bottom))
                     .onAppear {
                         withAnimation{}
                     }

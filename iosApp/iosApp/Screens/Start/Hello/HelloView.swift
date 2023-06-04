@@ -9,15 +9,15 @@
 import SwiftUI
 import SharedSDK
 
-struct StartView: View {
+struct HelloView: View {
     @EnvironmentObject var themeManager: ThemeManager
    
     
-    let state: StartViewState
-    let eventHandler: (StartEvent) -> Void
+    let state: HelloViewState
+    let eventHandler: (HelloEvent) -> Void
     
     var body: some View {
-        Text(state.text).background(themeManager.current.colorScheme.background)
+        Text(state.text).background(themeManager.currentTheme.colorScheme.background)
     }
 }
 
