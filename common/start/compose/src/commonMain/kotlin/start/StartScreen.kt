@@ -25,18 +25,9 @@ fun StartScreen() {
         val state = viewModel.viewStates().observeAsState()
         val action = viewModel.viewActions().observeAsState()
 
-        val stateTransition = remember {
-            MutableTransitionState(false).apply {
-                targetState = true
-            }
-        }
 
-        AnimatedVisibility(visibleState = stateTransition, enter = fadeIn(spring(stiffness = Spring.StiffnessLow))) {
-            StartView(state = state.value) {
-                viewModel.obtainEvent(it)
-            }
-        }
 
+        StartView(state = state.value) { viewModel.obtainEvent(it) }
 
         when (action.value) {
             is StartAction.OpenStartColor -> rootController.present(screen = NavigationTree.Start.StartColorScreen.name, launchFlag = LaunchFlag.SingleNewTask)

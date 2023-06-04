@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,8 +15,12 @@
 		870B54B62A2A33470000D9E0 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870B54B52A2A33470000D9E0 /* Theme.swift */; };
 		870B54B82A2A3D450000D9E0 /* ColorSchemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870B54B72A2A3D450000D9E0 /* ColorSchemes.swift */; };
 		870B54BC2A2A4A930000D9E0 /* Adaptive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870B54BB2A2A4A920000D9E0 /* Adaptive.swift */; };
+		8718E0E32A2BB5E2004C0D7A /* StartScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8718E0E22A2BB5E2004C0D7A /* StartScreen.swift */; };
+		8718E0E52A2BB7B6004C0D7A /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8718E0E42A2BB7B6004C0D7A /* StartView.swift */; };
 		876219212A290B16008570B5 /* Flow + Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876219202A290B16008570B5 /* Flow + Publisher.swift */; };
 		876219232A290B2F008570B5 /* ViewModel + View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876219222A290B2F008570B5 /* ViewModel + View.swift */; };
+		87F791C32A2C337E0072A943 /* NavigationTransitions in Frameworks */ = {isa = PBXBuildFile; productRef = 87F791C22A2C337E0072A943 /* NavigationTransitions */; };
+		87F791C52A2C36B40072A943 /* StartFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F791C42A2C36B40072A943 /* StartFlow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,8 +33,11 @@
 		870B54B52A2A33470000D9E0 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		870B54B72A2A3D450000D9E0 /* ColorSchemes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSchemes.swift; sourceTree = "<group>"; };
 		870B54BB2A2A4A920000D9E0 /* Adaptive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adaptive.swift; sourceTree = "<group>"; };
+		8718E0E22A2BB5E2004C0D7A /* StartScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreen.swift; sourceTree = "<group>"; };
+		8718E0E42A2BB7B6004C0D7A /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		876219202A290B16008570B5 /* Flow + Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flow + Publisher.swift"; sourceTree = "<group>"; };
 		876219222A290B2F008570B5 /* ViewModel + View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel + View.swift"; sourceTree = "<group>"; };
+		87F791C42A2C36B40072A943 /* StartFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartFlow.swift; sourceTree = "<group>"; };
 		C1F1121A1E6030F552E9818C /* Pods-iosApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.release.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.release.xcconfig"; sourceTree = "<group>"; };
 		E5CC0266566FEC8E2889BE54 /* Pods_iosApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA3D49F8C764F1DE2B9E7696 /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.debug.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -42,6 +49,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				079C895B001611768525A964 /* Pods_iosApp.framework in Frameworks */,
+				87F791C32A2C337E0072A943 /* NavigationTransitions in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,11 +93,10 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				8718E0DF2A2BB4A7004C0D7A /* Screens */,
 				8762191F2A290946008570B5 /* Utils */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
-				7555FF82242A565900829871 /* ContentView.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
-				2152FB032600AC8F00CF470E /* iOSApp.swift */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
 			);
 			path = iosApp;
@@ -123,6 +130,34 @@
 			path = Senior;
 			sourceTree = "<group>";
 		};
+		8718E0DF2A2BB4A7004C0D7A /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				8718E0E12A2BB5C4004C0D7A /* Start */,
+				8718E0E02A2BB4AF004C0D7A /* Init */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		8718E0E02A2BB4AF004C0D7A /* Init */ = {
+			isa = PBXGroup;
+			children = (
+				7555FF82242A565900829871 /* ContentView.swift */,
+				2152FB032600AC8F00CF470E /* iOSApp.swift */,
+			);
+			path = Init;
+			sourceTree = "<group>";
+		};
+		8718E0E12A2BB5C4004C0D7A /* Start */ = {
+			isa = PBXGroup;
+			children = (
+				8718E0E22A2BB5E2004C0D7A /* StartScreen.swift */,
+				8718E0E42A2BB7B6004C0D7A /* StartView.swift */,
+				87F791C42A2C36B40072A943 /* StartFlow.swift */,
+			);
+			path = Start;
+			sourceTree = "<group>";
+		};
 		8762191F2A290946008570B5 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -150,6 +185,9 @@
 			dependencies = (
 			);
 			name = iosApp;
+			packageProductDependencies = (
+				87F791C22A2C337E0072A943 /* NavigationTransitions */,
+			);
 			productName = iosApp;
 			productReference = 7555FF7B242A565900829871 /* iosApp.app */;
 			productType = "com.apple.product-type.application";
@@ -178,6 +216,9 @@
 				Base,
 			);
 			mainGroup = 7555FF72242A565900829871;
+			packageReferences = (
+				87F791C12A2C337E0072A943 /* XCRemoteSwiftPackageReference "swiftui-navigation-transitions" */,
+			);
 			productRefGroup = 7555FF7C242A565900829871 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -246,12 +287,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8718E0E52A2BB7B6004C0D7A /* StartView.swift in Sources */,
 				870B54BC2A2A4A930000D9E0 /* Adaptive.swift in Sources */,
 				876219212A290B16008570B5 /* Flow + Publisher.swift in Sources */,
+				8718E0E32A2BB5E2004C0D7A /* StartScreen.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				870B54B62A2A33470000D9E0 /* Theme.swift in Sources */,
 				876219232A290B2F008570B5 /* ViewModel + View.swift in Sources */,
+				87F791C52A2C36B40072A943 /* StartFlow.swift in Sources */,
 				870B54B82A2A3D450000D9E0 /* ColorSchemes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -461,6 +505,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		87F791C12A2C337E0072A943 /* XCRemoteSwiftPackageReference "swiftui-navigation-transitions" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/davdroman/swiftui-navigation-transitions";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		87F791C22A2C337E0072A943 /* NavigationTransitions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 87F791C12A2C337E0072A943 /* XCRemoteSwiftPackageReference "swiftui-navigation-transitions" */;
+			productName = NavigationTransitions;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7555FF73242A565900829871 /* Project object */;
 }

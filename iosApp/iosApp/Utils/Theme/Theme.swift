@@ -6,23 +6,26 @@
 //  Copyright © 2023 orgName. All rights reserved.
 //
 
-import Foundation
 import SharedSDK
 import SwiftUI
 
 class ThemeManager: ObservableObject {
-    @Published var orientation: CustomDeviceOrientation = .Vertical
-    
+    @Published var orientation: WindowScreen = .Vertical()
+    @Published var system: SwiftUI.ColorScheme = .dark
     @Published var current: Theme = .redLight
 }
 
-
 class Theme: ObservableObject {
-    let colorScheme: ColorScheme
+    var colorScheme: ColorScheme
     
     init(colorScheme: ColorScheme) {
         self.colorScheme = colorScheme
     }
+}
+
+class gay {
+    static let shared = gay()
+    @State var check = ""
 }
 
 extension Theme {
@@ -36,11 +39,42 @@ extension Theme {
     static let yellowDark  = Theme(colorScheme: yellowDarkPallete)
 }
 
-func themeInit(settingsRepository: SettingsRepositorySwift) {
-    if(settingsRepository.fetchThemeTint().isEmpty
-            && settingsRepository.fetchThemeColor().isEmpty) {
+func themeInit(settingsRepository: SettingsRepository) {
+    let tint = settingsRepository.fetchThemeTint()
+    let color = settingsRepository.fetchThemeColor()
+    
+    
+    if(tint.isEmpty && color.isEmpty) {
         settingsRepository.saveThemeColor(color: ThemeColors.default_.name)
         settingsRepository.saveThemeTint(tint: ThemeTint.auto_.name)
         }
+}
+
+
+
+func schemeChoser(isDark: Bool, color: String?) -> ColorScheme {
+    if (isDark) {
+        switch (color) {
+        case ThemeColors.yellow.name:
+            return yellowDarkPallete
+        case ThemeColors.green.name:
+            return greenDarkPallete
+        case ThemeColors.red.name:
+            return redDarkPallete
+        default:
+            return defaultDarkPallete
+        }
+    } else {
+        switch (color) {
+        case ThemeColors.yellow.name:
+            return yellowLightPallete
+        case ThemeColors.green.name:
+            return greenLightPallete
+        case ThemeColors.red.name:
+            return redLightPallete
+        default:
+            return defaultLightPallete
+        }
+    }
 }
 
