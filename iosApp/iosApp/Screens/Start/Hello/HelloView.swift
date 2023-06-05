@@ -17,7 +17,8 @@ struct HelloView: View {
     let eventHandler: (HelloEvent) -> Void
     
     var body: some View {
-        Text(state.text).background(themeManager.currentTheme.colorScheme.background)
+        Text(themeManager.orientation.description)
+//        Text(state.text).background(themeManager.currentTheme.colorScheme.background)
     }
 }
 

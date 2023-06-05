@@ -19,13 +19,11 @@ struct StartFlow: View {
     @EnvironmentObject var themeManager: ThemeManager
 
     var body: some View {
-        let colors = themeManager.currentTheme.colorScheme
+        
 
             if(currentScreen.value == NavigationTree.Start.helloscreen.name) {
                     HelloScreen()
-                
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                
                         .environmentObject(themeManager)
                         .environmentObject(currentScreen)
                         .transition(.move(edge: .top))
@@ -33,15 +31,8 @@ struct StartFlow: View {
                 VStack {
                     ThemeChangerScreen(isStart: true, colorStr: themeManager.currentTheme.colorScheme.colorStr, tint: themeManager.tint)
                         .environmentObject(themeManager)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        
-                        
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .transition(.move(edge: .bottom))
-                    .onAppear {
-                        withAnimation{}
-                    }
 
             }
 

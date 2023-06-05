@@ -10,7 +10,8 @@ import SharedSDK
 import SwiftUI
 
 class ThemeManager: ObservableObject {
-    @Published var orientation: WindowScreen = .Vertical()
+    @Published var orientation: WindowScreen = calculateFromScreen(size: UIScreen.main.bounds.size)
+    @Published var size: CGSize = UIScreen.main.bounds.size
     @Published var systemTint: SwiftUI.ColorScheme = .dark
     @Published var currentTheme: Theme = .redLight
     @Published var tint: String = ThemeTint.auto_.name
@@ -24,10 +25,6 @@ class Theme: ObservableObject {
     }
 }
 
-class gay {
-    static let shared = gay()
-    @State var check = ""
-}
 
 extension Theme {
     static let defaultLight = Theme(colorScheme: defaultLightPallete)
@@ -44,11 +41,10 @@ func themeInit(settingsRepository: SettingsRepository) {
     let tint = settingsRepository.fetchThemeTint()
     let color = settingsRepository.fetchThemeColor()
     
-    
     if(tint.isEmpty && color.isEmpty) {
         settingsRepository.saveThemeColor(color: ThemeColors.default_.name)
         settingsRepository.saveThemeTint(tint: ThemeTint.auto_.name)
-        }
+    }
 }
 
 

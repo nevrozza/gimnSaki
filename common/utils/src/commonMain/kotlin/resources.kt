@@ -4,13 +4,13 @@ import dev.icerock.moko.resources.StringResource
 
 val MRStrings = DMRStrings()
 
-data class DMRStrings(
-    val darkTheme: StringResource                       = MR.strings.darkTheme,
-    val lightTheme: StringResource                      = MR.strings.lightTheme,
-    val autoTheme: StringResource                       = MR.strings.autoTheme,
-    val chooseTheme: StringResource                     = MR.strings.chooseTheme,
+class DMRStrings {
+    val darkTheme: StringResource                       = MR.strings.darkTheme
+    val lightTheme: StringResource                      = MR.strings.lightTheme
+    val autoTheme: StringResource                       = MR.strings.autoTheme
+    val chooseTheme: StringResource                     = MR.strings.chooseTheme
     val chooseThemeUnder: StringResource                = MR.strings.chooseThemeUnder
-)
+}
 
 val MRColors = DMRColors()
 

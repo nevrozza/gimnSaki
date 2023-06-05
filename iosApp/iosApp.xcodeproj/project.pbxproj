@@ -19,6 +19,7 @@
 		870FB71F2A2CF13700BEFEB2 /* ThemeChangerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870FB71E2A2CF13700BEFEB2 /* ThemeChangerView.swift */; };
 		8718E0E32A2BB5E2004C0D7A /* HelloScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8718E0E22A2BB5E2004C0D7A /* HelloScreen.swift */; };
 		8718E0E52A2BB7B6004C0D7A /* HelloView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8718E0E42A2BB7B6004C0D7A /* HelloView.swift */; };
+		874328072A2D6D37005EE343 /* ElevatedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874328062A2D6D37005EE343 /* ElevatedCard.swift */; };
 		876219212A290B16008570B5 /* Flow + Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876219202A290B16008570B5 /* Flow + Publisher.swift */; };
 		876219232A290B2F008570B5 /* ViewModel + View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876219222A290B2F008570B5 /* ViewModel + View.swift */; };
 		87F791C32A2C337E0072A943 /* NavigationTransitions in Frameworks */ = {isa = PBXBuildFile; productRef = 87F791C22A2C337E0072A943 /* NavigationTransitions */; };
@@ -39,6 +40,7 @@
 		870FB71E2A2CF13700BEFEB2 /* ThemeChangerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeChangerView.swift; sourceTree = "<group>"; };
 		8718E0E22A2BB5E2004C0D7A /* HelloScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloScreen.swift; sourceTree = "<group>"; };
 		8718E0E42A2BB7B6004C0D7A /* HelloView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloView.swift; sourceTree = "<group>"; };
+		874328062A2D6D37005EE343 /* ElevatedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElevatedCard.swift; sourceTree = "<group>"; };
 		876219202A290B16008570B5 /* Flow + Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flow + Publisher.swift"; sourceTree = "<group>"; };
 		876219222A290B2F008570B5 /* ViewModel + View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel + View.swift"; sourceTree = "<group>"; };
 		87F791C42A2C36B40072A943 /* StartFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartFlow.swift; sourceTree = "<group>"; };
@@ -98,10 +100,10 @@
 			isa = PBXGroup;
 			children = (
 				8718E0DF2A2BB4A7004C0D7A /* Screens */,
+				874328052A2D6D05005EE343 /* Widgets */,
 				8762191F2A290946008570B5 /* Utils */,
-				058557BA273AAA24004C7B11 /* Assets.xcassets */,
-				7555FF8C242A565B00829871 /* Info.plist */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
+				7555FF8C242A565B00829871 /* Info.plist */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -128,6 +130,7 @@
 		870B54BA2A2A3DB80000D9E0 /* Senior */ = {
 			isa = PBXGroup;
 			children = (
+				058557BA273AAA24004C7B11 /* Assets.xcassets */,
 				876219202A290B16008570B5 /* Flow + Publisher.swift */,
 				876219222A290B2F008570B5 /* ViewModel + View.swift */,
 			);
@@ -186,6 +189,14 @@
 				87F791C42A2C36B40072A943 /* StartFlow.swift */,
 			);
 			path = Start;
+			sourceTree = "<group>";
+		};
+		874328052A2D6D05005EE343 /* Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				874328062A2D6D37005EE343 /* ElevatedCard.swift */,
+			);
+			path = Widgets;
 			sourceTree = "<group>";
 		};
 		8762191F2A290946008570B5 /* Utils */ = {
@@ -323,6 +334,7 @@
 				8718E0E32A2BB5E2004C0D7A /* HelloScreen.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
+				874328072A2D6D37005EE343 /* ElevatedCard.swift in Sources */,
 				870FB71D2A2CEED600BEFEB2 /* ThemeChangerScreen.swift in Sources */,
 				870FB71F2A2CF13700BEFEB2 /* ThemeChangerView.swift in Sources */,
 				870B54B62A2A33470000D9E0 /* Theme.swift in Sources */,

@@ -78,7 +78,6 @@ fun ThemeChangerView(
     isStart: Boolean = false,
     eventHandler: (ThemeChangerEvent) -> Unit
 ) {
-    val themeManager = LocalThemeManager.current
 
     val fullScreenConstraints = LocalFullScreenConstraints.current
     val screen = LocalWindowScreen.current
