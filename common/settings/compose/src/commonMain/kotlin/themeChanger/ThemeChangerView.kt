@@ -340,14 +340,14 @@ fun ThemePreview() {
                     Card(Modifier.fillMaxWidth(0.84f).fillMaxHeight(0.088f), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)) {}
                 }
                 Row() {
-                    Column {
-                        Spacer(Modifier.fillMaxWidth(0.13f).fillMaxHeight(0.22f))
+                    Column (modifier = Modifier.fillMaxHeight(), verticalArrangement = Arrangement.Bottom) {
+
                         Card(
-                            Modifier.fillMaxWidth(0.13f).fillMaxHeight(0.59f)
+                            Modifier.fillMaxWidth(0.13f).fillMaxHeight(0.50f)
                                 .padding(bottom = 3.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary)
                         ) {}
                         Card(
-                            Modifier.fillMaxWidth(0.13f).fillMaxHeight(1f).size(40.dp, 150.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+                            Modifier.fillMaxWidth(0.13f).fillMaxHeight(0.60f), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
                         ) {}
                     }
                     Column {
@@ -378,12 +378,11 @@ fun ThemePreview() {
                                         .padding(top = 3.dp, bottom = 3.dp, end = 3.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary)
                                 ) {}
                             }
-                            Column {
                                 Card(
                                     Modifier.fillMaxWidth(0.8f).fillMaxHeight(0.34f)
                                         .padding(vertical = 3.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary)
                                 ) {}
-                            }
+
                         }
                         Row {
                             Column {

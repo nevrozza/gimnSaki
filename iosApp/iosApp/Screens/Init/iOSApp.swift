@@ -19,9 +19,21 @@ struct iOSApp: App {
                         themeManager.orientation = calculateFromScreen(size: UIScreen.main.bounds.size)
                     }
                 }
+                .onChange(of: themeManager.tint) { isDark in
+                    if let window = UIApplication.shared.keyWindow {
+                        UIView.transition (with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
+                            window.overrideUserInterfaceStyle = (themeManager.tint == ThemeTint.dark.name) ? .dark :
+                                                               (themeManager.tint == ThemeTint.light.name) ? .light :
+                                                               (themeManager.tint == ThemeTint.auto_.name) ? .unspecified :
+                                                               .unspecified
+                        }, completion: nil)
+                    }
+                }
                 .environmentObject(themeManager)
             }
+        
         }
+    
     
     private func setupThemeManager() {
         let settingsRepository = FuckSwift().settingsRepository()

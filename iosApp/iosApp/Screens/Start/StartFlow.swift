@@ -28,11 +28,13 @@ struct StartFlow: View {
                         .environmentObject(currentScreen)
                         .transition(.move(edge: .top))
             } else {
-                VStack {
-                    ThemeChangerScreen(isStart: true, colorStr: themeManager.currentTheme.colorScheme.colorStr, tint: themeManager.tint)
-                        .environmentObject(themeManager)
+                ZStack {
+                    
+                        ThemeChangerScreen(isStart: true, colorStr: themeManager.currentTheme.colorScheme.colorStr, tint: themeManager.tint)
+                            .environmentObject(themeManager)
+                            
+                
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
 
             }
 

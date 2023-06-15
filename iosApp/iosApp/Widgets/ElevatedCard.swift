@@ -8,19 +8,23 @@
 
 import SwiftUI
 
-struct ElevatedCard: View {
+struct ElevatedCard<Accessory: View>: View {
     let colors: ColorScheme
-    @ViewBuilder let content: () -> AnyView
+    let content: () -> Accessory
     
     
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 10)
-                .fill(colors.surface)
-                .shadow(color: colors.scrim , radius: 2, x: 0, y: 1)
-            
+            colors.surface.frame(width: .infinity, height: .infinity)
+                
+                
             content()
+                
         }
+        .cornerRadius(10)
+        .shadow(color: colors.scrim , radius: 2, x: 0, y: 1)
+        
+        
     }
 }
 

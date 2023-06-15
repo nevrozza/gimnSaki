@@ -25,14 +25,20 @@ struct ThemeChangerScreen: View {
         self.tint = tint
         self.themeChangerViewModel = ThemeChangerViewModel(color: colorStr, tint: tint)
     }
-    
+    @State private var progress: Double = 0.0
     var body: some View {
         ObservingView(
             statePublisher: statePublisher(themeChangerViewModel.viewStates())
         ) { viewState in
-            ThemeChangerView(state: viewState, isStart: isStart) { event in
-                themeChangerViewModel.obtainEvent(viewEvent: event)
-            }.environmentObject(themeManager)
+            
+            
+                    ThemeChangerView(state: viewState, isStart: isStart) { event in
+                        themeChangerViewModel.obtainEvent(viewEvent: event)
+                    }
+            
+                    .environmentObject(themeManager)
+                    
+            
         }
         
         .onReceive(sharePublisher(themeChangerViewModel.viewActions())) { action in
@@ -42,7 +48,8 @@ struct ThemeChangerScreen: View {
             case ThemeChangerAction.UpdateColor():
                 break
             case ThemeChangerAction.UpdateTint():
-                break
+                themeManager.tint = themeChangerViewModel.viewState.tint
+                themeChangerViewModel.viewAction = nil
             default:
                 break
             }
