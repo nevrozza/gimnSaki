@@ -10,6 +10,7 @@ struct iOSApp: App {
     
 	var body: some Scene {
         WindowGroup {
+            
             ContentView()
                 .onAppear {
                     setupThemeManager()
@@ -42,7 +43,9 @@ struct iOSApp: App {
                     themeManager.currentTheme.colorScheme = schemeChoser(isDark: isDark, color: themeManager.color)
                 }
                 .environmentObject(themeManager)
-            }
+                }
+            
+            
         
         }
     

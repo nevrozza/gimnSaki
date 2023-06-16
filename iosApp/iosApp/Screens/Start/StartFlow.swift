@@ -22,19 +22,30 @@ struct StartFlow: View {
         
 
             if(currentScreen.value == NavigationTree.Start.helloscreen.name) {
+                
+                    
                     HelloScreen()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .environmentObject(themeManager)
                         .environmentObject(currentScreen)
                         .transition(.move(edge: .top))
             } else {
-                ZStack {
-                    
+                
+                NavigationView {
+                    ZStack {
+                        themeManager.currentTheme.colorScheme.background.edgesIgnoringSafeArea(.all)
+                        
                         ThemeChangerScreen(isStart: true, colorStr: themeManager.currentTheme.colorScheme.colorStr, tint: themeManager.tint)
                             .environmentObject(themeManager)
-                            
-                
+                    }
+                    .navigationBarHidden(true)
+                    .navigationTitle("Тема")
+                    .navigationBarTitleDisplayMode(.inline)
                 }
+                .accentColor(themeManager.currentTheme.colorScheme.primary)
+                .navigationViewStyle(.stack)
+                
+                
 
             }
 

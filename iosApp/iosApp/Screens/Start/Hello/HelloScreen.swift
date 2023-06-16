@@ -24,6 +24,7 @@ struct HelloScreen: View {
         ObservingView(
             statePublisher: statePublisher(helloViewModel.viewStates())
         ) { viewState in
+            
             HelloView(state: viewState) { event in
                 helloViewModel.obtainEvent(viewEvent: event)
             }.environmentObject(themeManager)

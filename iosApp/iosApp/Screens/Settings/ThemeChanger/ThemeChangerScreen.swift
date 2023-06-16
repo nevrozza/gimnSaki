@@ -27,23 +27,35 @@ struct ThemeChangerScreen: View {
     }
     @State private var progress: Double = 0.0
     var body: some View {
+        
+        
         ObservingView(
             statePublisher: statePublisher(themeChangerViewModel.viewStates())
         ) { viewState in
-            
-            
                 ThemeChangerView(state: viewState, isStart: isStart) { event in
                     themeChangerViewModel.obtainEvent(viewEvent: event)
                 }
                 .environmentObject(themeManager)
-            
-            
         }
+        
+        NavigationLink(
+            destination:
+                ZStack (alignment: .top) {
+                    
+                    themeManager.currentTheme.colorScheme.background.edgesIgnoringSafeArea(.all)
+                    Text("hello")
+                        .navigationTitle("Описание")
+//                        .navigationBackButton(color: themeManager.currentTheme.colorScheme.primary)
+                },
+            isActive: $isStartDescriptionPresented) {
+                
+            }
         
         .onReceive(sharePublisher(themeChangerViewModel.viewActions())) { action in
             switch action {
             case ThemeChangerAction.OpenStartDescription():
                 isStartDescriptionPresented = true
+                themeChangerViewModel.viewAction = nil
             case ThemeChangerAction.UpdateColor():
                 if let window = UIApplication.shared.keyWindow {
                     UIView.transition (with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
@@ -58,6 +70,8 @@ struct ThemeChangerScreen: View {
                 break
             }
         }
+        
+        
     }
     
 }

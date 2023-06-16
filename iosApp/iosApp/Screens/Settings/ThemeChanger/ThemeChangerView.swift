@@ -115,7 +115,7 @@ private struct ExpandedView: View {
                     ZStack() {
                         if(!isAnimating) {
                             Button(action: {eventHandler(.NextPressed())} ) {
-                                Text("Готово!")
+                                Text("Далее")
                                     .frame(maxWidth: .infinity, maxHeight: 10)
                                     .padding()
                                     .background(colors.secondaryContainer)
@@ -259,7 +259,7 @@ private struct NextButton: View {
         ZStack {
             if(!isAnimating) {
                 Button(action: {eventHandler(.NextPressed())}) {
-                    Text("Готово!")
+                    Text("Далее")
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(colors.secondaryContainer)

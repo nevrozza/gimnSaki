@@ -16,6 +16,7 @@ class ThemeManager: ObservableObject {
     @Published var currentTheme: Theme = .redLight
     @Published var tint: String = ThemeTint.auto_.name
     @Published var color: String = ThemeColors.default_.name
+//    @Published var currentScreen: String = NavigationTree.Start.helloscreen.name
 }
 
 class Theme: ObservableObject {

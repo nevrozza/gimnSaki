@@ -22,6 +22,7 @@
 		874328072A2D6D37005EE343 /* ElevatedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874328062A2D6D37005EE343 /* ElevatedCard.swift */; };
 		876219212A290B16008570B5 /* Flow + Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876219202A290B16008570B5 /* Flow + Publisher.swift */; };
 		876219232A290B2F008570B5 /* ViewModel + View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876219222A290B2F008570B5 /* ViewModel + View.swift */; };
+		8775E24E2A3CD1550031AD18 /* Custom Back Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8775E24D2A3CD1550031AD18 /* Custom Back Button.swift */; };
 		87F791C32A2C337E0072A943 /* NavigationTransitions in Frameworks */ = {isa = PBXBuildFile; productRef = 87F791C22A2C337E0072A943 /* NavigationTransitions */; };
 		87F791C52A2C36B40072A943 /* StartFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F791C42A2C36B40072A943 /* StartFlow.swift */; };
 /* End PBXBuildFile section */
@@ -43,6 +44,7 @@
 		874328062A2D6D37005EE343 /* ElevatedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElevatedCard.swift; sourceTree = "<group>"; };
 		876219202A290B16008570B5 /* Flow + Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flow + Publisher.swift"; sourceTree = "<group>"; };
 		876219222A290B2F008570B5 /* ViewModel + View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel + View.swift"; sourceTree = "<group>"; };
+		8775E24D2A3CD1550031AD18 /* Custom Back Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom Back Button.swift"; sourceTree = "<group>"; };
 		87F791C42A2C36B40072A943 /* StartFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartFlow.swift; sourceTree = "<group>"; };
 		C1F1121A1E6030F552E9818C /* Pods-iosApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.release.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.release.xcconfig"; sourceTree = "<group>"; };
 		E5CC0266566FEC8E2889BE54 /* Pods_iosApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,6 +135,7 @@
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
 				876219202A290B16008570B5 /* Flow + Publisher.swift */,
 				876219222A290B2F008570B5 /* ViewModel + View.swift */,
+				8775E24D2A3CD1550031AD18 /* Custom Back Button.swift */,
 			);
 			path = Senior;
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				874328072A2D6D37005EE343 /* ElevatedCard.swift in Sources */,
+				8775E24E2A3CD1550031AD18 /* Custom Back Button.swift in Sources */,
 				870FB71D2A2CEED600BEFEB2 /* ThemeChangerScreen.swift in Sources */,
 				870FB71F2A2CF13700BEFEB2 /* ThemeChangerView.swift in Sources */,
 				870B54B62A2A33470000D9E0 /* Theme.swift in Sources */,
