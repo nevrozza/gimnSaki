@@ -22,6 +22,7 @@ struct iOSApp: App {
                 .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
                     DispatchQueue.main.async {
                         themeManager.orientation = calculateFromScreen(size: UIScreen.main.bounds.size)
+                        themeManager.size = UIScreen.main.bounds.size
                     }
                 }
                 .onChange(of: themeManager.tint) { isDark in

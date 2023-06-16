@@ -56,8 +56,12 @@ fun ComponentActivity.setupThemedNavigation() {
 
     setContent {
         val settingsRepository: SettingsRepository = Inject.instance()
+        val tint = settingsRepository.fetchThemeTint()
 
-        val themeManager = ThemeManager(mutableStateOf(settingsRepository.fetchThemeColor()), mutableStateOf(settingsRepository.fetchThemeTint()))
+        val isDark: Boolean =
+            if (tint == ThemeTint.Auto.name) isSystemInDarkTheme()
+            else tint == ThemeTint.Dark.name
+        val themeManager = ThemeManager(mutableStateOf(settingsRepository.fetchThemeColor()), mutableStateOf(settingsRepository.fetchThemeTint()), mutableStateOf(isDark))
 
         if (themeManager.color.value.isBlank()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -67,22 +71,18 @@ fun ComponentActivity.setupThemedNavigation() {
         }
         themeInit(themeManager, settingsRepository)
 
-
-        val tint = themeManager.tint.value
         val color = themeManager.color.value
-        val darkTheme: Boolean =
-            if (tint == ThemeTint.Auto.name) isSystemInDarkTheme()
-            else tint == ThemeTint.Dark.name
+
 
         val colorScheme =
             if (color == ThemeColors.Dynamic.name) {
-                if (darkTheme) {
+                if (isDark) {
                     dynamicDarkColorScheme(applicationContext)
                 } else {
                     dynamicLightColorScheme(applicationContext)
                 }
             } else {
-                schemeChooser(darkTheme, color)
+                schemeChooser(isDark, color)
             }
 
 
@@ -92,7 +92,7 @@ fun ComponentActivity.setupThemedNavigation() {
         val view = LocalView.current
 
         SideEffect {
-            ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = !darkTheme
+            ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = !isDark
         }
 
 

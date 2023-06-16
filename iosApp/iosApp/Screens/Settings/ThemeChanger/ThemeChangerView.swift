@@ -11,7 +11,6 @@ import SharedSDK
 
 class CircleAnimation: ObservableObject {
     @Published var value: CGFloat = 1
-    @Published var isFinished: Bool = true
     
 }
 
@@ -31,21 +30,32 @@ struct ThemeChangerView: View {
         let divider: CGFloat = 3 * (50 * 50)
         let maxSize = (screenSize.width * screenSize.height) / divider
         
-        ZStack (alignment: .top) {
+        ZStack {
             switch themeManager.orientation {
-            case WindowScreen.Vertical():
-                VerticalView(state: state, colors: colors, isStart: isStart) { event in
+            case WindowScreen.Expanded():
+                ExpandedView(state: state, colors: colors, isStart: isStart) { event in
+                    eventHandler(event)
+                }
+                .environmentObject(themeManager)
+                .environmentObject(circleAnimation)
+            case WindowScreen.Horizontal():
+                HorizontalView(state: state, colors: colors, isStart: isStart) { event in
                     eventHandler(event)
                 }
                 .environmentObject(themeManager)
                 .environmentObject(circleAnimation)
             default:
-                Text("null")
+                VerticalView(state: state, colors: colors, isStart: isStart) { event in
+                    eventHandler(event)
+                }
+                .environmentObject(themeManager)
+                .environmentObject(circleAnimation)
             }
         }
         .onChange(of: state.isColorChanging) { newState in
-            isAnimating = true
-            circleAnimation.isFinished = false
+            withAnimation(Animation.interpolatingSpring(stiffness: 200, damping: 1000)) {
+                isAnimating = true
+            }
             withAnimation(.linear(duration: 0.5)) {
                 circleAnimation.value =
                 (newState) ? maxSize : 1
@@ -68,8 +78,9 @@ struct ThemeChangerView: View {
                 }
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    circleAnimation.isFinished = true
-                    isAnimating = false
+                    withAnimation(Animation.interpolatingSpring(stiffness: 200, damping: 1000)) {
+                        isAnimating = false
+                    }
                 }
             }
         }
@@ -79,10 +90,125 @@ struct ThemeChangerView: View {
     
 }
 
-private struct VerticalView: View {
+private struct ExpandedView: View {
+    @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var circleAnimation: CircleAnimation
+    @AppStorage("isAnimating") private var isAnimating: Bool = false
+    
+    let state: ThemeChangerViewState
+    let colors: ColorScheme
+    let isStart: Bool
+    let eventHandler: (ThemeChangerEvent) -> Void
+    
+    let bottomPadding = (UIApplication.shared.windows.first?.safeAreaInsets.bottom)!
+    var body: some View {
+        ZStack {
+            ThemePreview(colors: colors)
+                .ignoresSafeArea(edges: .bottom)
+            VStack {
+                Spacer()
+                ZStack (alignment: .bottom) {
+                    colors.surface
+                    .shadow(color: colors.scrim , radius: 2, x: 0, y: 1)
+                    .cornerRadius(30)
+                    .offset(y: bottomPadding)
+                    ZStack() {
+                        if(!isAnimating) {
+                            Button(action: {eventHandler(.NextPressed())} ) {
+                                Text("Готово!")
+                                    .frame(maxWidth: .infinity, maxHeight: 10)
+                                    .padding()
+                                    .background(colors.secondaryContainer)
+                                    .foregroundColor(colors.onSecondaryContainer)
+                                
+                                    .cornerRadius(12)
+                            }
+                            .transition(.move(edge: .bottom).combined(with:
+                                    .offset(y: 25).combined(with:
+                                            .opacity)))
+                            .frame(width: 120)
+                            .padding(.bottom, 5)
+                        }
+                        
+                    }
+                    .frame(width: 640, height: 200 + bottomPadding, alignment: .bottomTrailing)
+                    .padding([.bottom, .trailing], bottomPadding)
+                    VStack {
+                        if(isStart) {
+                            Text(MRStrings.chooseTheme.desc().localized())
+                                .font(.system(size: 24))
+                            Text(MRStrings.chooseThemeUnder.desc().localized())
+                                .padding(.bottom, 15)
+                        }
+                        ColorPickerTab(colors: colors, segmentationSelection: themeManager.tint, state: state) { event in
+                            eventHandler(event)
+                        }
+                        .environmentObject(themeManager)
+                        .environmentObject(circleAnimation)
+                        Spacer()
+                    }
+                    .frame(width: 640, height: 200 + bottomPadding)
+                }
+                .frame(width: 640, height: 250 + bottomPadding)
+                
+                
+
+            }
+            .ignoresSafeArea(edges: .bottom)
+            
+            
+            
+        }
+    }
+}
+
+private struct HorizontalView: View {
     @EnvironmentObject var themeManager: ThemeManager
     @EnvironmentObject var circleAnimation: CircleAnimation
     
+    let state: ThemeChangerViewState
+    let colors: ColorScheme
+    let isStart: Bool
+    let eventHandler: (ThemeChangerEvent) -> Void
+    
+    var body: some View {
+        HStack {
+            ThemePreview(colors: colors)
+                .padding([.top, .leading], (UIApplication.shared.windows.first?.safeAreaInsets.bottom)!)
+            Spacer()
+                .frame(width: (UIApplication.shared.windows.first?.safeAreaInsets.bottom)!)
+            VStack {
+                if(isStart) {
+                    Text(MRStrings.chooseTheme.desc().localized())
+                        .font(.system(size: 24))
+//                        .padding(.top, themeManager.size.height * 0.01)
+                    Text(MRStrings.chooseThemeUnder.desc().localized())
+                        .padding(.bottom, themeManager.size.height * 0.03)
+                }
+                
+                ColorPickerTab(colors: colors, segmentationSelection: themeManager.tint, state: state) { event in
+                    eventHandler(event)
+                }
+                .environmentObject(themeManager)
+                .environmentObject(circleAnimation)
+                
+                Spacer()
+                    .frame(height: 20)
+                
+                NextButton(colors: colors) { event in
+                    eventHandler(event)
+                }
+                
+            }
+        }
+        .ignoresSafeArea(edges: .leading)
+        
+    }
+}
+
+private struct VerticalView: View {
+    @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var circleAnimation: CircleAnimation
     let state: ThemeChangerViewState
     let colors: ColorScheme
     let isStart: Bool
@@ -94,7 +220,7 @@ private struct VerticalView: View {
             if(isStart) {
                 Text(MRStrings.chooseTheme.desc().localized())
                     .font(.system(size: 24))
-                    .padding(.top, themeManager.size.height * 0.01)
+//                    .padding(.top, themeManager.size.height * 0.01)
                 Text(MRStrings.chooseThemeUnder.desc().localized())
                     .padding(.bottom, themeManager.size.height * 0.03)
             }
@@ -110,20 +236,44 @@ private struct VerticalView: View {
             Spacer()
                 .frame(height: 20)
             
-            Button(action: {eventHandler(.NextPressed())}) {
-                Text("Готово!")
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(colors.secondaryContainer)
-                    .foregroundColor(colors.onSecondaryContainer)
-                    .cornerRadius(12)
+            NextButton(colors: colors) { event in
+                eventHandler(event)
             }
-            .frame(width: 150)
+            
             
             
             
         }
         
+    }
+}
+
+private struct NextButton: View {
+    @AppStorage("isAnimating") private var isAnimating: Bool = false
+    
+    let colors: ColorScheme
+    
+    let eventHandler: (ThemeChangerEvent) -> Void
+    
+    var body: some View {
+        ZStack {
+            if(!isAnimating) {
+                Button(action: {eventHandler(.NextPressed())}) {
+                    Text("Готово!")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(colors.secondaryContainer)
+                        .foregroundColor(colors.onSecondaryContainer)
+                    
+                        .cornerRadius(12)
+                }
+                .transition(.move(edge: .bottom).combined(with:
+                        .offset(y: 25).combined(with:
+                                .opacity)))
+                .frame(width: 150)
+            }
+        }
+        .frame(width: 150, height: 40)
     }
 }
 
@@ -159,8 +309,9 @@ private struct ColorPickerTab: View {
     
     var body: some View {
         
-        Spacer()
-            .frame(height: 40)
+            Spacer()
+                .frame(height: (themeManager.orientation == .Expanded()) ? 10 : 40)
+        
         ZStack (alignment: .top) {
             VStack {
                 Spacer()
@@ -222,23 +373,9 @@ private struct ColorPickButton: View {
                 cardBackgroundColor
             }
             .frame(width: buttonSize + 10, height: buttonSize + 10)
-            .onChange(of: circleAnimation.isFinished) { isFinished in
-                if(!isFinished && state.color != color) {
-                    withAnimation (.easeOut(duration: 0.2)) {
-                        opacity = 0
-                    }
-                }
-            }
-            .onAppear {
-                if(isAnimating && state.color != color) {
-                    opacity = 0
-                    withAnimation(.easeIn(duration: 1)) {
-                        opacity = 1
-                    }
-                }
-            }
+            
             Button(action: {
-                eventHandler(.ColorChangeOn(color: color))
+                    eventHandler(.ColorChangeOn(color: color))
             }) {
                 Circle()
                     .frame(width: buttonSize, height: buttonSize)
@@ -246,7 +383,10 @@ private struct ColorPickButton: View {
                     .scaleEffect(x: (state.color == color) ? circleAnimation.value: 1, y: (state.color == color) ? circleAnimation.value: 1)
             }
         }
-        .opacity(opacity)
+        .disabled(isAnimating || state.color == color)
+        .opacity(!isAnimating && state.color != color ? 1 :
+                 state.color == color ? 1 : 0)
+        .animation(.easeIn(duration: 0.2), value: isAnimating)
     }
 }
 

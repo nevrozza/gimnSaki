@@ -5,6 +5,7 @@ import theme.LocalThemeManager
 import MRStrings
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.EaseIn
 import androidx.compose.animation.core.EaseOut
 import androidx.compose.animation.core.LinearEasing
@@ -27,6 +28,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -53,6 +56,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.icerock.moko.resources.compose.stringResource
@@ -133,14 +139,18 @@ fun ThemeChangerView(
 private fun horizontalView(
     state: ThemeChangerViewState,
     animatedSize: State<Float>,
-    buttonSize: Int,
+    buttonSize: Int = 50,
     isStart: Boolean,
     padding: PaddingValues,
     eventHandler: (ThemeChangerEvent) -> Unit
 ) {
     Row(Modifier.padding(padding).fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         Box(
-            Modifier.padding(bottom = padding.calculateBottomPadding() + padding.calculateTopPadding())
+            Modifier.padding(
+                bottom = padding.calculateBottomPadding() + padding.calculateTopPadding(),
+                top = padding.calculateTopPadding()/2,
+                start = if(padding.calculateEndPadding(LayoutDirection.Rtl) != 0.dp) padding.calculateTopPadding() else padding.calculateTopPadding()/2
+            )
                 .fillMaxHeight().fillMaxWidth(.5f)
         ) {
             ThemePreview()
@@ -148,7 +158,7 @@ private fun horizontalView(
         Column(
             Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top
+            verticalArrangement = Arrangement.Center
         ) {
             if (isStart) {
                 Text(stringResource(MRStrings.chooseTheme),
@@ -168,11 +178,22 @@ private fun horizontalView(
                     visible = isStart && !state.isColorChanging && animatedSize.value == 1f,
                     enter = slideInVertically(
                         initialOffsetY = { it },
-                        animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy)
+                        animationSpec = spring(
+                            stiffness = Spring.StiffnessLow,
+                            dampingRatio = Spring.DampingRatioNoBouncy
+                        )
                     ),
                     exit = slideOutVertically(
-                        targetOffsetY = { it * 2 },
-                        animationSpec = spring(stiffness = Spring.StiffnessLow)
+                        targetOffsetY = { it },
+                        animationSpec = spring(
+                            stiffness = Spring.StiffnessLow,
+                            dampingRatio = Spring.DampingRatioNoBouncy
+                        )
+                    ) + fadeOut(
+                        spring(
+                            stiffness = Spring.StiffnessLow,
+                            dampingRatio = Spring.DampingRatioNoBouncy
+                        )
                     )
                 ) {
                     Box(
@@ -181,10 +202,10 @@ private fun horizontalView(
                     ) {
                         FilledTonalButton(
                             onClick = { eventHandler(ThemeChangerEvent.NextPressed) },
-                            modifier = Modifier.height(40.dp).width(120.dp)
+                            modifier = Modifier.height(50.dp).width(150.dp)
                         ) {
 
-                            Text("Готово!")
+                            Text("Готово!", fontSize = 19.sp)
 
                         }
                     }
@@ -218,7 +239,7 @@ private fun expandedView(
             Column(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Top
+                verticalArrangement = Arrangement.Center
             ) {
                 if (isStart) {
                     Spacer(Modifier.height(15.dp))
@@ -243,11 +264,22 @@ private fun expandedView(
                 visible = isStart && !state.isColorChanging && animatedSize.value == 1f,
                 enter = slideInVertically(
                     initialOffsetY = { it },
-                    animationSpec = spring(dampingRatio = Spring.DampingRatioLowBouncy)
+                    animationSpec = spring(
+                        stiffness = Spring.StiffnessLow,
+                        dampingRatio = Spring.DampingRatioNoBouncy
+                    )
                 ),
                 exit = slideOutVertically(
-                    targetOffsetY = { it * 2 },
-                    animationSpec = spring(stiffness = Spring.StiffnessLow)
+                    targetOffsetY = { it },
+                    animationSpec = spring(
+                        stiffness = Spring.StiffnessLow,
+                        dampingRatio = Spring.DampingRatioNoBouncy
+                    )
+                ) + fadeOut(
+                    spring(
+                        stiffness = Spring.StiffnessLow,
+                        dampingRatio = Spring.DampingRatioNoBouncy
+                    )
                 )
             ) {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.BottomEnd) {
@@ -270,7 +302,7 @@ private fun expandedView(
 private fun verticalView(
     state: ThemeChangerViewState,
     animatedSize: State<Float>,
-    buttonSize: Int,
+    buttonSize: Int = 50,
     isStart: Boolean,
     padding: PaddingValues,
     eventHandler: (ThemeChangerEvent) -> Unit
@@ -278,11 +310,10 @@ private fun verticalView(
     Column(
         modifier = Modifier.fillMaxSize().padding(padding),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
+        verticalArrangement = Arrangement.Center
     ) {
 
         if (isStart) {
-            Spacer(Modifier.fillMaxHeight(.01f))
             Text(stringResource(MRStrings.chooseTheme),
                 fontSize = 24.sp,
                 modifier = Modifier.clickable { eventHandler(ThemeChangerEvent.NextPressed) })
@@ -301,26 +332,39 @@ private fun verticalView(
         ColorPickerTab(state = state, animatedSize = animatedSize, buttonSize = buttonSize) {
             eventHandler(it)
         }
+        Column(modifier = Modifier.fillMaxHeight(.7f)) {
+            AnimatedVisibility(
+                visible = isStart && !state.isColorChanging && animatedSize.value == 1f,
+                enter = slideInVertically(
+                    initialOffsetY = { it },
+                    animationSpec = spring(
+                        stiffness = Spring.StiffnessLow,
+                        dampingRatio = Spring.DampingRatioNoBouncy
+                    )
+                ),
+                exit = slideOutVertically(
+                    targetOffsetY = { it },
+                    animationSpec = spring(
+                        stiffness = Spring.StiffnessLow,
+                        dampingRatio = Spring.DampingRatioNoBouncy
+                    )
+                ) + fadeOut(
+                    spring(
+                        stiffness = Spring.StiffnessLow,
+                        dampingRatio = Spring.DampingRatioNoBouncy
+                    )
+                )
 
-        AnimatedVisibility(
-            visible = isStart && !state.isColorChanging && animatedSize.value == 1f,
-            enter = slideInVertically(
-                initialOffsetY = { it },
-                animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy)
-            ),
-            exit = slideOutVertically(
-                targetOffsetY = { it * 2 },
-                animationSpec = spring(stiffness = Spring.StiffnessLow)
-            )
-        ) {
-            Box(modifier = Modifier.fillMaxHeight(.7f), contentAlignment = Alignment.Center) {
-                FilledTonalButton(
-                    onClick = { eventHandler(ThemeChangerEvent.NextPressed) },
-                    modifier = Modifier.height(40.dp).width(120.dp)
-                ) {
+            ) {
+                Box(modifier = Modifier.fillMaxHeight(), contentAlignment = Alignment.Center) {
+                    FilledTonalButton(
+                        onClick = { eventHandler(ThemeChangerEvent.NextPressed) },
+                        modifier = Modifier.height(50.dp).width(150.dp)
+                    ) {
 
-                    Text("Готово!")
+                        Text("Готово!", fontSize = 19.sp)
 
+                    }
                 }
             }
         }
@@ -338,74 +382,98 @@ fun ThemePreview() {
         Row() {
             Column {
                 Row() {
-                    Card(Modifier.fillMaxWidth(0.2f).fillMaxHeight(0.088f), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary)) {}
+                    Card(
+                        Modifier.fillMaxWidth(0.2f).fillMaxHeight(0.088f),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary)
+                    ) {}
                     Spacer(Modifier.fillMaxWidth(0.33f).fillMaxHeight(0.088f))
-                    Card(Modifier.fillMaxWidth(0.84f).fillMaxHeight(0.088f), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)) {}
+                    Card(
+                        Modifier.fillMaxWidth(0.84f).fillMaxHeight(0.088f),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
+                    ) {}
                 }
                 Row() {
-                    Column (modifier = Modifier.fillMaxHeight(), verticalArrangement = Arrangement.Bottom) {
+                    Column(
+                        modifier = Modifier.fillMaxHeight(),
+                        verticalArrangement = Arrangement.Bottom
+                    ) {
 
                         Card(
                             Modifier.fillMaxWidth(0.13f).fillMaxHeight(0.50f)
-                                .padding(bottom = 3.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary)
+                                .padding(bottom = 3.dp),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary)
                         ) {}
                         Card(
-                            Modifier.fillMaxWidth(0.13f).fillMaxHeight(0.60f), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+                            Modifier.fillMaxWidth(0.13f).fillMaxHeight(0.60f),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
                         ) {}
                     }
                     Column {
                         Row {
                             //height: 85.wpx + 42.5f.hpx
                             Card(
-                                Modifier.fillMaxWidth(0.5f).fillMaxHeight(0.33f).padding(3.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary)
+                                Modifier.fillMaxWidth(0.5f).fillMaxHeight(0.33f).padding(3.dp),
+                                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary)
                             ) {}
                             Column {
                                 Card(
                                     Modifier.fillMaxWidth(0.8f).fillMaxHeight(0.19f)
-                                        .padding(vertical = 3.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+                                        .padding(vertical = 3.dp),
+                                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
                                 ) {}
-                                Card(Modifier.fillMaxWidth(0.8f).fillMaxHeight(0.13f), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)) {}
+                                Card(
+                                    Modifier.fillMaxWidth(0.8f).fillMaxHeight(0.13f),
+                                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
+                                ) {}
                             }
                         }
                         Row {
                             Card(
-                                Modifier.fillMaxWidth(0.25f).fillMaxHeight(0.45f).padding(3.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+                                Modifier.fillMaxWidth(0.25f).fillMaxHeight(0.45f).padding(3.dp),
+                                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
                             ) {}
                             Column {
                                 Card(
                                     Modifier.fillMaxWidth(0.34f).fillMaxHeight(0.225f)
-                                        .padding(top = 3.dp, end = 3.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
+                                        .padding(top = 3.dp, end = 3.dp),
+                                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
                                 ) {}
                                 Card(
                                     Modifier.fillMaxWidth(0.34f).fillMaxHeight(0.29f)
-                                        .padding(top = 3.dp, bottom = 3.dp, end = 3.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary)
+                                        .padding(top = 3.dp, bottom = 3.dp, end = 3.dp),
+                                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary)
                                 ) {}
                             }
-                                Card(
-                                    Modifier.fillMaxWidth(0.8f).fillMaxHeight(0.34f)
-                                        .padding(vertical = 3.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary)
-                                ) {}
+                            Card(
+                                Modifier.fillMaxWidth(0.8f).fillMaxHeight(0.34f)
+                                    .padding(vertical = 3.dp),
+                                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary)
+                            ) {}
 
                         }
                         Row {
                             Column {
                                 Card(
                                     Modifier.fillMaxWidth(0.5f).fillMaxHeight(0.38f)
-                                        .padding(start = 3.dp, bottom = 3.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
+                                        .padding(start = 3.dp, bottom = 3.dp),
+                                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
                                 ) {}
                                 Card(
                                     Modifier.fillMaxWidth(0.5f).fillMaxHeight(1f)
-                                        .padding(start = 3.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary)
+                                        .padding(start = 3.dp),
+                                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary)
                                 ) {}
                             }
                             Column {
                                 Card(
                                     Modifier.fillMaxWidth(0.8f).fillMaxHeight(0.8f)
-                                        .padding(start = 3.dp, bottom = 3.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+                                        .padding(start = 3.dp, bottom = 3.dp),
+                                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
                                 ) {}
                                 Card(
                                     Modifier.fillMaxWidth(0.8f).fillMaxHeight(1f)
-                                        .padding(start = 3.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
+                                        .padding(start = 3.dp),
+                                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
                                 ) {}
                             }
                         }
@@ -414,9 +482,15 @@ fun ThemePreview() {
                 }
             }
             Column(Modifier.padding(start = 3.dp)) {
-                Card(Modifier.fillMaxWidth(1f).fillMaxHeight(0.45f), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary)) {}
+                Card(
+                    Modifier.fillMaxWidth(1f).fillMaxHeight(0.45f),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary)
+                ) {}
                 Spacer(Modifier.fillMaxWidth(1f).fillMaxHeight(0.2f))
-                Card(Modifier.fillMaxWidth(1f).fillMaxHeight(1f), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary)) {}
+                Card(
+                    Modifier.fillMaxWidth(1f).fillMaxHeight(1f),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary)
+                ) {}
             }
         }
     }
@@ -428,14 +502,18 @@ fun ColorPickButton(
     state: ThemeChangerViewState,
     color: String,
     isFinished: Boolean,
-    isDark: Boolean,
     animatedSize: State<Float>,
     eventHandler: (ThemeChangerEvent) -> Unit
 ) {
+    val themeManager = LocalThemeManager.current
+//    !themeManager.isDark.value
+    val lightColorScheme = schemeChooser(false, color)
+    val darkColorScheme = schemeChooser(true, color)
 
-
-    val colorScheme = schemeChooser(!isDark, color)
-
+    val animatedPrimaryColor = animateColorAsState(
+        targetValue = if (themeManager.isDark.value) lightColorScheme.primary else darkColorScheme.primary,
+        tween(500, easing = EaseIn)
+    )
 
 
     Box(modifier = Modifier.size((buttonSize + 10).dp)) {
@@ -452,6 +530,7 @@ fun ColorPickButton(
                         else MaterialTheme.colorScheme.surface
                     )
                 ) {}
+
                 ElevatedButton(
                     modifier = Modifier.size(buttonSize.dp)
                         .scale(if (state.color == color) animatedSize.value else 1f)
@@ -461,8 +540,10 @@ fun ColorPickButton(
                             eventHandler(ThemeChangerEvent.ColorChangeOn(color))
                         }
                     },
-                    colors = ButtonDefaults.outlinedButtonColors(containerColor = colorScheme.primary)
+                    colors = ButtonDefaults.outlinedButtonColors(containerColor = animatedPrimaryColor.value)
                 ) {}
+
+
             }
         }
 
@@ -477,11 +558,6 @@ fun ColorPickerTab(
     buttonSize: Int,
     eventHandler: (ThemeChangerEvent) -> Unit
 ) {
-    val themeManager = LocalThemeManager.current
-    val isDark: Boolean =
-        if (state.tint == ThemeTint.Auto.name) isSystemInDarkTheme()
-        else state.tint == ThemeTint.Dark.name
-
     val isFinished = !state.isColorChanging && animatedSize.value == 1f
     val width = 290.dp
     Column {
@@ -533,7 +609,10 @@ fun ColorPickerTab(
                     } else {
                         Spacer(Modifier.size(20.dp + 5.dp))
                     }
-                    Row(modifier = Modifier.width(width-20.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+                    Row(
+                        modifier = Modifier.width(width - 20.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
                         val colorsBut =
                             listOf(
                                 ThemeColors.Default.name,
@@ -547,7 +626,6 @@ fun ColorPickerTab(
                                 state = state,
                                 color = color,
                                 isFinished = isFinished,
-                                isDark = isDark,
                                 animatedSize = animatedSize
                             ) {
                                 eventHandler(it)

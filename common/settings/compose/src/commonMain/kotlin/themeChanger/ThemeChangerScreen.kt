@@ -16,6 +16,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -45,15 +46,13 @@ fun ThemeChangerScreen(isStart: Boolean) {
         val darkColorScheme = if (isDynamic) dynamicDarkScheme()!! else schemeChooser(true, themeManager.color.value)
         val lightColorScheme = if (isDynamic) dynamicLightScheme()!! else schemeChooser(false, themeManager.color.value)
 
+        Text(themeManager.isDark.value.toString())
 
-        val darkTheme: Boolean =
-            if (themeManager.tint.value == ThemeTint.Auto.name) isSystemInDarkTheme()
-            else themeManager.tint.value == ThemeTint.Dark.name
 
         AnimatedVisibility(
-            visible = darkTheme,
+            visible = themeManager.isDark.value,
             enter = fadeIn(tween(500, easing = EaseIn)),
-            exit = fadeOut(tween(500, easing = EaseOut))
+            exit = fadeOut(tween(500, easing = EaseIn))
         ) {
             AppTheme(darkColorScheme) {
                 ThemeChangerView(state = state.value, isStart = isStart) {
@@ -63,9 +62,9 @@ fun ThemeChangerScreen(isStart: Boolean) {
         }
 
         AnimatedVisibility(
-            visible = !darkTheme,
+            visible = !themeManager.isDark.value,
             enter = fadeIn(tween(500, easing = EaseIn)),
-            exit = fadeOut(tween(500, easing = EaseOut))
+            exit = fadeOut(tween(500, easing = EaseIn))
         ) {
             AppTheme(lightColorScheme) {
                 ThemeChangerView(state = state.value, isStart = isStart) {
@@ -90,6 +89,10 @@ fun ThemeChangerScreen(isStart: Boolean) {
 
             is ThemeChangerAction.UpdateTint -> {
                 themeManager.tint.value  = state.value.tint
+                val isDark: Boolean =
+                    if (themeManager.tint.value == ThemeTint.Auto.name) isSystemInDarkTheme()
+                    else themeManager.tint.value == ThemeTint.Dark.name
+                themeManager.isDark.value = isDark
             }
 
             else -> {}

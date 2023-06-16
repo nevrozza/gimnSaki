@@ -41,16 +41,17 @@ fun JFrame.setupThemedNavigation() {
     val composePanel = ComposePanel()
     composePanel.setContent {
         val settingsRepository: SettingsRepository = Inject.instance()
-        val themeManager = ThemeManager(mutableStateOf(settingsRepository.fetchThemeColor()), mutableStateOf(settingsRepository.fetchThemeTint()))
+        val tint = settingsRepository.fetchThemeTint()
 
-        themeInit(themeManager, settingsRepository)
-        val tint = themeManager.tint.value
-        val color = themeManager.color.value
-        val darkTheme: Boolean =
+        val isDark: Boolean =
             if (tint == ThemeTint.Auto.name) isSystemInDarkTheme()
             else tint == ThemeTint.Dark.name
+        val themeManager = ThemeManager(mutableStateOf(settingsRepository.fetchThemeColor()), mutableStateOf(settingsRepository.fetchThemeTint()), mutableStateOf(isDark))
 
-        val colorScheme = schemeChooser(darkTheme, color)
+        themeInit(themeManager, settingsRepository)
+        val color = themeManager.color.value
+
+        val colorScheme = schemeChooser(isDark, color)
         val backgroundColor = colorScheme.background
 
         rootController.backgroundColor = backgroundColor

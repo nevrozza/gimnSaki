@@ -20,7 +20,8 @@ import androidx.compose.runtime.compositionLocalOf
 //}
 class ThemeManager(
     var color: MutableState<String>,
-    var tint: MutableState<String>
+    var tint: MutableState<String>,
+    var isDark: MutableState<Boolean>
 )
 val LocalThemeManager: ProvidableCompositionLocal<ThemeManager> = compositionLocalOf {
     error("No theme.getLocalThemeManager provided")
