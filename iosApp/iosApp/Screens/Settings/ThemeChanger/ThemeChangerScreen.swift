@@ -32,12 +32,11 @@ struct ThemeChangerScreen: View {
         ) { viewState in
             
             
-                    ThemeChangerView(state: viewState, isStart: isStart) { event in
-                        themeChangerViewModel.obtainEvent(viewEvent: event)
-                    }
+                ThemeChangerView(state: viewState, isStart: isStart) { event in
+                    themeChangerViewModel.obtainEvent(viewEvent: event)
+                }
+                .environmentObject(themeManager)
             
-                    .environmentObject(themeManager)
-                    
             
         }
         
@@ -46,7 +45,12 @@ struct ThemeChangerScreen: View {
             case ThemeChangerAction.OpenStartDescription():
                 isStartDescriptionPresented = true
             case ThemeChangerAction.UpdateColor():
-                break
+                if let window = UIApplication.shared.keyWindow {
+                    UIView.transition (with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
+                        themeManager.color = themeChangerViewModel.viewState.color
+                    }, completion: nil)
+                }
+                themeChangerViewModel.viewAction = nil
             case ThemeChangerAction.UpdateTint():
                 themeManager.tint = themeChangerViewModel.viewState.tint
                 themeChangerViewModel.viewAction = nil

@@ -2,6 +2,9 @@ package themeChanger
 
 import theme.LocalThemeManager
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.EaseIn
+import androidx.compose.animation.core.EaseOut
+import androidx.compose.animation.core.EaseOutBack
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -49,8 +52,8 @@ fun ThemeChangerScreen(isStart: Boolean) {
 
         AnimatedVisibility(
             visible = darkTheme,
-            enter = fadeIn(spring(stiffness = Spring.StiffnessLow)),
-            exit = fadeOut(spring(stiffness = Spring.StiffnessLow))
+            enter = fadeIn(tween(500, easing = EaseIn)),
+            exit = fadeOut(tween(500, easing = EaseOut))
         ) {
             AppTheme(darkColorScheme) {
                 ThemeChangerView(state = state.value, isStart = isStart) {
@@ -61,8 +64,8 @@ fun ThemeChangerScreen(isStart: Boolean) {
 
         AnimatedVisibility(
             visible = !darkTheme,
-            enter = fadeIn(spring(stiffness = Spring.StiffnessLow)),
-            exit = fadeOut(spring(stiffness = Spring.StiffnessLow))
+            enter = fadeIn(tween(500, easing = EaseIn)),
+            exit = fadeOut(tween(500, easing = EaseOut))
         ) {
             AppTheme(lightColorScheme) {
                 ThemeChangerView(state = state.value, isStart = isStart) {

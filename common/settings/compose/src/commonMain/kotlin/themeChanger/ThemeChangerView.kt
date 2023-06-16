@@ -5,6 +5,9 @@ import theme.LocalThemeManager
 import MRStrings
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.EaseIn
+import androidx.compose.animation.core.EaseOut
+import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
@@ -88,7 +91,7 @@ fun ThemeChangerView(
 
     val animatedSize = animateFloatAsState(
         if (state.isColorChanging) maxSize else 1f,
-        animationSpec = tween(500)
+        animationSpec = tween(500, easing = LinearEasing)
     )
 
 
@@ -438,8 +441,8 @@ fun ColorPickButton(
     Box(modifier = Modifier.size((buttonSize + 10).dp)) {
         AnimatedVisibility(
             visible = (isFinished) || state.color == color,
-            enter = fadeIn(spring(stiffness = Spring.StiffnessLow)),
-            exit = fadeOut(spring(stiffness = Spring.StiffnessLow))
+            enter = fadeIn(tween(durationMillis = 200, easing = EaseIn)),
+            exit = fadeOut(tween(durationMillis = 200, easing = EaseOut))
         ) {
             Box(contentAlignment = Alignment.Center) {
                 ElevatedCard(
@@ -530,25 +533,15 @@ fun ColorPickerTab(
                     } else {
                         Spacer(Modifier.size(20.dp + 5.dp))
                     }
-                    Row() {
-                        ColorPickButton(
-                            buttonSize = buttonSize,
-                            state = state,
-                            color = ThemeColors.Default.name,
-                            isFinished = isFinished,
-                            isDark = isDark,
-                            animatedSize = animatedSize
-                        ) {
-                            eventHandler(it)
-                        }
-                        val remainingColors =
+                    Row(modifier = Modifier.width(width-20.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+                        val colorsBut =
                             listOf(
+                                ThemeColors.Default.name,
                                 ThemeColors.Green.name,
                                 ThemeColors.Red.name,
                                 ThemeColors.Yellow.name
                             )
-                        for (color in remainingColors) {
-                            Spacer(Modifier.size(10.dp))
+                        for (color in colorsBut) {
                             ColorPickButton(
                                 buttonSize = buttonSize,
                                 state = state,

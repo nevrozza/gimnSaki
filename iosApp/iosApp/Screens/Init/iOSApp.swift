@@ -13,6 +13,11 @@ struct iOSApp: App {
             ContentView()
                 .onAppear {
                     setupThemeManager()
+                    
+                    
+                    //delete AppStorages...
+                    @AppStorage("isAnimating") var isAnimating: Bool = false
+                    isAnimating = false
                 }
                 .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
                     DispatchQueue.main.async {
@@ -29,6 +34,12 @@ struct iOSApp: App {
                         }, completion: nil)
                     }
                 }
+                .onChange(of: themeManager.color) { color in
+                    themeManager.color = color
+                    let isDark = (themeManager.tint == ThemeTint.auto_.name) ? (themeManager.systemTint == .light) : (themeManager.tint == ThemeTint.dark.name)
+                    
+                    themeManager.currentTheme.colorScheme = schemeChoser(isDark: isDark, color: themeManager.color)
+                }
                 .environmentObject(themeManager)
             }
         
@@ -39,14 +50,11 @@ struct iOSApp: App {
         let settingsRepository = FuckSwift().settingsRepository()
         themeInit(settingsRepository: settingsRepository)
         
-        let tint = settingsRepository.fetchThemeTint()
-        let color = settingsRepository.fetchThemeColor()
+        themeManager.tint = settingsRepository.fetchThemeTint()
+        themeManager.color = settingsRepository.fetchThemeColor()
         
-        themeManager.tint = tint
-        
-        let isSystemInDarkTheme = themeManager.systemTint == .light
-        let isDark = (tint == ThemeTint.auto_.name) ? (isSystemInDarkTheme) : (tint == ThemeTint.dark.name)
-        let colorScheme = schemeChoser(isDark: isDark, color: color)
+        let isDark = (themeManager.tint == ThemeTint.auto_.name) ? (themeManager.systemTint == .light) : (themeManager.tint == ThemeTint.dark.name)
+        let colorScheme = schemeChoser(isDark: isDark, color: themeManager.color)
         
         themeManager.currentTheme = Theme(colorScheme: colorScheme)
     }

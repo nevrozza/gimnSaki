@@ -15,6 +15,7 @@ class ThemeManager: ObservableObject {
     @Published var systemTint: SwiftUI.ColorScheme = .dark
     @Published var currentTheme: Theme = .redLight
     @Published var tint: String = ThemeTint.auto_.name
+    @Published var color: String = ThemeColors.default_.name
 }
 
 class Theme: ObservableObject {

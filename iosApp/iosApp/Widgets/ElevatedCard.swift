@@ -10,18 +10,18 @@ import SwiftUI
 
 struct ElevatedCard<Accessory: View>: View {
     let colors: ColorScheme
+   
     let content: () -> Accessory
-    
-    
     var body: some View {
         ZStack {
-            colors.surface.frame(width: .infinity, height: .infinity)
+            colors.surface
+            
                 
                 
             content()
                 
         }
-        .cornerRadius(10)
+        .cornerRadius(12)
         .shadow(color: colors.scrim , radius: 2, x: 0, y: 1)
         
         

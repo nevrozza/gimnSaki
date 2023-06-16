@@ -13,12 +13,13 @@ struct ContentView: View {
                 if(systemTint == .dark) {themeManager.systemTint = .light} else { themeManager.systemTint = .dark}
             }
             .onChange(of: systemTint) { _ in
-                    print(systemTint)
-                    themeManager.systemTint = systemTint
-                    themeManager.currentTheme.colorScheme = schemeChoser(isDark: themeManager.systemTint == .light, color: nil)
+                themeManager.systemTint = systemTint
+                themeManager.currentTheme.colorScheme = schemeChoser(isDark: themeManager.systemTint == .light, color: themeManager.currentTheme.colorScheme.colorStr)
                 
             }
             
+        
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .background(themeManager.currentTheme.colorScheme.background)
             .background(ignoresSafeAreaEdges: [.top, .bottom, .leading, .trailing])
             .environmentObject(themeManager)

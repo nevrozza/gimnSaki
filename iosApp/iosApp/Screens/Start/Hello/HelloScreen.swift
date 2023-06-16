@@ -32,7 +32,7 @@ struct HelloScreen: View {
         .onReceive(sharePublisher(helloViewModel.viewActions())) { action in
             switch action {
             case HelloAction.OpenStartColor():
-                
+    
                 withAnimation {
                     currentScreen.value = NavigationTree.Start.startcolorscreen.name
                 }

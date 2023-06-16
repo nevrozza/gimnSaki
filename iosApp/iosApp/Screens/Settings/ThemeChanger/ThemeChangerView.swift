@@ -9,25 +9,69 @@
 import SwiftUI
 import SharedSDK
 
+class CircleAnimation: ObservableObject {
+    @Published var value: CGFloat = 1
+    @Published var isFinished: Bool = true
+    
+}
+
 struct ThemeChangerView: View {
     @EnvironmentObject var themeManager: ThemeManager
-    
+    @StateObject var circleAnimation = CircleAnimation()
+    @AppStorage("isAnimating") private var isAnimating: Bool = false
     
     let state: ThemeChangerViewState
     let isStart: Bool
     let eventHandler: (ThemeChangerEvent) -> Void
     
+    
     var body: some View {
         let colors = themeManager.currentTheme.colorScheme
-        switch themeManager.orientation {
-        case WindowScreen.Vertical():
-            VerticalView(state: state, colors: colors, isStart: isStart) { event in
-                eventHandler(event)
+        let screenSize = themeManager.size
+        let divider: CGFloat = 3 * (50 * 50)
+        let maxSize = (screenSize.width * screenSize.height) / divider
+        
+        ZStack (alignment: .top) {
+            switch themeManager.orientation {
+            case WindowScreen.Vertical():
+                VerticalView(state: state, colors: colors, isStart: isStart) { event in
+                    eventHandler(event)
+                }
+                .environmentObject(themeManager)
+                .environmentObject(circleAnimation)
+            default:
+                Text("null")
             }
-            .environmentObject(themeManager)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top).border(Color.red)
-        default:
-            Text("null")
+        }
+        .onChange(of: state.isColorChanging) { newState in
+            isAnimating = true
+            circleAnimation.isFinished = false
+            withAnimation(.linear(duration: 0.5)) {
+                circleAnimation.value =
+                (newState) ? maxSize : 1
+                
+            }
+            
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    eventHandler(.ColorChanged())
+                    
+                }
+        }
+        .onAppear {
+            if(isAnimating) {
+                circleAnimation.value = maxSize
+                
+                withAnimation(.linear(duration: 0.5)) {
+                    
+                    circleAnimation.value = 1
+                    
+                }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    circleAnimation.isFinished = true
+                    isAnimating = false
+                }
+            }
         }
         
         
@@ -37,6 +81,7 @@ struct ThemeChangerView: View {
 
 private struct VerticalView: View {
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var circleAnimation: CircleAnimation
     
     let state: ThemeChangerViewState
     let colors: ColorScheme
@@ -56,10 +101,25 @@ private struct VerticalView: View {
             
             ThemePreview(colors: colors)
                 .frame( width: themeManager.size.width * 0.77, height: themeManager.size.height * 0.5)
-            ColorPickerTab(colors: colors, segmentationSelection: themeManager.tint) { event in
+            ColorPickerTab(colors: colors, segmentationSelection: themeManager.tint, state: state) { event in
                 eventHandler(event)
             }
-                .environmentObject(themeManager)
+            .environmentObject(themeManager)
+            .environmentObject(circleAnimation)
+            
+            Spacer()
+                .frame(height: 20)
+            
+            Button(action: {eventHandler(.NextPressed())}) {
+                Text("Готово!")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(colors.secondaryContainer)
+                    .foregroundColor(colors.onSecondaryContainer)
+                    .cornerRadius(12)
+            }
+            .frame(width: 150)
+            
             
             
         }
@@ -70,48 +130,125 @@ private struct VerticalView: View {
 private struct ColorPickerTab: View {
     
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var circleAnimation: CircleAnimation
     let colors: ColorScheme
     @State var segmentationSelection: String
+    let state: ThemeChangerViewState
     let eventHandler: (ThemeChangerEvent) -> Void
-    var items = [
+    
+    
+    
+    //PICKER VARS
+    let items = [
         ThemeTint.dark.name,
         ThemeTint.light.name,
         ThemeTint.auto_.name
     ]
-    var names = [
+    let names = [
         MRStrings.darkTheme.desc().localized(),
         MRStrings.lightTheme.desc().localized(),
         MRStrings.autoTheme.desc().localized()
     ]
     
-
-    
+    let colorsBut = [
+        ThemeColors.default_.name,
+        ThemeColors.green.name,
+        ThemeColors.red.name,
+        ThemeColors.yellow.name
+    ]
     
     var body: some View {
         
-        Picker("", selection: $segmentationSelection) {
-            ForEach(items, id: \.self) { item in
-                Text(names[items.firstIndex(of: item) ?? 2])
-                    
-                
+        Spacer()
+            .frame(height: 40)
+        ZStack (alignment: .top) {
+            VStack {
+                Spacer()
+                Picker("", selection: $segmentationSelection) {
+                    ForEach(items, id: \.self) { item in
+                        Text(names[items.firstIndex(of: item) ?? 2])
+                    }
+                }
+                .pickerStyle(.segmented)
+                .onAppear {
+                    let appearance = UISegmentedControl.appearance()
+                    appearance.selectedSegmentTintColor = UIColor(colors.secondaryContainer)
+                    appearance.setTitleTextAttributes([.foregroundColor : UIColor(colors.primary)], for: .selected)
+                }
+                .onChange(of: segmentationSelection) { newValue in
+                    eventHandler(.TintChangeOn(tint: newValue))
+                }
+                .frame(width: 300)
+            }
+            VStack {
+                HStack {
+                    ForEach(colorsBut, id: \.self) { colorBut in
+                        ColorPickButton(colors: colors, state: state, color: colorBut) { event in
+                            eventHandler(event)
+                        }
+                        .environmentObject(circleAnimation)
+                    }
+                }
+                Spacer()
             }
             
         }
-        .pickerStyle(.segmented)
-            .onAppear {
-                let appearance = UISegmentedControl.appearance()
-                appearance.selectedSegmentTintColor = UIColor(colors.secondaryContainer)
-                appearance.setTitleTextAttributes([.foregroundColor : UIColor(colors.primary)], for: .selected)
-            }
-            .onChange(of: segmentationSelection) { newValue in
-                eventHandler(.TintChangeOn(tint: newValue))
-            }
-            .frame(width: 300)
+        .frame(width: 300, height: 115)
+        
+        
+        
+       
         
     }
     
 }
 
+private struct ColorPickButton: View {
+    @Environment(\.colorScheme) var systemTint
+    @EnvironmentObject var circleAnimation: CircleAnimation
+    let buttonSize: CGFloat = 50
+    let colors: ColorScheme
+    let state: ThemeChangerViewState
+    let color: String
+    @State var opacity: Double = 1
+    @AppStorage("isAnimating") private var isAnimating: Bool = false
+    
+    let eventHandler: (ThemeChangerEvent) -> Void
+    var body: some View {
+        let colorScheme = schemeChoser(isDark: systemTint == .light, color: color)
+        ZStack {
+            let cardBackgroundColor = (state.color == color) ? colors.secondaryContainer : colors.surface
+            ElevatedCard(colors: colors) {
+                cardBackgroundColor
+            }
+            .frame(width: buttonSize + 10, height: buttonSize + 10)
+            .onChange(of: circleAnimation.isFinished) { isFinished in
+                if(!isFinished && state.color != color) {
+                    withAnimation (.easeOut(duration: 0.2)) {
+                        opacity = 0
+                    }
+                }
+            }
+            .onAppear {
+                if(isAnimating && state.color != color) {
+                    opacity = 0
+                    withAnimation(.easeIn(duration: 1)) {
+                        opacity = 1
+                    }
+                }
+            }
+            Button(action: {
+                eventHandler(.ColorChangeOn(color: color))
+            }) {
+                Circle()
+                    .frame(width: buttonSize, height: buttonSize)
+                    .foregroundColor(colorScheme.primary)
+                    .scaleEffect(x: (state.color == color) ? circleAnimation.value: 1, y: (state.color == color) ? circleAnimation.value: 1)
+            }
+        }
+        .opacity(opacity)
+    }
+}
 
 private struct ThemePreview: View {
     let colors: ColorScheme
