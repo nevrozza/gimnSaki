@@ -16,6 +16,7 @@ kotlin {
     sourceSets {
         named("commonMain") {
             dependencies {
+                implementation(Dependencies.Other.Decompose.compose)
 
                 implementation(compose.runtime)
                 implementation(compose.foundation)
@@ -31,6 +32,8 @@ kotlin {
 
         named("androidMain") {
             dependencies {
+                implementation(Dependencies.Other.Decompose.androidCompose)
+
                 implementation(Dependencies.Android.Compose.ui)
                 implementation(Dependencies.Android.Compose.material3)
                 implementation(Dependencies.Android.Compose.icons)

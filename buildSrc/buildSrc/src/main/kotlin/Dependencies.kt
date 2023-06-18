@@ -82,17 +82,25 @@ object Dependencies {
     }
 
     object Other {
-        object ViewModel {
-            private const val version = "0.14"
-            const val core = "com.adeo:kviewmodel:$version"
-            const val compose = "com.adeo:kviewmodel-compose:$version"
-            const val odyssey = "com.adeo:kviewmodel-odyssey:$version"
+
+        object Decompose {
+            private const val version = "2.0.0-beta-01"
+            const val decompose = "com.arkivanov.decompose:decompose:$version"
+            const val androidCompose = "com.arkivanov.decompose:extensions-compose-jetpack:$version"
+            const val compose = "com.arkivanov.decompose:extensions-compose-jetbrains:$version"
         }
 
-        object Navigation {
-            private const val version = "1.3.1"
-            const val core = "io.github.alexgladkov:odyssey-core:$version"
-            const val compose = "io.github.alexgladkov:odyssey-compose:$version"
-        }
+//        object ViewModel {
+//            private const val version = "0.14"
+//            const val core = "com.adeo:kviewmodel:$version"
+//            const val compose = "com.adeo:kviewmodel-compose:$version"
+//            const val odyssey = "com.adeo:kviewmodel-odyssey:$version"
+//        }
+//
+//        object Navigation {
+//            private const val version = "1.3.1"
+//            const val core = "io.github.alexgladkov:odyssey-core:$version"
+//            const val compose = "io.github.alexgladkov:odyssey-compose:$version"
+//        }
     }
 }

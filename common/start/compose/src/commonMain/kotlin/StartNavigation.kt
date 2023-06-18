@@ -1,6 +1,5 @@
-package navigation
-
 import hello.HelloScreen
+import navigation.NavigationTree
 import ru.alexgladkov.odyssey.compose.extensions.flow
 import ru.alexgladkov.odyssey.compose.extensions.screen
 import ru.alexgladkov.odyssey.compose.navigation.RootComposeBuilder
