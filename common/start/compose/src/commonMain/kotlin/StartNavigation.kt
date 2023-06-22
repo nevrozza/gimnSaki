@@ -3,7 +3,7 @@ import navigation.NavigationTree
 import ru.alexgladkov.odyssey.compose.extensions.flow
 import ru.alexgladkov.odyssey.compose.extensions.screen
 import ru.alexgladkov.odyssey.compose.navigation.RootComposeBuilder
-import themeChanger.ThemeChangerScreen
+import theme.ThemeChangerScreen
 
 fun RootComposeBuilder.startFlow() {
     flow(name = NavigationTree.Start.StartFlow.name) {

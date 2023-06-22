@@ -2,7 +2,7 @@ import org.gradle.api.artifacts.dsl.Dependencies
 
 plugins {
     id("com.android.library")
-    id("kotlin-parcelize")
+
 }
 
 android {

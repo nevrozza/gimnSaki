@@ -9,8 +9,8 @@ kotlin {
             dependencies {
                 api(project(":common:settings:api"))
                 implementation(project(":common:core"))
-
-                implementation(Dependencies.Other.ViewModel.core)
+                implementation(project(":common:utils"))
+                implementation(Dependencies.Decompose.decompose)
             }
         }
     }

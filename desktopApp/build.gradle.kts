@@ -25,8 +25,7 @@ kotlin {
 
 
 
-                implementation(Dependencies.Other.Navigation.core)
-                implementation(Dependencies.Other.Navigation.compose)
+                implementation(Dependencies.Decompose.decompose)
             }
         }
 
