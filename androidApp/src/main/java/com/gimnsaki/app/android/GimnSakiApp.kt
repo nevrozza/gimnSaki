@@ -14,7 +14,5 @@ class GimnSakiApp: Application() {
 }
 
 fun GimnSakiApp.initPlatformSDK() {
-    PlatformSDK.init(
-        configuration = PlatformConfiguration(applicationContext)
-    )
+
 }

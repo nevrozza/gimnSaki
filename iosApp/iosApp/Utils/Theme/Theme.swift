@@ -13,7 +13,7 @@ class ThemeManager: ObservableObject {
     @Published var orientation: WindowScreen = calculateFromScreen(size: UIScreen.main.bounds.size)
     @Published var size: CGSize = UIScreen.main.bounds.size
     @Published var systemTint: SwiftUI.ColorScheme = .dark
-    @Published var currentTheme: Theme = .redLight
+    @Published var colorScheme: ColorScheme = greenLightPallete
     @Published var tint: String = ThemeTint.auto_.name
     @Published var color: String = ThemeColors.default_.name
 //    @Published var currentScreen: String = NavigationTree.Start.helloscreen.name
@@ -25,18 +25,6 @@ class Theme: ObservableObject {
     init(colorScheme: ColorScheme) {
         self.colorScheme = colorScheme
     }
-}
-
-
-extension Theme {
-    static let defaultLight = Theme(colorScheme: defaultLightPallete)
-    static let defaultDark  = Theme(colorScheme: defaultDarkPallete)
-    static let greenLight = Theme(colorScheme: greenLightPallete)
-    static let greenDark  = Theme(colorScheme: greenDarkPallete)
-    static let redLight = Theme(colorScheme: redLightPallete)
-    static let redDark  = Theme(colorScheme: redDarkPallete)
-    static let yellowLight = Theme(colorScheme: yellowLightPallete)
-    static let yellowDark  = Theme(colorScheme: yellowDarkPallete)
 }
 
 func themeInit(settingsRepository: SettingsRepository) {

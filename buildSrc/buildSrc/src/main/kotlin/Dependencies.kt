@@ -10,7 +10,7 @@ object Dependencies {
     }
 
     object Kotlin {
-        private const val version = "1.8.10"
+        private const val version = "1.8.20"
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
 
         object Serialization {
@@ -35,7 +35,7 @@ object Dependencies {
     }
 
     object Ktor {
-        private const val version = "2.1.0"
+        private const val version = "2.3.1"
         const val core = "io.ktor:ktor-client-core:$version"
         const val json = "io.ktor:ktor-client-json:$version"
         const val serialization = "io.ktor:ktor-client-serialization:$version"

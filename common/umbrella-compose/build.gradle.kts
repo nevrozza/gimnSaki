@@ -3,6 +3,7 @@ plugins {
     id("multiplatform-compose-setup")
 }
 
+
 kotlin {
     sourceSets {
         commonMain {
@@ -10,6 +11,7 @@ kotlin {
                 implementation(project(":common:core"))
                 api(project(":common:settings:api"))
                 api(project(":common:auth:api"))
+                api(project(":common:start:api"))
 
                 implementation(project(":common:utils-compose"))
                 implementation(project(":common:utils"))
@@ -19,6 +21,7 @@ kotlin {
 
                 implementation(project(":common:start:compose"))
 
+                implementation(project(":common:umbrella-core"))
                 implementation(Dependencies.Decompose.decompose)
             }
         }

@@ -17,7 +17,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.4"
+        kotlinCompilerExtensionVersion = "1.4.6"
     }
     packagingOptions {
         resources {
@@ -41,5 +41,7 @@ dependencies {
     implementation(project(":common:umbrella-core"))
     implementation(project(":common:core"))
     implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.activity:activity-compose:1.7.2")
+    implementation(Dependencies.Decompose.decompose)
     implementation(Dependencies.Android.runtime)
 }

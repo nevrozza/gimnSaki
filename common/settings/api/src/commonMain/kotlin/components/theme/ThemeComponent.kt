@@ -1,6 +1,7 @@
 package components.theme
 
 import com.arkivanov.decompose.value.Value
+import theme.ThemeColors
 
 interface ThemeComponent {
     val model: Value<Model>
@@ -19,6 +20,7 @@ interface ThemeComponent {
         val title: String = "Тема",
         val isStart: Boolean = false,
         val isAnimating: Boolean = false,
-        val isDynamicAnimation: Boolean = false
+        val isDynamicAnimation: Boolean = false,
+//        val color: String = ThemeColors.Default.name
     )
 }

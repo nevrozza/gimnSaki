@@ -9,6 +9,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(project(":common:utils"))
+                implementation(project(":common:core"))
                 implementation(Dependencies.Moko.Resources.compose)
             }
         }
